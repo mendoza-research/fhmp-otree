@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+	Make bids on each seller's asset
+{% endblock %}
+
+{% block content %}
+	<p>
+		These bids are private to other buyers.
+	</p>
+
+	<div class="row">
+		<div class="col-md-6">
+			<p>Asset 1 has a probability of {{asset1_disclose_interval}}</p>
+	{% formfield player.bid_asset1 label="How much will you pay for Asset 1 ?" %}
+		</div>
+
+		<div class="col-md-6">
+			<p>Asset 2 has a probability of {{asset2_disclose_interval}}</p>
+	{% formfield player.bid_asset2 label="How much will you pay for Asset2 ?" %}
+		</div>
+	</div>
+
+	{% next_button %}
+
+{% endblock %}

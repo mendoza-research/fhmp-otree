@@ -1,0 +1,63 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Background
+{% endblock %}
+
+{% block content %}
+	<ul>
+		<li>There are two types of assets available: high quality assets and low quality assets. The high quality asset is worth 300 points to the buyer, and the low quality asset is worth 100 points.</li>
+	</ul>
+
+	<p>
+		The following will happen each period.
+	</p>
+
+	<ul>
+		<li>
+			First, each seller receives a probability between 0% and 100%. This probability represents the likelihood that that seller’s asset is a high quality asset. For example, if seller A receives 64% probability, then there is 64% chance the asset will be a high quality asset equal to 300 points, and a 36% chance the asset will be a low quality asset equal to 100 points.
+		</li>
+
+		<li>
+			One seller’s probability does not impact the probability that the other sellers’ will receive. For example, seller A could have a probability of 96%, seller B could have a probability of 87%, and seller C could have a probability of 87%.
+		</li>
+
+		<li>
+			Each seller must decide how to disclose to the buyers the probability that the seller received. Each seller has two options, to disclose low detail information or high detail information:
+
+			<ul>
+				<li>
+					Low Detail: Seller says whether the probability is either between 0%-49% or between 50%-100%. This option is no cost to the seller.
+				</li>
+
+				<li>
+					High Detail: Seller says whether the probability is between 0%-24%, between 25%-49%, between 50%-74%, or between 75%-100%. This option costs the seller 30 points.
+				</li>
+			</ul>
+		</li>
+
+		<li>
+			After each seller chooses high or low detail, the seller then chooses which range to disclose to the buyer.
+		</li>
+
+		<li>
+			The buyers place one private bid on each seller’s asset.
+		</li>
+
+		<li>
+			After bids are placed, the computer will select the asset type based on the underlying probability known to the seller.
+		</li>
+
+		<li>
+			Each seller’s asset type is revealed to all participants, and payouts are determined.
+		</li>
+
+		<li>
+			This process will repeat for 20 periods.
+		</li>
+	</ul>
+
+    {% next_button %}
+
+{% endblock %}
