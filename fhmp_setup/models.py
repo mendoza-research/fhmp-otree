@@ -39,5 +39,4 @@ class Player(BasePlayer):
 		else:
 			self.participant.vars['role'] = 'buyer'
 
-		print('player.id_in_group==', self.id_in_group, ', role=' + self.participant.vars['role'])
 		return self.participant.vars['role']

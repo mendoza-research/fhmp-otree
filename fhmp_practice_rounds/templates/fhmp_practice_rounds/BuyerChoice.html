@@ -11,14 +11,23 @@
 	</p>
 
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-12">
 			<p>Asset 1 has a probability of {{asset1_disclose_interval}}</p>
 	{% formfield player.bid_asset1 label="How much will you pay for Asset 1 ?" %}
 		</div>
+	</div>
 
-		<div class="col-md-6">
+	<div class="row">
+		<div class="col-md-12">
 			<p>Asset 2 has a probability of {{asset2_disclose_interval}}</p>
 	{% formfield player.bid_asset2 label="How much will you pay for Asset2 ?" %}
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<p>Asset 3 has a probability of {{asset3_disclose_interval}}</p>
+	{% formfield player.bid_asset3 label="How much will you pay for Asset3 ?" %}
 		</div>
 	</div>
 

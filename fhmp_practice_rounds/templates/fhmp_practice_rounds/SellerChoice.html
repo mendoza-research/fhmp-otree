@@ -7,12 +7,8 @@
 
 {% block content %}
 	<p>The probability of your asset being a high quality asset is {{group.asset1_probability}}</p>
-	{% formfield group.asset1_disclose_interval label="How do you want to disclose this information?" %}
 
-	<!--
-	<p>The probability of your asset being a high quality asset is {{group.asset2_probability}}</p>
-	{% formfield group.asset2_disclose_interval label="How do you want to disclose this information?" %}
-	-->
+	{%  formfields %}
 
 	{% next_button %}
 {% endblock %}
