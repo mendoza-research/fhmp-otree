@@ -4,6 +4,11 @@ from .models import Constants
 
 import random
 
+class BeginWaitPage(WaitPage):
+	def after_all_players_arrive(self):
+		self.group.init_assets()
+		self.group.set_players_budgets()
+
 
 class SellerChoice(Page):
 	form_model = 'group'
@@ -25,83 +30,28 @@ class SellerChoice(Page):
 
 	def vars_for_template(self):
 		asset_probabilities_by_player_id = {
-
+			1: self.group.asset1_probability,
+			2: self.group.asset2_probability,
+			3: self.group.asset3_probability
 		}
 
-		pass
+		return {
+			'asset_probability': asset_probabilities_by_player_id[self.player.id_in_group]
+		}
 
 	def before_next_page(self):
 		pass
 
 
-class AllPlayersWaitPage(WaitPage):
+class AllPlayersArrivalWaitPage(WaitPage):
 	def after_all_players_arrive(self):
 		pass
 
 
 class ResultsWaitPage(WaitPage):
 	def after_all_players_arrive(self):
-		group = self.group
-
-		# A list to hold IDs of all buyers
-		buyer_ids = []
-
-		# Lists of bids for each asset by all buyers
-		asset1_bids = []
-		asset2_bids = []
-		asset3_bids = []
-
-		# Lists of max bids for each asset (in case tie happens)
-		asset1_max_bidders = []
-		asset2_max_bidders = []
-		asset3_max_bidders = []
-
-		for p in group.get_players():
-			if p.role() == 'buyer':
-				# IDs of all buyers
-				buyer_ids.append(p.id_in_group)
-
-				# Bids on each asset
-				asset1_bids.append(p.bid_asset1)
-				asset2_bids.append(p.bid_asset2)
-				asset3_bids.append(p.bid_asset3)
-
-		print('buyers in ResultsWaitPage')
-		print(buyer_ids)
-
-		print('bids on asset1=', asset1_bids)
-		print('bids on asset2=', asset2_bids)
-		print('bids on asset3=', asset3_bids)
-
-		# Get max bid on each asset
-		asset1_max_bid = max(asset1_bids)
-		asset2_max_bid = max(asset2_bids)
-		asset3_max_bid = max(asset3_bids)
-
-		print('asset1_max_bid=', asset1_max_bid)
-		print('asset2_max_bid=', asset2_max_bid)
-		print('asset3_max_bid=', asset3_max_bid)
-
-		for buyer_id in buyer_ids:
-			p = group.get_player_by_id(buyer_id)
-
-			if p.bid_asset1 >= asset1_max_bid:
-				asset1_max_bidders.append(buyer_id)
-
-			if p.bid_asset2 >= asset2_max_bid:
-				asset2_max_bidders.append(buyer_id)
-
-			if p.bid_asset3 >= asset3_max_bid:
-				asset3_max_bidders.append(buyer_id)
-
-		print('asset1_max_bidders=', asset1_max_bidders)
-		print('asset2_max_bidders=', asset2_max_bidders)
-		print('asset3_max_bidders=', asset3_max_bidders)
-
-		# Randomly select a winner amongst highest bidders for each asset
-		group.get_player_by_id(random.choice(asset1_max_bidders)).did_win_asset1 = True
-		group.get_player_by_id(random.choice(asset2_max_bidders)).did_win_asset2 = True
-		group.get_player_by_id(random.choice(asset3_max_bidders)).did_win_asset3 = True
+		self.group.determine_bid_winners()
+		self.group.set_payoffs()
 
 
 
@@ -125,8 +75,9 @@ class Results(Page):
 
 
 page_sequence = [
+	BeginWaitPage,
 	SellerChoice,
-	AllPlayersWaitPage,
+	AllPlayersArrivalWaitPage,
 	BuyerChoice,
 	ResultsWaitPage,
 	Results
