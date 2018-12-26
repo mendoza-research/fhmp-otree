@@ -8,7 +8,7 @@ from otree.api import (
 author = 'Your name here'
 
 doc = """
-Your app description
+Practice rounds
 """
 
 
@@ -53,14 +53,7 @@ class Constants(BaseConstants):
 		}
 	}
 
-	disclose_interval_choices = [
-		['0%-49%', 'Low: 0-49% (No cost)'],
-		['50%-100%', 'Low: 50-100% (No cost)'],
-		['0%-24%', 'High: 0-24% (Costs 30 points)'],
-		['25%-49%', 'High: 25-49% (Costs 30 points)'],
-		['50%-74%', 'High: 50-74% (Costs 30 points)'],
-		['75%-100%', 'High: 75-100% (Costs 30 points)'],
-	]
+	disclose_interval_choices = list(map(lambda x: [x[0], x[1]['label']], disclose_intervals.items()))
 
 
 class Subsession(BaseSubsession):
@@ -68,11 +61,6 @@ class Subsession(BaseSubsession):
 		print('creating_session')
 
 		pass
-
-
-# Set disclose interval choices
-def get_disclose_interval_choices():
-	return list(map(lambda x: [x[0], x[1]['label']], Constants.disclose_intervals.items()))
 
 class Group(BaseGroup):
 	print('running Group init')
@@ -84,7 +72,7 @@ class Group(BaseGroup):
 
 	# Disclosure intervals
 	asset1_disclose_interval = models.StringField(
-		choices=get_disclose_interval_choices(),
+		choices=Constants.disclose_interval_choices,
 		widget=widgets.RadioSelect,
 		blank=False
 	)
@@ -122,15 +110,9 @@ class Group(BaseGroup):
 		self.asset2_true_value = Constants.asset_high_quality_value if random.random() < self.asset2_probability else Constants.asset_low_quality_value
 		self.asset3_true_value = Constants.asset_high_quality_value if random.random() < self.asset3_probability else Constants.asset_low_quality_value
 
-		print('asset1_true_value=', self.asset1_true_value)
-		print('asset2_true_value=', self.asset2_true_value)
-		print('asset3_true_value=', self.asset3_true_value)
-
 	# Set players' budgets for current round
 	# budget for current round = budget for prev round - [sum of all winning bids from prev round)
 	def set_players_budgets(self):
-		print('set_players_budget()')
-
 		for p in self.get_players():
 			if p.role() == 'seller':
 				p.budget = 0
@@ -178,8 +160,6 @@ class Group(BaseGroup):
 				asset2_bids.append(p.bid_asset2)
 				asset3_bids.append(p.bid_asset3)
 
-		print(buyer_ids)
-
 		# Get max bid on each asset
 		self.asset1_max_bid = max(asset1_bids)
 		self.asset2_max_bid = max(asset2_bids)
@@ -207,8 +187,7 @@ class Group(BaseGroup):
 		for p in self.get_players():
 			p.set_payoff()
 
-	def get_asset_max_bid_by_id(self, seller_id):
-		print('get_asset_max_bid_by_id(seller_id=', seller_id, ')')
+	def get_asset_max_bid(self, seller_id):
 		assets = {
 			1: self.asset1_max_bid,
 			2: self.asset2_max_bid,
@@ -217,10 +196,17 @@ class Group(BaseGroup):
 
 		return assets[seller_id]
 
+	def get_seller_disclosure_cost(self, seller_id):
+		seller_disclose_intervals = {
+			1: self.asset1_disclose_interval,
+			2: self.asset2_disclose_interval,
+			3: self.asset3_disclose_interval
+		}
+
+		return Constants.disclose_intervals[seller_disclose_intervals[seller_id]]['cost']
+
 
 class Player(BasePlayer):
-	print('running player init')
-
 	# Buyer budget for all rounds
 	# For practice rounds, buyer budget is 600 (2 rounds * initial endowment)
 	# For main rounds, buyer budget is 6000 (20 rounds * initial endowment)
@@ -246,12 +232,11 @@ class Player(BasePlayer):
 
 	# Calculate payoff for each player
 	def set_payoff(self):
-		print('get_payoff for player ', self.id_in_group, ', role=' + self.role())
-
-		# Winning bids for each asset
-
 		if self.role() == 'seller':
-			self.round_earning = self.group.get_asset_max_bid_by_id(self.id_in_group)
+			seller_disclosure_cost = self.group.get_seller_disclosure_cost(self.id_in_group)
+			seller_asset_max_bid = self.group.get_asset_max_bid(self.id_in_group)
+
+			self.round_earning = seller_asset_max_bid - seller_disclosure_cost
 
 		elif self.role() == 'buyer':
 			if self.did_win_asset1:
