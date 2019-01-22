@@ -35,8 +35,10 @@ class SellerChoice(Page):
 			3: self.group.asset3_probability
 		}
 
+		asset_probability_text = "{0:.0f}%".format(asset_probabilities_by_player_id[self.player.id_in_group] * 100)
+
 		return {
-			'asset_probability': asset_probabilities_by_player_id[self.player.id_in_group]
+			'asset_probability': asset_probability_text
 		}
 
 	def before_next_page(self):
@@ -46,13 +48,6 @@ class SellerChoice(Page):
 class AllPlayersArrivalWaitPage(WaitPage):
 	def after_all_players_arrive(self):
 		pass
-
-
-class ResultsWaitPage(WaitPage):
-	def after_all_players_arrive(self):
-		self.group.determine_bid_winners()
-		self.group.set_payoffs()
-
 
 
 class BuyerChoice(Page):
@@ -70,8 +65,20 @@ class BuyerChoice(Page):
 		}
 
 
+class ResultsWaitPage(WaitPage):
+	def after_all_players_arrive(self):
+		self.group.determine_bid_winners()
+		self.group.set_payoffs()
+
+
 class Results(Page):
-	pass
+	def vars_for_template(self):
+		results = {
+			sellers: None,
+			buyers: None
+		}
+
+		pass
 
 
 page_sequence = [
