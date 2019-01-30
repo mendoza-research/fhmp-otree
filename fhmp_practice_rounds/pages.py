@@ -73,12 +73,11 @@ class ResultsWaitPage(WaitPage):
 
 class Results(Page):
 	def vars_for_template(self):
-		results = {
+		return {
 			'sellers': None,
-			'buyers': None
+			'buyers': None,
+			'payoff': self.player.payoff
 		}
-
-		pass
 
 
 page_sequence = [
