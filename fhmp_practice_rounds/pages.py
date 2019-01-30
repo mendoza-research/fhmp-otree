@@ -54,7 +54,6 @@ class ResultsWaitPage(WaitPage):
 		self.group.set_payoffs()
 
 
-
 class BuyerChoice(Page):
 	form_model = 'player'
 	form_fields = ['bid_asset1', 'bid_asset2', 'bid_asset3']

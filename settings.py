@@ -12,38 +12,6 @@ SESSION_CONFIG_DEFAULTS = {
 }
 
 SESSION_CONFIGS = [
-	# {
-	#    'name': 'public_goods',
-	#    'display_name': "Public Goods",
-	#    'num_demo_participants': 3,
-	#    'app_sequence': ['public_goods', 'payment_info'],
-	# },
-	{
-		'name': 'my_simple_survey',
-		'num_demo_participants': 3,
-		'app_sequence': ['my_simple_survey'],
-	},
-	{
-		'name': 'my_public_goods',
-		'display_name': 'My Public Goods (Simple Version)',
-		'num_demo_participants': 3,
-		'app_sequence': ['my_public_goods'],
-		# 'use_browser_bots': True,
-	},
-	{
-		'name': 'my_trust',
-		'display_name': 'My Trust Game (Simple version from tutorial)',
-		'num_demo_participants': 2,
-		'app_sequence': ['my_trust'],
-	},
-	{
-		'name': 'my_matching_pennies',
-		'display_name': 'My Matching Pennies (tutorial version)',
-		'num_demo_participants': 2,
-		'app_sequence': [
-			'my_matching_pennies',
-		]
-	},
 	{
 		'name': 'fhmp',
 		'display_name': 'FHMP',
