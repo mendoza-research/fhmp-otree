@@ -101,11 +101,14 @@ class Group(BaseGroup):
 	asset3_max_bid = models.CurrencyField()
 
 	# Generate probabilities for each asset and true values
+	# Probabilities are in float format (examples: 0.173, 0.552, 0.993)
 	def init_assets(self):
+		# High asset prabilities
 		self.asset1_probability = round(random.uniform(0, 1), 3)
 		self.asset2_probability = round(random.uniform(0, 1), 3)
 		self.asset3_probability = round(random.uniform(0, 1), 3)
 
+		# Asset true values (either low quality or high quality)
 		self.asset1_true_value = Constants.asset_high_quality_value if random.random() < self.asset1_probability else Constants.asset_low_quality_value
 		self.asset2_true_value = Constants.asset_high_quality_value if random.random() < self.asset2_probability else Constants.asset_low_quality_value
 		self.asset3_true_value = Constants.asset_high_quality_value if random.random() < self.asset3_probability else Constants.asset_low_quality_value
@@ -149,13 +152,14 @@ class Group(BaseGroup):
 		asset2_max_bidders = []
 		asset3_max_bidders = []
 
-		# For every player
+		# Loop through all players
 		for p in group.get_players():
+			# Check if buyer
 			if p.role() == 'buyer':
-				# IDs of all buyers
+				# Collect ids of all buyers
 				buyer_ids.append(p.id_in_group)
 
-				# Bids on each asset
+				# Add bids on each asset to corresponding array
 				asset1_bids.append(p.bid_asset1)
 				asset2_bids.append(p.bid_asset2)
 				asset3_bids.append(p.bid_asset3)
@@ -165,6 +169,7 @@ class Group(BaseGroup):
 		self.asset2_max_bid = max(asset2_bids)
 		self.asset3_max_bid = max(asset3_bids)
 
+		# Find max bidders (this is to break ties)
 		for buyer_id in buyer_ids:
 			p = group.get_player_by_id(buyer_id)
 
@@ -187,6 +192,7 @@ class Group(BaseGroup):
 		for p in self.get_players():
 			p.set_payoff()
 
+	# Get max bids for an asset by asset's seller id
 	def get_asset_max_bid(self, seller_id):
 		assets = {
 			1: self.asset1_max_bid,
@@ -195,6 +201,7 @@ class Group(BaseGroup):
 		}
 
 		return assets[seller_id]
+
 
 	def get_seller_disclosure_cost(self, seller_id):
 		seller_disclose_intervals = {
@@ -230,14 +237,17 @@ class Player(BasePlayer):
 	def role(self):
 		return self.participant.vars['role']
 
-	# Calculate payoff for each player
+	# Calculate earning and add to payoffs
+	# This method is run at the end of each round
 	def set_payoff(self):
+		# Seller earning from round
 		if self.role() == 'seller':
 			seller_disclosure_cost = self.group.get_seller_disclosure_cost(self.id_in_group)
 			seller_asset_max_bid = self.group.get_asset_max_bid(self.id_in_group)
 
 			self.round_earning = seller_asset_max_bid - seller_disclosure_cost
 
+		# Buyer payoffs
 		elif self.role() == 'buyer':
 			if self.did_win_asset1:
 				self.round_earning += self.group.asset1_true_value - self.bid_asset1
@@ -248,4 +258,5 @@ class Player(BasePlayer):
 			if self.did_win_asset3:
 				self.round_earning += self.group.asset3_true_value - self.bid_asset3
 
+		#
 		self.payoff += self.round_earning

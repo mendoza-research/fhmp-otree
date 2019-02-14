@@ -1,9 +1,7 @@
-from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
-from .models import Constants
 
-import random
-
+# This is a transition page that is not shown to the end-user
+#
 class BeginWaitPage(WaitPage):
 	def after_all_players_arrive(self):
 		self.group.init_assets()
@@ -45,6 +43,7 @@ class SellerChoice(Page):
 		pass
 
 
+
 class AllPlayersArrivalWaitPage(WaitPage):
 	def after_all_players_arrive(self):
 		pass
@@ -52,19 +51,22 @@ class AllPlayersArrivalWaitPage(WaitPage):
 
 class BuyerChoice(Page):
 	form_model = 'player'
+
+	# Input text fields to be shown to buyers
 	form_fields = ['bid_asset1', 'bid_asset2', 'bid_asset3']
 
+	# is_displayed() is used to show this page only to the buyers
 	def is_displayed(self):
 		return self.player.role() == 'buyer'
 
 	def vars_for_template(self):
 		return {
-			'asset1_disclose_interval': self.group.asset1_disclose_interval,
-			'asset2_disclose_interval': self.group.asset2_disclose_interval,
-			'asset3_disclose_interval': self.group.asset3_disclose_interval,
+
 		}
 
 
+# This is a transition page that is not shown to the end-user
+# Bid winners and payoffs for all players are determined here
 class ResultsWaitPage(WaitPage):
 	def after_all_players_arrive(self):
 		self.group.determine_bid_winners()
@@ -74,8 +76,27 @@ class ResultsWaitPage(WaitPage):
 class Results(Page):
 	def vars_for_template(self):
 		return {
-			'sellers': None,
-			'buyers': None,
+			# This array of objects is used in the Results page to display range of high asset probabilities, true asset value, other players' bids, and winners
+			'assets': [
+				{
+					'asset_id': 1,
+					'disclose_interval': self.group.asset1_disclose_interval,
+					'asset_value': self.group.asset1_true_value,
+					'bid_winner': 1
+				},
+				{
+					'asset_id': 2,
+					'disclose_interval': self.group.asset1_disclose_interval,
+					'asset_value': self.group.asset1_true_value,
+					'bid_winner': 1
+				},
+				{
+					'asset_id': 3,
+					'disclose_interval': self.group.asset1_disclose_interval,
+					'asset_value': self.group.asset1_true_value,
+					'bid_winner': 1
+				},
+			],
 			'payoff': self.player.payoff
 		}
 

@@ -6,6 +6,14 @@
 {% endblock %}
 
 {% block content %}
+	<div class="row">
+		<div class="col-md-12">
+            <h2>Asset 1</h2>
+            <p>Seller 1 for Asset 1 has chose a probability of {{asset1_disclose_interval}}.</p>
+            <p>The true value of Asset 1 was </p>
+		</div>
+	</div>
+
     <p>Your payoff from this round is {{ payoff }}.</p>
 
     {% next_button %}
