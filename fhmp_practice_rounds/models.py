@@ -101,7 +101,7 @@ class Group(BaseGroup):
 	asset3_max_bid = models.CurrencyField()
 
 	# Generate probabilities for each asset and true values
-	# Probabilities are in float format (examples: 0.173, 0.552, 0.993)
+	# Probabilities are in decimal format (examples: 0.173, 0.552, 0.993)
 	def init_assets(self):
 		# High asset prabilities
 		self.asset1_probability = round(random.uniform(0, 1), 3)
@@ -127,6 +127,7 @@ class Group(BaseGroup):
 					p_in_prev_round = p.in_round(self.round_number - 1)
 					p.budget = p_in_prev_round.budget
 
+					# If the buyer has purchased an asset through auction in the previous round, deduct the spent amount from budget
 					if p_in_prev_round.did_win_asset1:
 						p.budget -= p_in_prev_round.bid_asset1
 
@@ -136,11 +137,30 @@ class Group(BaseGroup):
 					if p_in_prev_round.did_win_asset3:
 						p.budget -= p_in_prev_round.bid_asset3
 
+	# Get buyers
+	def get_buyers(self):
+		# A list to hold IDs of all buyers
+		buyers = []
+
+		# Loop through all players
+		for p in self.get_players():
+			# Check if buyer
+			if p.role() == 'buyer':
+				# Collect ids of all buyers
+				buyers.append(p)
+
+		return buyers
+
+	# Get buyer ids
+	def get_buyer_ids(self):
+		return list(map(lambda b: b.id_in_group, self.get_buyers))
+
+	# Determine bid winners
 	def determine_bid_winners(self):
 		group = self
 
 		# A list to hold IDs of all buyers
-		buyer_ids = []
+		buyer_ids = map(lambda p: p.id_in_group, self.get_buyers())
 
 		# Lists of bids for each asset by all buyers
 		asset1_bids = []
@@ -153,16 +173,11 @@ class Group(BaseGroup):
 		asset3_max_bidders = []
 
 		# Loop through all players
-		for p in group.get_players():
-			# Check if buyer
-			if p.role() == 'buyer':
-				# Collect ids of all buyers
-				buyer_ids.append(p.id_in_group)
-
-				# Add bids on each asset to corresponding array
-				asset1_bids.append(p.bid_asset1)
-				asset2_bids.append(p.bid_asset2)
-				asset3_bids.append(p.bid_asset3)
+		for p in group.get_buyers():
+			# Add bids on each asset to corresponding array
+			asset1_bids.append(p.bid_asset1)
+			asset2_bids.append(p.bid_asset2)
+			asset3_bids.append(p.bid_asset3)
 
 		# Get max bid on each asset
 		self.asset1_max_bid = max(asset1_bids)

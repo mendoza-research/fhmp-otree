@@ -61,7 +61,9 @@ class BuyerChoice(Page):
 
 	def vars_for_template(self):
 		return {
-
+			'asset1_disclose_interval': self.group.asset1_disclose_interval,
+			'asset2_disclose_interval': self.group.asset2_disclose_interval,
+			'asset3_disclose_interval': self.group.asset3_disclose_interval,
 		}
 
 
@@ -73,28 +75,48 @@ class ResultsWaitPage(WaitPage):
 		self.group.set_payoffs()
 
 
-class Results(Page):
+class Results(Page): 
 	def vars_for_template(self):
+		buyers = self.group.get_buyers()
+
 		return {
-			# This array of objects is used in the Results page to display range of high asset probabilities, true asset value, other players' bids, and winners
+			# This array of objects is used in the Results page
+			# to display range of high asset probabilities, true asset value,
+			# other buyers' bids, and winners
+
 			'assets': [
 				{
-					'asset_id': 1,
+					'id': 1,
 					'disclose_interval': self.group.asset1_disclose_interval,
-					'asset_value': self.group.asset1_true_value,
-					'bid_winner': 1
+					'true_value': self.group.asset1_true_value,
+					'bids': list(map(lambda b: {
+						'player_id': b.id_in_group,
+						'amount': b.bid_asset1,
+						'did_win': b.did_win_asset1,
+						'is_self': b.id_in_group == self.player.id_in_group
+					}, buyers))
 				},
 				{
-					'asset_id': 2,
-					'disclose_interval': self.group.asset1_disclose_interval,
-					'asset_value': self.group.asset1_true_value,
-					'bid_winner': 1
+					'id': 2,
+					'disclose_interval': self.group.asset2_disclose_interval,
+					'true_value': self.group.asset2_true_value,
+					'bids': list(map(lambda b: {
+						'player_id': b.id_in_group,
+						'amount': b.bid_asset2,
+						'did_win': b.did_win_asset2,
+						'is_self': b.id_in_group == self.player.id_in_group
+					}, buyers))
 				},
 				{
-					'asset_id': 3,
-					'disclose_interval': self.group.asset1_disclose_interval,
-					'asset_value': self.group.asset1_true_value,
-					'bid_winner': 1
+					'id': 3,
+					'disclose_interval': self.group.asset2_disclose_interval,
+					'true_value': self.group.asset3_true_value,
+					'bids': list(map(lambda b: {
+						'player_id': b.id_in_group,
+						'amount': b.bid_asset3,
+						'did_win': b.did_win_asset3,
+						'is_self': b.id_in_group == self.player.id_in_group
+					}, buyers))
 				},
 			],
 			'payoff': self.player.payoff

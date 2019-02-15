@@ -7,11 +7,40 @@
 
 {% block content %}
 	<div class="row">
-		<div class="col-md-12">
-            <h2>Asset 1</h2>
-            <p>Seller 1 for Asset 1 has chose a probability of {{asset1_disclose_interval}}.</p>
-            <p>The true value of Asset 1 was </p>
-		</div>
+
+		{% for asset in assets %}
+			<div class="col-md-12">
+				<h3>Asset {{ asset.id }}</h3>
+				<p>Seller disclosed a probability of {{ asset.disclose_interval }}.</p>
+				<p>The true value of Asset {{ asset.id }} was {{ asset.true_value }}.</p>
+
+
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">Player</th>
+							<th scope="col">Bid</th>
+							<th scope="col">Win</th>
+						</tr>
+					</thead>
+
+					<tbody>
+				{% for bid in asset.bids %}
+						<tr class="{% if bid.did_win %}table-success{% endif %}">
+							<td>
+								{{ bid.player_id }}
+								{% if bid.is_self %}
+									(you)
+								{% endif %}
+							</td>
+							<td>{{ bid.amount }}</td>
+							<td>{{ bid.did_win | yesno:"Yes,No,Unknown" }}</td>
+						</tr>
+				{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% endfor %}
 	</div>
 
     <p>Your payoff from this round is {{ payoff }}.</p>
