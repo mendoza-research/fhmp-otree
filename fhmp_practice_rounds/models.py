@@ -21,35 +21,147 @@ class Constants(BaseConstants):
 	num_rounds = 2
 
 	# Currency definitions
-	initial_endowment = c(300) * num_rounds
-	high_detail_disclosure_cost = c(30)
+	initial_endowment = c(15) * num_rounds
+	high_detail_disclosure_cost = c(2)
 	asset_high_quality_value = c(300)
 	asset_low_quality_value = c(100)
 
 	disclose_intervals = {
-		'0%-49%': {
-			'label': 'Low: 0-49% (No cost)',
+		'1-5': {
+			'label': 'Low: 1-5 (No cost)',
 			'cost': 0
 		},
-		'50%-100%': {
-			'label': 'Low: 50-100% (No cost)',
+		'2-6': {
+			'label': 'Low: 2-6 (No cost)',
 			'cost': 0
 		},
-		'0%-24%': {
-			'label': 'High: 0-24% (Costs 30 points)',
-			'cost': 30
+		'3-7': {
+			'label': 'Low: 3-7 (No cost)',
+			'cost': 0
 		},
-		'25%-49%': {
-			'label': 'High: 25-49% (Costs 30 points)',
-			'cost': 30
+		'4-8': {
+			'label': 'Low: 4-8 (No cost)',
+			'cost': 0
 		},
-		'50%-74%': {
-			'label': 'High: 50-74% (Costs 30 points)',
-			'cost': 30
+		'5-9': {
+			'label': 'Low: 5-9 (No cost)',
+			'cost': 0
 		},
-		'75%-100%': {
-			'label': 'High: 75-100% (Costs 30 points)',
-			'cost': 30
+		'6-10': {
+			'label': 'Low: 6-10 (No cost)',
+			'cost': 0
+		},
+		'7-11': {
+			'label': 'Low: 7-11 (No cost)',
+			'cost': 0
+		},
+		'8-12': {
+			'label': 'Low: 8-12 (No cost)',
+			'cost': 0
+		},
+		'9-13': {
+			'label': 'Low: 9-13 (No cost)',
+			'cost': 0
+		},
+		'10-14': {
+			'label': 'Low: 10-14 (No cost)',
+			'cost': 0
+		},
+		'11-15': {
+			'label': 'Low: 11-15 (No cost)',
+			'cost': 0
+		},
+		'12-16': {
+			'label': 'Low: 12-16 (No cost)',
+			'cost': 0
+		},
+		'13-17': {
+			'label': 'Low: 13-17 (No cost)',
+			'cost': 0
+		},
+		'14-18': {
+			'label': 'Low: 14-18 (No cost)',
+			'cost': 0
+		},
+		'15-19': {
+			'label': 'Low: 15-19 (No cost)',
+			'cost': 0
+		},
+		'16-20': {
+			'label': 'High: 16-20 (No cost)',
+			'cost': 2
+		},
+		'1-3': {
+			'label': 'High: 1-3 (Costs 2 points)',
+			'cost': 2
+		},
+		'2-4': {
+			'label': 'High: 2-4 (Costs 2 points)',
+			'cost': 2
+		},
+		'3-5': {
+			'label': 'High: 3-5 (Costs 2 points)',
+			'cost': 2
+		},
+		'4-6': {
+			'label': 'High: 4-6 (Costs 2 points)',
+			'cost': 2
+		},
+		'5-7': {
+			'label': 'High: 5-7 (Costs 2 points)',
+			'cost': 2
+		},
+		'6-8': {
+			'label': 'High: 6-8 (Costs 2 points)',
+			'cost': 2
+		},
+		'7-9': {
+			'label': 'High: 7-9 (Costs 2 points)',
+			'cost': 2
+		},
+		'8-10': {
+			'label': 'High: 8-10 (Costs 2 points)',
+			'cost': 2
+		},
+		'9-11': {
+			'label': 'High: 9-11 (Costs 2 points)',
+			'cost': 2
+		},
+		'10-12': {
+			'label': 'High: 10-12 (Costs 2 points)',
+			'cost': 2
+		},
+		'11-13': {
+			'label': 'High: 11-13 (Costs 2 points)',
+			'cost': 2
+		},
+		'12-14': {
+			'label': 'High: 12-14 (Costs 2 points)',
+			'cost': 2
+		},
+		'13-15': {
+			'label': 'High: 13-15 (Costs 2 points)',
+			'cost': 2
+		},
+		'14-16': {
+			'label': 'High: 14-16 (Costs 2 points)',
+			'cost': 2
+		},
+		'15-17': {
+			'label': 'High: 15-17 (Costs 2 points)',
+			'cost': 2
+		},
+		'16-18': {
+			'label': 'High: 16-18 (Costs 2 points)',
+			'cost': 2
+		},
+		'17-19': {
+			'label': 'High: 17-19 (Costs 2 points)',
+			'cost': 2
+		},
+		'18-20': {
+			'label': 'High: 18-20 (Costs 2 points)',
+			'cost': 2
 		}
 	}
 
@@ -66,9 +178,9 @@ class Group(BaseGroup):
 	print('running Group init')
 
 	# Since there is a fixed number of assets, each asset's probability and disclose_interval should be listed here
-	asset1_probability = models.FloatField(min=0.0, max=1.0)
-	asset2_probability = models.FloatField(min=0.0, max=1.0)
-	asset3_probability = models.FloatField(min=0.0, max=1.0)
+	asset1_est_value = models.FloatField(min=0.0, max=20.0)
+	asset2_est_value = models.FloatField(min=0.0, max=20.0)
+	asset3_est_value = models.FloatField(min=0.0, max=20.0)
 
 	# Disclosure intervals
 	asset1_disclose_interval = models.StringField(
@@ -103,22 +215,22 @@ class Group(BaseGroup):
 	# Generate probabilities for each asset and true values
 	# Probabilities are in decimal format (examples: 0.173, 0.552, 0.993)
 	def init_assets(self):
-		# High asset prabilities
-		self.asset1_probability = round(random.uniform(0, 1), 3)
-		self.asset2_probability = round(random.uniform(0, 1), 3)
-		self.asset3_probability = round(random.uniform(0, 1), 3)
+		# High asset probabilities
+		self.asset1_est_value = round(random.uniform(1, 20), 0)
+		self.asset2_est_value = round(random.uniform(1, 20), 0)
+		self.asset3_est_value = round(random.uniform(1, 20), 0)
 
 		# Asset true values (either low quality or high quality)
-		self.asset1_true_value = Constants.asset_high_quality_value if random.random() < self.asset1_probability else Constants.asset_low_quality_value
-		self.asset2_true_value = Constants.asset_high_quality_value if random.random() < self.asset2_probability else Constants.asset_low_quality_value
-		self.asset3_true_value = Constants.asset_high_quality_value if random.random() < self.asset3_probability else Constants.asset_low_quality_value
+		self.asset1_true_value = Constants.asset_high_quality_value if random.random() < self.asset1_est_value else Constants.asset_low_quality_value
+		self.asset2_true_value = Constants.asset_high_quality_value if random.random() < self.asset2_est_value else Constants.asset_low_quality_value
+		self.asset3_true_value = Constants.asset_high_quality_value if random.random() < self.asset3_est_value else Constants.asset_low_quality_value
 
 	# Set players' budgets for current round
 	# budget for current round = budget for prev round - [sum of all winning bids from prev round)
 	def set_players_budgets(self):
 		for p in self.get_players():
 			if p.role() == 'seller':
-				p.budget = 0
+				p.budget = 5
 			else:
 				if self.round_number == 1:
 					p.budget = Constants.initial_endowment

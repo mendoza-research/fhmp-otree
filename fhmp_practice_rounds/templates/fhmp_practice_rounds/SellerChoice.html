@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-	<p>The probability of your asset being a high quality asset is {{ asset_probability }}</p>
+	<p>The most likely value of your asset is {{ asset_est_value }}. The actual value of your asset is determined by drawing from a distribution of outcomes around {{ asset_est_value }}.</p>
 
 	{%  formfields %}
 

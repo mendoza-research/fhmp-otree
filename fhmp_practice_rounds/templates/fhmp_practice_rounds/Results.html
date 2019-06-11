@@ -10,9 +10,9 @@
 
 		{% for asset in assets %}
 			<div class="col-md-12">
-				<h3>Asset {{ asset.id }}</h3>
-				<p>Seller disclosed a probability of {{ asset.disclose_interval }}.</p>
-				<p>The true value of Asset {{ asset.id }} was {{ asset.true_value }}.</p>
+				<h3><u>Asset {{ asset.id }}</u></h3>
+				<p><strong>Seller {{asset.id}}</strong> disclosed a range of <strong>{{ asset.disclose_interval }} points</strong> for their asset.</p>
+				<p>The true value of their asset after drawing from a distribution is <strong>{{ asset.true_value }}</strong>.</p>
 
 
 				<table class="table">

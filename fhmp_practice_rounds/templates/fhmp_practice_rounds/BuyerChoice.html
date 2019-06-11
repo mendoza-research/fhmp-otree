@@ -12,22 +12,28 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<p>Asset 1 has a probability of {{asset1_disclose_interval}}</p>
-	{% formfield player.bid_asset1 label="How much will you pay for Asset 1 ?" %}
+			<p><strong><u>Seller 1</u></strong></p>
+			<p>Seller 1 has chosen to disclose a range of {{asset1_disclose_interval}} points.</p>
+			<p>Based on this range, the fact checker has given the Seller a grade of ###.</p>
+	{% formfield player.bid_asset1 label="How much will you bid for Seller 1's Asset?" %}
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-md-12">
-			<p>Asset 2 has a probability of {{asset2_disclose_interval}}</p>
-	{% formfield player.bid_asset2 label="How much will you pay for Asset2 ?" %}
+			<p><strong><u>Seller 2</u></strong></p>
+			<p>Seller 2 has chosen to disclose a range of {{asset2_disclose_interval}} points. </p>
+			<p>Based on this range, the fact checker has given the Seller a grade of ###.</p>
+	{% formfield player.bid_asset2 label="How much will you bid for Seller 2's Asset?" %}
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-md-12">
-			<p>Asset 3 has a probability of {{asset3_disclose_interval}}</p>
-	{% formfield player.bid_asset3 label="How much will you pay for Asset3 ?" %}
+			<p><strong><u>Seller 3</u></strong></p>
+			<p>Seller 3 has chosen to disclose a range of {{asset3_disclose_interval}} points.</p>
+			<p>Based on this range, the fact checker has given the Seller a grade of ###.</p>
+	{% formfield player.bid_asset3 label="How much will you bid for Seller 3's Asset?" %}
 		</div>
 	</div>
 

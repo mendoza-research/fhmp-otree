@@ -56,16 +56,16 @@ class SellerChoice(Page):
 		return form_fields_by_player_id[self.player.id_in_group]
 
 	def vars_for_template(self):
-		asset_probabilities_by_player_id = {
-			1: self.group.asset1_probability,
-			2: self.group.asset2_probability,
-			3: self.group.asset3_probability
+		asset_est_values_by_player_id = {
+			1: self.group.asset1_est_value,
+			2: self.group.asset2_est_value,
+			3: self.group.asset3_est_value
 		}
 
-		asset_probability_text = "{0:.0f}%".format(asset_probabilities_by_player_id[self.player.id_in_group] * 100)
+		asset_est_value_text = "{0:.0f}".format(asset_est_values_by_player_id[self.player.id_in_group])
 
 		return {
-			'asset_probability': asset_probability_text
+			'asset_est_value': asset_est_value_text
 		}
 
 	def before_next_page(self):
