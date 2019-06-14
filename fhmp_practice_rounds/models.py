@@ -19,153 +19,160 @@ class Constants(BaseConstants):
 	# Practice = 2 rounds
 	# Main = 20 rounds
 	num_rounds = 2
-
 	# Currency definitions
-	initial_endowment = c(15) * num_rounds
+	initial_endowment = c(20) * num_rounds
 	high_detail_disclosure_cost = c(2)
-	asset_high_quality_value = c(300)
-	asset_low_quality_value = c(100)
+	asset_high_quality_value = c(20)
+	asset_low_quality_value = c(1)
 
 	disclose_intervals = {
 		'1-5': {
-			'label': 'Low: 1-5 (No cost)',
+			'label': 'Low: 1-5',
 			'cost': 0
 		},
 		'2-6': {
-			'label': 'Low: 2-6 (No cost)',
+			'label': 'Low: 2-6',
 			'cost': 0
 		},
 		'3-7': {
-			'label': 'Low: 3-7 (No cost)',
+			'label': 'Low: 3-7',
 			'cost': 0
 		},
 		'4-8': {
-			'label': 'Low: 4-8 (No cost)',
+			'label': 'Low: 4-8',
 			'cost': 0
 		},
 		'5-9': {
-			'label': 'Low: 5-9 (No cost)',
+			'label': 'Low: 5-9',
 			'cost': 0
 		},
 		'6-10': {
-			'label': 'Low: 6-10 (No cost)',
+			'label': 'Low: 6-10',
 			'cost': 0
 		},
 		'7-11': {
-			'label': 'Low: 7-11 (No cost)',
+			'label': 'Low: 7-11',
 			'cost': 0
 		},
 		'8-12': {
-			'label': 'Low: 8-12 (No cost)',
+			'label': 'Low: 8-12',
 			'cost': 0
 		},
 		'9-13': {
-			'label': 'Low: 9-13 (No cost)',
+			'label': 'Low: 9-13',
 			'cost': 0
 		},
 		'10-14': {
-			'label': 'Low: 10-14 (No cost)',
+			'label': 'Low: 10-14',
 			'cost': 0
 		},
 		'11-15': {
-			'label': 'Low: 11-15 (No cost)',
+			'label': 'Low: 11-15',
 			'cost': 0
 		},
 		'12-16': {
-			'label': 'Low: 12-16 (No cost)',
+			'label': 'Low: 12-16',
 			'cost': 0
 		},
 		'13-17': {
-			'label': 'Low: 13-17 (No cost)',
+			'label': 'Low: 13-17',
 			'cost': 0
 		},
 		'14-18': {
-			'label': 'Low: 14-18 (No cost)',
+			'label': 'Low: 14-18',
 			'cost': 0
 		},
 		'15-19': {
-			'label': 'Low: 15-19 (No cost)',
+			'label': 'Low: 15-19',
 			'cost': 0
 		},
 		'16-20': {
-			'label': 'High: 16-20 (No cost)',
+			'label': 'Low: 16-20',
 			'cost': 2
 		},
 		'1-3': {
-			'label': 'High: 1-3 (Costs 2 points)',
+			'label': 'High: 1-3',
 			'cost': 2
 		},
 		'2-4': {
-			'label': 'High: 2-4 (Costs 2 points)',
+			'label': 'High: 2-4',
 			'cost': 2
 		},
 		'3-5': {
-			'label': 'High: 3-5 (Costs 2 points)',
+			'label': 'High: 3-5',
 			'cost': 2
 		},
 		'4-6': {
-			'label': 'High: 4-6 (Costs 2 points)',
+			'label': 'High: 4-6',
 			'cost': 2
 		},
 		'5-7': {
-			'label': 'High: 5-7 (Costs 2 points)',
+			'label': 'High: 5-7',
 			'cost': 2
 		},
 		'6-8': {
-			'label': 'High: 6-8 (Costs 2 points)',
+			'label': 'High: 6-8',
 			'cost': 2
 		},
 		'7-9': {
-			'label': 'High: 7-9 (Costs 2 points)',
+			'label': 'High: 7-9',
 			'cost': 2
 		},
 		'8-10': {
-			'label': 'High: 8-10 (Costs 2 points)',
+			'label': 'High: 8-10',
 			'cost': 2
 		},
 		'9-11': {
-			'label': 'High: 9-11 (Costs 2 points)',
+			'label': 'High: 9-11',
 			'cost': 2
 		},
 		'10-12': {
-			'label': 'High: 10-12 (Costs 2 points)',
+			'label': 'High: 10-12',
 			'cost': 2
 		},
 		'11-13': {
-			'label': 'High: 11-13 (Costs 2 points)',
+			'label': 'High: 11-13',
 			'cost': 2
 		},
 		'12-14': {
-			'label': 'High: 12-14 (Costs 2 points)',
+			'label': 'High: 12-14',
 			'cost': 2
 		},
 		'13-15': {
-			'label': 'High: 13-15 (Costs 2 points)',
+			'label': 'High: 13-15',
 			'cost': 2
 		},
 		'14-16': {
-			'label': 'High: 14-16 (Costs 2 points)',
+			'label': 'High: 14-16',
 			'cost': 2
 		},
 		'15-17': {
-			'label': 'High: 15-17 (Costs 2 points)',
+			'label': 'High: 15-17',
 			'cost': 2
 		},
 		'16-18': {
-			'label': 'High: 16-18 (Costs 2 points)',
+			'label': 'High: 16-18',
 			'cost': 2
 		},
 		'17-19': {
-			'label': 'High: 17-19 (Costs 2 points)',
+			'label': 'High: 17-19',
 			'cost': 2
 		},
 		'18-20': {
-			'label': 'High: 18-20 (Costs 2 points)',
+			'label': 'High: 18-20',
 			'cost': 2
 		}
 	}
 
+	# Create a list of strings to be displayed in form fields
+	# shown to users
 	disclose_interval_choices = list(map(lambda x: [x[0], x[1]['label']], disclose_intervals.items()))
+
+	# Choices for disclosure levels
+	asset_disclose_choices = [
+		[False, 'Low (No cost)'],
+		[True, 'High (2 points)'],
+	]
 
 
 class Subsession(BaseSubsession):
@@ -178,9 +185,26 @@ class Group(BaseGroup):
 	print('running Group init')
 
 	# Since there is a fixed number of assets, each asset's probability and disclose_interval should be listed here
-	asset1_est_value = models.FloatField(min=0.0, max=20.0)
-	asset2_est_value = models.FloatField(min=0.0, max=20.0)
-	asset3_est_value = models.FloatField(min=0.0, max=20.0)
+	asset1_est_value = models.FloatField(min=1.0, max=20.0)
+	asset2_est_value = models.FloatField(min=1.0, max=20.0)
+	asset3_est_value = models.FloatField(min=1.0, max=20.0)
+
+	# These boolean fields indicate whether the user has selected high (2 points) level
+	# of disclosure
+	asset1_disclose_high = models.BooleanField(
+		choices=Constants.asset_disclose_choices,
+		widget=widgets.RadioSelect
+	)
+
+	asset2_disclose_high = models.BooleanField(
+		choices=Constants.asset_disclose_choices,
+		widget=widgets.RadioSelect
+	)
+
+	asset3_disclose_high = models.BooleanField(
+		choices=Constants.asset_disclose_choices,
+		widget=widgets.RadioSelect
+	)
 
 	# Disclosure intervals
 	asset1_disclose_interval = models.StringField(
@@ -188,6 +212,7 @@ class Group(BaseGroup):
 		widget=widgets.RadioSelect,
 		blank=False
 	)
+
 	asset2_disclose_interval = models.StringField(
 		choices=Constants.disclose_interval_choices,
 		widget=widgets.RadioSelect,
@@ -195,6 +220,7 @@ class Group(BaseGroup):
 		initial=Constants.disclose_interval_choices[5][0],
 		blank=False
 	)
+
 	asset3_disclose_interval = models.StringField(
 		choices=Constants.disclose_interval_choices,
 		widget=widgets.RadioSelect,
@@ -348,9 +374,9 @@ class Player(BasePlayer):
 
 	# For buyers
 	# Bids on assets
-	bid_asset1 = models.CurrencyField(min=0, blank=True)
-	bid_asset2 = models.CurrencyField(min=0, blank=True)
-	bid_asset3 = models.CurrencyField(min=0, blank=True)
+	bid_asset1 = models.CurrencyField(min=0, max=20.0, blank=False)
+	bid_asset2 = models.CurrencyField(min=0, max=20.0, blank=False)
+	bid_asset3 = models.CurrencyField(min=0, max=20.0, blank=False)
 
 	# For buyers
 	# Bids results

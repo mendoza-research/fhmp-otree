@@ -37,10 +37,41 @@ class BeginWaitPage(WaitPage):
 		self.group.set_players_budgets()
 
 
-class SellerChoice(Page):
+class SellerChoiceLowHigh(Page):
 	form_model = 'group'
 
-	form_fields = ['asset1_disclose_interval']
+	def is_displayed(self):
+		return self.player.role() == 'seller'
+
+	# Return disclose level form field based on player id
+	def get_form_fields(self):
+		form_fields_by_player_id = {
+			1: ['asset1_disclose_high'],
+			2: ['asset2_disclose_high'],
+			3: ['asset3_disclose_high']
+		}
+
+		return form_fields_by_player_id[self.player.id_in_group]
+
+	def vars_for_template(self):
+		asset_est_values_by_player_id = {
+			1: self.group.asset1_est_value,
+			2: self.group.asset2_est_value,
+			3: self.group.asset3_est_value
+		}
+
+		asset_est_value_text = "{0:.0f}".format(asset_est_values_by_player_id[self.player.id_in_group])
+
+		return {
+			'asset_est_value': asset_est_value_text
+		}
+
+	def before_next_page(self):
+		pass
+
+
+class SellerChoiceDiscloseRange(Page):
+	form_model = 'group'
 
 	def is_displayed(self):
 		return self.player.role() == 'seller'
@@ -62,15 +93,21 @@ class SellerChoice(Page):
 			3: self.group.asset3_est_value
 		}
 
+		asset_disclose_high = {
+			1: self.group.asset1_disclose_high,
+			2: self.group.asset2_disclose_high,
+			3: self.group.asset3_disclose_high
+		}
+
 		asset_est_value_text = "{0:.0f}".format(asset_est_values_by_player_id[self.player.id_in_group])
 
 		return {
-			'asset_est_value': asset_est_value_text
+			'asset_est_value': asset_est_value_text,
+			'asset_disclose_high': asset_disclose_high[self.player.id_in_group]
 		}
 
 	def before_next_page(self):
 		pass
-
 
 
 class AllPlayersArrivalWaitPage(WaitPage):
@@ -154,7 +191,8 @@ class Results(Page):
 
 page_sequence = [
 	BeginWaitPage,
-	SellerChoice,
+	SellerChoiceLowHigh,
+	SellerChoiceDiscloseRange,
 	AllPlayersArrivalWaitPage,
 	BuyerChoice,
 	ResultsWaitPage,

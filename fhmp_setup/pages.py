@@ -34,7 +34,7 @@ class ResultsWaitPage(WaitPage):
 
 
 page_sequence = [
-	# GroundRules,
+	GroundRules,
 	# HowWillYouGetPaid,
 	HowToEarnPoints,
 	# Background,

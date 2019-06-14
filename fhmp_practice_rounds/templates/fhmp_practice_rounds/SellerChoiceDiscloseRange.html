@@ -1,0 +1,41 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+	Choose how to disclose the probability
+{% endblock %}
+
+{% block content %}
+	<p>The most likely value of your asset is {{ asset_est_value }}. The actual value of your asset is determined by drawing from a distribution of outcomes around {{ asset_est_value }}.</p>
+
+	<!-- Show different text based on seller's reporting option -->
+	{% if asset_disclose_high %}
+		<p>You have chosen <strong class="red">High</strong> reporting option.</p>
+	{% else %}
+		<p>You have chosen <strong class="red">Low</strong> reporting option.</p>
+	{% endif %}
+
+	<p>Please select an option. </p>
+
+	<!-- Show different radioboxes based on seller's reporting option -->
+	{% for field in form %}
+		<div class="controls">
+			<ul>
+			{% for choice in field %}
+				{% if asset_disclose_high %}
+					{% if 'High' in choice.data.label %}
+						<li>{{ choice }}</li>
+					{% endif %}
+				{% else %}
+					{% if 'Low' in choice.data.label %}
+						<li>{{ choice }}</li>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+	{% endfor %}
+
+
+	{% next_button %}
+{% endblock %}

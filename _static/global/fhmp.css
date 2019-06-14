@@ -1,0 +1,19 @@
+/* Custom CSS for FHMP */
+body {
+	font-family: 'Roboto', sans-serif;
+	line-height: 1.7;
+}
+
+.formula-box {
+	color: #28B463;
+	background: #EAFAF1;
+	border: 1px solid #D5F5E3;
+	padding: 15px 20px;
+	text-align: center;
+	border-radius: 6px;
+	margin-bottom: 20px;
+}
+
+.red {
+	color: #E74C3C;
+}
