@@ -1,4 +1,5 @@
 import random
+from numpy.random import choice
 
 from otree.api import (
 	models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
@@ -22,8 +23,6 @@ class Constants(BaseConstants):
 	# Currency definitions
 	initial_endowment = c(20) * num_rounds
 	high_detail_disclosure_cost = c(2)
-	asset_high_quality_value = c(20)
-	asset_low_quality_value = c(1)
 
 	disclose_intervals = {
 		'1-5': {
@@ -181,16 +180,16 @@ class Subsession(BaseSubsession):
 
 		pass
 
+
 class Group(BaseGroup):
 	print('running Group init')
 
 	# Since there is a fixed number of assets, each asset's probability and disclose_interval should be listed here
-	asset1_est_value = models.FloatField(min=1.0, max=20.0)
-	asset2_est_value = models.FloatField(min=1.0, max=20.0)
-	asset3_est_value = models.FloatField(min=1.0, max=20.0)
+	asset1_est_value = models.IntegerField(min=1, max=20)
+	asset2_est_value = models.IntegerField(min=1, max=20)
+	asset3_est_value = models.IntegerField(min=1, max=20)
 
-	# These boolean fields indicate whether the user has selected high (2 points) level
-	# of disclosure
+	# These boolean fields indicate whether the user has selected high level of disclosure
 	asset1_disclose_high = models.BooleanField(
 		choices=Constants.asset_disclose_choices,
 		widget=widgets.RadioSelect
@@ -216,16 +215,12 @@ class Group(BaseGroup):
 	asset2_disclose_interval = models.StringField(
 		choices=Constants.disclose_interval_choices,
 		widget=widgets.RadioSelect,
-		# TODO: Remove initial value, for testing only
-		initial=Constants.disclose_interval_choices[5][0],
 		blank=False
 	)
 
 	asset3_disclose_interval = models.StringField(
 		choices=Constants.disclose_interval_choices,
 		widget=widgets.RadioSelect,
-		# TODO: Remove initial value, for testing only
-		initial=Constants.disclose_interval_choices[1][0],
 		blank=False
 	)
 
@@ -238,21 +233,42 @@ class Group(BaseGroup):
 	asset2_max_bid = models.CurrencyField()
 	asset3_max_bid = models.CurrencyField()
 
-	# Generate probabilities for each asset and true values
-	# Probabilities are in decimal format (examples: 0.173, 0.552, 0.993)
+	# Generate estimated/true values
 	def init_assets(self):
 		# High asset probabilities
-		self.asset1_est_value = round(random.uniform(1, 20), 0)
-		self.asset2_est_value = round(random.uniform(1, 20), 0)
-		self.asset3_est_value = round(random.uniform(1, 20), 0)
+		self.asset1_est_value = random.randint(1, 21)
+		self.asset2_est_value = random.randint(1, 21)
+		self.asset3_est_value = random.randint(1, 21)
 
 		# Asset true values (either low quality or high quality)
-		self.asset1_true_value = Constants.asset_high_quality_value if random.random() < self.asset1_est_value else Constants.asset_low_quality_value
-		self.asset2_true_value = Constants.asset_high_quality_value if random.random() < self.asset2_est_value else Constants.asset_low_quality_value
-		self.asset3_true_value = Constants.asset_high_quality_value if random.random() < self.asset3_est_value else Constants.asset_low_quality_value
+		self.asset1_true_value = self.asset1_est_value
+		self.asset2_true_value = self.asset2_est_value
+		self.asset3_true_value = self.asset3_est_value
+
+	@staticmethod
+	def get_asset_true_value(est_value):
+		possible_values = [_ for _ in range(1, 21)]
+
+		if est_value == 1:
+			weights = [((1 - 0.3 - 0.18) / 18) for _ in range(20)]
+			weights[est_value - 1] = 0.3
+			weights[1] = 0.18
+
+		elif est_value == 20:
+			weights = [((1 - 0.3 - 0.18) / 18) for _ in range(20)]
+			weights[est_value - 1] = 0.3
+			weights[18] = 0.18
+
+		else:
+			weights = [0.02 for _ in range(20)]
+			weights[est_value - 1] = 0.3
+			weights[est_value - 2] = 0.18
+			weights[est_value] = 0.18
+
+		return choice(possible_values, p=weights)
 
 	# Set players' budgets for current round
-	# budget for current round = budget for prev round - [sum of all winning bids from prev round)
+	# budget for current round = budget for prev round + (sum of all winning bids from prev round)
 	def set_players_budgets(self):
 		for p in self.get_players():
 			if p.role() == 'seller':
@@ -291,7 +307,7 @@ class Group(BaseGroup):
 
 	# Get buyer ids
 	def get_buyer_ids(self):
-		return list(map(lambda b: b.id_in_group, self.get_buyers))
+		return list(map(lambda b: b.id_in_group, self.get_buyers()))
 
 	# Determine bid winners
 	def determine_bid_winners(self):
@@ -355,7 +371,6 @@ class Group(BaseGroup):
 
 		return assets[seller_id]
 
-
 	def get_seller_disclosure_cost(self, seller_id):
 		seller_disclose_intervals = {
 			1: self.asset1_disclose_interval,
@@ -368,7 +383,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 	# Buyer budget for all rounds
-	# For practice rounds, buyer budget is 600 (2 rounds * initial endowment)
+	# For practice rounds, buyer budget is 40 (2 rounds * initial endowment)
 	# For main rounds, buyer budget is 6000 (20 rounds * initial endowment)
 	budget = models.CurrencyField(min=0, blank=False)
 
@@ -411,5 +426,4 @@ class Player(BasePlayer):
 			if self.did_win_asset3:
 				self.round_earning += self.group.asset3_true_value - self.bid_asset3
 
-		#
 		self.payoff += self.round_earning
