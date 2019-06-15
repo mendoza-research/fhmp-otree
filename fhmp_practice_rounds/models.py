@@ -185,9 +185,9 @@ class Group(BaseGroup):
 	print('running Group init')
 
 	# Since there is a fixed number of assets, each asset's probability and disclose_interval should be listed here
-	asset1_est_value = models.IntegerField(min=1, max=20)
-	asset2_est_value = models.IntegerField(min=1, max=20)
-	asset3_est_value = models.IntegerField(min=1, max=20)
+	asset1_est_value = models.CurrencyField(min=1, max=20)
+	asset2_est_value = models.CurrencyField(min=1, max=20)
+	asset3_est_value = models.CurrencyField(min=1, max=20)
 
 	# These boolean fields indicate whether the user has selected high level of disclosure
 	asset1_disclose_high = models.BooleanField(
@@ -236,36 +236,38 @@ class Group(BaseGroup):
 	# Generate estimated/true values
 	def init_assets(self):
 		# High asset probabilities
-		self.asset1_est_value = random.randint(1, 21)
-		self.asset2_est_value = random.randint(1, 21)
-		self.asset3_est_value = random.randint(1, 21)
+		self.asset1_est_value = c(random.randint(1, 21))
+		self.asset2_est_value = c(random.randint(1, 21))
+		self.asset3_est_value = c(random.randint(1, 21))
 
-		# Asset true values (either low quality or high quality)
-		self.asset1_true_value = self.asset1_est_value
-		self.asset2_true_value = self.asset2_est_value
-		self.asset3_true_value = self.asset3_est_value
+		# Asset true values
+		self.asset1_true_value = self.get_asset_true_value(self.asset1_est_value)
+		self.asset2_true_value = self.get_asset_true_value(self.asset2_est_value)
+		self.asset3_true_value = self.get_asset_true_value(self.asset3_est_value)
 
 	@staticmethod
 	def get_asset_true_value(est_value):
+		est_value_int = int(est_value)
+
 		possible_values = [_ for _ in range(1, 21)]
 
-		if est_value == 1:
+		if est_value_int == 1:
 			weights = [((1 - 0.3 - 0.18) / 18) for _ in range(20)]
-			weights[est_value - 1] = 0.3
+			weights[est_value_int - 1] = 0.3
 			weights[1] = 0.18
 
-		elif est_value == 20:
+		elif est_value_int == 20:
 			weights = [((1 - 0.3 - 0.18) / 18) for _ in range(20)]
-			weights[est_value - 1] = 0.3
+			weights[est_value_int - 1] = 0.3
 			weights[18] = 0.18
 
 		else:
 			weights = [0.02 for _ in range(20)]
-			weights[est_value - 1] = 0.3
-			weights[est_value - 2] = 0.18
-			weights[est_value] = 0.18
+			weights[est_value_int - 1] = 0.3
+			weights[est_value_int - 2] = 0.18
+			weights[est_value_int] = 0.18
 
-		return choice(possible_values, p=weights)
+		return c(float(choice(possible_values, p=weights)))
 
 	# Set players' budgets for current round
 	# budget for current round = budget for prev round + (sum of all winning bids from prev round)
