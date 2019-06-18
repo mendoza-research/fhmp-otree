@@ -110,9 +110,13 @@ class SellerChoiceDiscloseRange(Page):
 		pass
 
 
-class AllPlayersArrivalWaitPage(WaitPage):
+# This is a transition page that is not shown to the end-user
+# By the time all players arrive on this page, sellers have finished
+# picking reporting options and disclose range
+# Seller grade calculation should be done in this step
+class SellerChoiceResultWaitPage(WaitPage):
 	def after_all_players_arrive(self):
-		pass
+		self.group.set_seller_grades()
 
 
 class BuyerChoice(Page):
@@ -130,18 +134,21 @@ class BuyerChoice(Page):
 			'asset1_disclose_interval': self.group.asset1_disclose_interval,
 			'asset2_disclose_interval': self.group.asset2_disclose_interval,
 			'asset3_disclose_interval': self.group.asset3_disclose_interval,
+			'seller1_grade': self.group.seller1_grade,
+			'seller2_grade': self.group.seller2_grade,
+			'seller3_grade': self.group.seller3_grade,
 		}
 
 
 # This is a transition page that is not shown to the end-user
-# Bid winners and payoffs for all players are determined here
-class ResultsWaitPage(WaitPage):
+# Bid winners and payoffs for each round are determined here
+class RoundResultWaitPage(WaitPage):
 	def after_all_players_arrive(self):
 		self.group.determine_bid_winners()
 		self.group.set_payoffs()
 
 
-class Results(Page): 
+class RoundResult(Page):
 	def vars_for_template(self):
 		buyers = self.group.get_buyers()
 
@@ -193,8 +200,8 @@ page_sequence = [
 	BeginWaitPage,
 	SellerChoiceLowHigh,
 	SellerChoiceDiscloseRange,
-	AllPlayersArrivalWaitPage,
+	SellerChoiceResultWaitPage,
 	BuyerChoice,
-	ResultsWaitPage,
-	Results
+	RoundResultWaitPage,
+	RoundResult
 ]

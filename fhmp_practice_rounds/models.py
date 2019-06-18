@@ -24,151 +24,40 @@ class Constants(BaseConstants):
 	initial_endowment = c(20) * num_rounds
 	high_detail_disclosure_cost = c(2)
 
-	disclose_intervals = {
-		'1-5': {
-			'label': 'Low: 1-5',
-			'cost': 0
-		},
-		'2-6': {
-			'label': 'Low: 2-6',
-			'cost': 0
-		},
-		'3-7': {
-			'label': 'Low: 3-7',
-			'cost': 0
-		},
-		'4-8': {
-			'label': 'Low: 4-8',
-			'cost': 0
-		},
-		'5-9': {
-			'label': 'Low: 5-9',
-			'cost': 0
-		},
-		'6-10': {
-			'label': 'Low: 6-10',
-			'cost': 0
-		},
-		'7-11': {
-			'label': 'Low: 7-11',
-			'cost': 0
-		},
-		'8-12': {
-			'label': 'Low: 8-12',
-			'cost': 0
-		},
-		'9-13': {
-			'label': 'Low: 9-13',
-			'cost': 0
-		},
-		'10-14': {
-			'label': 'Low: 10-14',
-			'cost': 0
-		},
-		'11-15': {
-			'label': 'Low: 11-15',
-			'cost': 0
-		},
-		'12-16': {
-			'label': 'Low: 12-16',
-			'cost': 0
-		},
-		'13-17': {
-			'label': 'Low: 13-17',
-			'cost': 0
-		},
-		'14-18': {
-			'label': 'Low: 14-18',
-			'cost': 0
-		},
-		'15-19': {
-			'label': 'Low: 15-19',
-			'cost': 0
-		},
-		'16-20': {
-			'label': 'Low: 16-20',
-			'cost': 2
-		},
-		'1-3': {
-			'label': 'High: 1-3',
-			'cost': 2
-		},
-		'2-4': {
-			'label': 'High: 2-4',
-			'cost': 2
-		},
-		'3-5': {
-			'label': 'High: 3-5',
-			'cost': 2
-		},
-		'4-6': {
-			'label': 'High: 4-6',
-			'cost': 2
-		},
-		'5-7': {
-			'label': 'High: 5-7',
-			'cost': 2
-		},
-		'6-8': {
-			'label': 'High: 6-8',
-			'cost': 2
-		},
-		'7-9': {
-			'label': 'High: 7-9',
-			'cost': 2
-		},
-		'8-10': {
-			'label': 'High: 8-10',
-			'cost': 2
-		},
-		'9-11': {
-			'label': 'High: 9-11',
-			'cost': 2
-		},
-		'10-12': {
-			'label': 'High: 10-12',
-			'cost': 2
-		},
-		'11-13': {
-			'label': 'High: 11-13',
-			'cost': 2
-		},
-		'12-14': {
-			'label': 'High: 12-14',
-			'cost': 2
-		},
-		'13-15': {
-			'label': 'High: 13-15',
-			'cost': 2
-		},
-		'14-16': {
-			'label': 'High: 14-16',
-			'cost': 2
-		},
-		'15-17': {
-			'label': 'High: 15-17',
-			'cost': 2
-		},
-		'16-18': {
-			'label': 'High: 16-18',
-			'cost': 2
-		},
-		'17-19': {
-			'label': 'High: 17-19',
-			'cost': 2
-		},
-		'18-20': {
-			'label': 'High: 18-20',
-			'cost': 2
+	# Generate disclose intervals array
+	# low_range is the
+	disclose_intervals = {}
+
+	low_range = 4
+	high_range = 2
+	high_cost = 2
+
+	for min_value in range(1, 20 - low_range + 1):
+		key = str(min_value) + '-' + str(min_value + low_range)
+
+		disclose_intervals[key] = {
+			'label': 'Low ' + key,
+			'cost': 0,
+			'min': min_value,
+			'max': min_value + low_range
 		}
-	}
+
+	for min_value in range(1, 20 - high_range + 1):
+		key = str(min_value) + '-' + str(min_value + high_range)
+
+		disclose_intervals[key] = {
+			'label': 'High ' + key,
+			'cost': 2,
+			'min': min_value,
+			'max': min_value + high_range
+		}
 
 	# Create a list of strings to be displayed in form fields
 	# shown to users
 	disclose_interval_choices = list(map(lambda x: [x[0], x[1]['label']], disclose_intervals.items()))
 
-	# Choices for disclosure levels
-	asset_disclose_choices = [
+	# Choices for disclose levels
+	reporting_option_choices = [
 		[False, 'Low (No cost)'],
 		[True, 'High (2 points)'],
 	]
@@ -178,34 +67,28 @@ class Subsession(BaseSubsession):
 	def creating_session(self):
 		print('creating_session')
 
-		pass
-
 
 class Group(BaseGroup):
 	print('running Group init')
 
-	# Since there is a fixed number of assets, each asset's probability and disclose_interval should be listed here
-	asset1_est_value = models.CurrencyField(min=1, max=20)
-	asset2_est_value = models.CurrencyField(min=1, max=20)
-	asset3_est_value = models.CurrencyField(min=1, max=20)
-
 	# These boolean fields indicate whether the user has selected high level of disclosure
 	asset1_disclose_high = models.BooleanField(
-		choices=Constants.asset_disclose_choices,
+		choices=Constants.reporting_option_choices,
 		widget=widgets.RadioSelect
 	)
 
 	asset2_disclose_high = models.BooleanField(
-		choices=Constants.asset_disclose_choices,
+		choices=Constants.reporting_option_choices,
 		widget=widgets.RadioSelect
 	)
 
 	asset3_disclose_high = models.BooleanField(
-		choices=Constants.asset_disclose_choices,
-		widget=widgets.RadioSelect
+		choices=Constants.reporting_option_choices,
+		widget=widgets.RadioSelect,
+		initial=False
 	)
 
-	# Disclosure intervals
+	# Disclose intervals
 	asset1_disclose_interval = models.StringField(
 		choices=Constants.disclose_interval_choices,
 		widget=widgets.RadioSelect,
@@ -221,13 +104,23 @@ class Group(BaseGroup):
 	asset3_disclose_interval = models.StringField(
 		choices=Constants.disclose_interval_choices,
 		widget=widgets.RadioSelect,
-		blank=False
+		blank=False,
+		initial=list(Constants.disclose_intervals.keys())[0]
 	)
 
 	# Assets' true values based on each probability
 	asset1_true_value = models.CurrencyField()
 	asset2_true_value = models.CurrencyField()
 	asset3_true_value = models.CurrencyField()
+
+	# Since there is a fixed number of assets, each asset's probability and disclose_interval should be listed here
+	asset1_est_value = models.CurrencyField(min=1, max=20)
+	asset2_est_value = models.CurrencyField(min=1, max=20)
+	asset3_est_value = models.CurrencyField(min=1, max=20)
+
+	seller1_grade = models.StringField()
+	seller2_grade = models.StringField()
+	seller3_grade = models.StringField()
 
 	asset1_max_bid = models.CurrencyField()
 	asset2_max_bid = models.CurrencyField()
@@ -236,37 +129,48 @@ class Group(BaseGroup):
 	# Generate estimated/true values
 	def init_assets(self):
 		# High asset probabilities
-		self.asset1_est_value = c(random.randint(1, 21))
-		self.asset2_est_value = c(random.randint(1, 21))
-		self.asset3_est_value = c(random.randint(1, 21))
+		self.asset1_est_value = c(random.randint(1, 20))
+		self.asset2_est_value = c(random.randint(1, 20))
+		self.asset3_est_value = c(random.randint(1, 20))
 
 		# Asset true values
 		self.asset1_true_value = self.get_asset_true_value(self.asset1_est_value)
 		self.asset2_true_value = self.get_asset_true_value(self.asset2_est_value)
 		self.asset3_true_value = self.get_asset_true_value(self.asset3_est_value)
 
+	# A static method to get a true asset value given an estimated value
+	# 30% prob chance that true == estimated
+	# 18% prob chance for true == estimated + 1 or true == estimated - 1
+	# Remaining probabilities are equally split
 	@staticmethod
 	def get_asset_true_value(est_value):
+		# Convert estimated value to int since est_value is a Currency type
 		est_value_int = int(est_value)
 
+		# Possible true value range is [1, 2, ..., 19, 20]
 		possible_values = [_ for _ in range(1, 21)]
 
+		# When estimated value is 1
 		if est_value_int == 1:
 			weights = [((1 - 0.3 - 0.18) / 18) for _ in range(20)]
 			weights[est_value_int - 1] = 0.3
 			weights[1] = 0.18
 
+		# When estimated value is 20
 		elif est_value_int == 20:
 			weights = [((1 - 0.3 - 0.18) / 18) for _ in range(20)]
 			weights[est_value_int - 1] = 0.3
 			weights[18] = 0.18
 
+		# When estimated value is between 2 and 19
 		else:
 			weights = [0.02 for _ in range(20)]
 			weights[est_value_int - 1] = 0.3
 			weights[est_value_int - 2] = 0.18
 			weights[est_value_int] = 0.18
 
+		# Use numpy's random.choice() to pick a random value from a list
+		# with probabilities list
 		return c(float(choice(possible_values, p=weights)))
 
 	# Set players' budgets for current round
@@ -274,7 +178,7 @@ class Group(BaseGroup):
 	def set_players_budgets(self):
 		for p in self.get_players():
 			if p.role() == 'seller':
-				p.budget = 5
+				p.budget = c(5)
 			else:
 				if self.round_number == 1:
 					p.budget = Constants.initial_endowment
@@ -311,6 +215,60 @@ class Group(BaseGroup):
 	def get_buyer_ids(self):
 		return list(map(lambda b: b.id_in_group, self.get_buyers()))
 
+	# Set seller grades based on differences between estimated/disclosed asset values
+	# This method should be called from a WaitPage after sellers select reporting options
+	def set_seller_grades(self):
+		self.seller1_grade = self.calculate_seller_grade(
+			Constants.disclose_intervals[self.asset1_disclose_interval]['min'],
+			Constants.disclose_intervals[self.asset1_disclose_interval]['max'],
+			self.asset1_est_value
+		)
+
+		self.seller2_grade = self.calculate_seller_grade(
+			Constants.disclose_intervals[self.asset2_disclose_interval]['min'],
+			Constants.disclose_intervals[self.asset2_disclose_interval]['max'],
+			self.asset2_est_value
+		)
+
+	# A: in range
+	# B: within 1 outside the range
+	# C: within 2 outside the range
+	# D: within 3 outside the range
+	# F: within 4 or more outside the range
+	@staticmethod
+	def calculate_seller_grade(disclose_min, disclose_max, est_value):
+		print('calculate_seller_grade=disclose_min=' + str(disclose_min) + ', disclose_max=' + str(disclose_max) + ', est_value=' + str(est_value))
+
+		# Describes the padding added to left and right to the
+		# reported asset range
+		# Change the values below to adjust how seller grades are determined
+		# Note that the condition D > C > B > A must be met
+		grade_a_padding = 0
+		grade_b_padding = 1
+		grade_c_padding = 2
+		grade_d_padding = 3
+
+		if disclose_min - grade_a_padding <= est_value <= disclose_max + grade_a_padding:
+			return 'A'
+		elif disclose_min - grade_b_padding <= est_value <= disclose_max + grade_b_padding:
+			return 'B'
+		elif disclose_min - grade_c_padding <= est_value <= disclose_max + grade_c_padding:
+			return 'C'
+		elif disclose_min - grade_d_padding <= est_value <= disclose_max + grade_d_padding:
+			return 'D'
+		else:
+			# Anything else
+			return 'F'
+
+	def get_seller_grade(self, seller_id):
+		grade_dict = {
+			1: self.seller1_grade,
+			2: self.seller2_grade,
+			3: self.seller3_grade
+		}
+
+		return grade_dict[seller_id]
+
 	# Determine bid winners
 	def determine_bid_winners(self):
 		group = self
@@ -330,7 +288,7 @@ class Group(BaseGroup):
 
 		# Loop through all players
 		for p in group.get_buyers():
-			# Add bids on each asset to corresponding array
+			# Add bids on each asset to corresponding lists
 			asset1_bids.append(p.bid_asset1)
 			asset2_bids.append(p.bid_asset2)
 			asset3_bids.append(p.bid_asset3)
@@ -358,7 +316,7 @@ class Group(BaseGroup):
 		group.get_player_by_id(random.choice(asset2_max_bidders)).did_win_asset2 = True
 		group.get_player_by_id(random.choice(asset3_max_bidders)).did_win_asset3 = True
 
-	# Set payoffs for all players
+	# Set payoffs of all players
 	def set_payoffs(self):
 		for p in self.get_players():
 			p.set_payoff()
@@ -386,7 +344,7 @@ class Group(BaseGroup):
 class Player(BasePlayer):
 	# Buyer budget for all rounds
 	# For practice rounds, buyer budget is 40 (2 rounds * initial endowment)
-	# For main rounds, buyer budget is 6000 (20 rounds * initial endowment)
+	# For main rounds, buyer budget is  (20 rounds * initial endowment)
 	budget = models.CurrencyField(min=0, blank=False)
 
 	# For buyers
