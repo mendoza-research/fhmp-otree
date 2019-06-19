@@ -22,7 +22,7 @@ class Constants(BaseConstants):
 	num_rounds = 2
 	# Currency definitions
 	buyer_initial_endowment = c(20) * num_rounds
-	seller_initial_endowment = c(5)
+	seller_initial_endowment = c(5g)
 	high_detail_disclosure_cost = c(2)
 
 	# Generate disclose intervals dict
@@ -143,11 +143,13 @@ class Group(BaseGroup):
 		self.asset2_true_value = self.draw_asset_true_value(self.asset2_est_value)
 		self.asset3_true_value = self.draw_asset_true_value(self.asset3_est_value)
 
+		is_first_round = self.round_number == 1
+
 		for p in self.get_players():
 			if p.role() == 'seller':
-				p.budget = Constants.seller_initial_endowment
+				p.budget = Constants.seller_initial_endowment if is_first_round else p.in_round(self.round_number - 1).budget
 			else:
-				p.budget = Constants.buyer_initial_endowment
+				p.budget = Constants.buyer_initial_endowment if is_first_round else p.in_round(self.round_number - 1).budget
 
 	# A static method to get a true asset value given an estimated value
 	# 30% prob chance that true == estimated
