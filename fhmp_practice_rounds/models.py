@@ -22,7 +22,7 @@ class Constants(BaseConstants):
 	num_rounds = 2
 	# Currency definitions
 	buyer_initial_endowment = c(20) * num_rounds
-	seller_initial_endowment = c(5g)
+	seller_initial_endowment = c(5)
 	high_detail_disclosure_cost = c(2)
 
 	# Generate disclose intervals dict
