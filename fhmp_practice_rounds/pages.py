@@ -150,7 +150,6 @@ class BuyerChoice(Page):
 		}
 
 	def error_message(self, values):
-		print('values is', values)
 		if values["bid_asset1"] + values["bid_asset2"] + values["bid_asset3"] > self.player.budget:
 			return 'Sum of the bids exceeds your budget.'
 
