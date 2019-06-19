@@ -26,17 +26,7 @@
 
 	<p>The actual value of your asset is determined by drawing from a distribution of outcomes around {{ asset_est_value }}.</p>
 
-	<p>Which type of reporting option do you want to choose?</p>
-
-	{% for field in form %}
-		<div class="controls">
-			<ul>
-			{% for choice in field %}
-				<li>{{ choice }}</li>
-			{% endfor %}
-			</ul>
-		</div>
-	{% endfor %}
+	<p>Since you do not have enough budget to choose high reporting option, low reporting option will be automatically selected for you.</p>
 
 	{% next_button %}
 {% endblock %}

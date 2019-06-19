@@ -15,33 +15,42 @@ from ._builtin import Page, WaitPage
 # For detailed documentation regarding pages, please refer to oTree's documentation page below
 # https://otree.readthedocs.io/en/latest/pages.html
 
+
 # This is a transition page that is not shown to the end-user
 class BeginWaitPage(WaitPage):
 	# This method is called once all players arrive at this page.
 	def after_all_players_arrive(self):
-		# init_assets() is a method defined in models.py
-		# The init_assets() method does two things as described below
-		# 1. It generates a random probability for each asset being a "high quality" asset
-		# 2. It determines the true asset value based on the probablity generated from Step 1
-		self.group.init_assets()
-		
-		# set_players_budgets() is a method defined in models.py
-		# It sets the remaining budget for each player
-		
-		# For a seller, the budget will always be 0
-		
-		# For a buyer, two cases exist. 
-		# If first round, the budget will be set to initial endowment amount (300 multipled by number of rounds)
-		# As an example, if a player has 20 rounds, the initial endowment will be set to 6,000 for the first round
-		# If later than first round, budget will be decreased by the amount used in purchasing an asset (with winning bid)
-		self.group.set_players_budgets()
+		# init_round() is a method defined in models.py
+		# The init_round() method does two things as described below
+		# 1. It generates an estimated asset value between 1-20
+		# 2. It determines the true asset value based on the estimated value from Step 1
+		# 3. It sets initial budgets for all sellers and buyers
+		self.group.init_round()
+
+
+class SellerChoiceNotEnoughBudget(Page):
+	def is_displayed(self):
+		return self.player.role() == 'seller' and self.player.budget < self.group.get_high_detail_disclosure_cost()
+
+	def vars_for_template(self):
+		asset_est_values_by_player_id = {
+			1: self.group.asset1_est_value,
+			2: self.group.asset2_est_value,
+			3: self.group.asset3_est_value
+		}
+
+		asset_est_value_text = "{0:.0f}".format(asset_est_values_by_player_id[self.player.id_in_group])
+
+		return {
+			'asset_est_value': asset_est_value_text
+		}
 
 
 class SellerChoiceLowHigh(Page):
 	form_model = 'group'
 
 	def is_displayed(self):
-		return self.player.role() == 'seller'
+		return self.player.role() == 'seller' and self.player.budget >= self.group.get_high_detail_disclosure_cost()
 
 	# Return disclose level form field based on player id
 	def get_form_fields(self):
@@ -67,7 +76,8 @@ class SellerChoiceLowHigh(Page):
 		}
 
 	def before_next_page(self):
-		pass
+		if self.player.role() == 'seller':
+			self.player.update_seller_budget_after_reporting()
 
 
 class SellerChoiceDiscloseRange(Page):
@@ -136,8 +146,13 @@ class BuyerChoice(Page):
 			'asset3_disclose_interval': self.group.asset3_disclose_interval,
 			'seller1_grade': self.group.seller1_grade,
 			'seller2_grade': self.group.seller2_grade,
-			'seller3_grade': self.group.seller3_grade,
+			'seller3_grade': self.group.seller3_grade
 		}
+
+	def error_message(self, values):
+		print('values is', values)
+		if values["bid_asset1"] + values["bid_asset2"] + values["bid_asset3"] > self.player.budget:
+			return 'Sum of the bids exceeds your budget.'
 
 
 # This is a transition page that is not shown to the end-user
@@ -192,12 +207,12 @@ class RoundResult(Page):
 					}, buyers))
 				},
 			],
-			'payoff': self.player.payoff
 		}
 
 
 page_sequence = [
 	BeginWaitPage,
+	SellerChoiceNotEnoughBudget,
 	SellerChoiceLowHigh,
 	SellerChoiceDiscloseRange,
 	SellerChoiceResultWaitPage,

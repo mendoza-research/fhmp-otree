@@ -6,6 +6,24 @@
 {% endblock %}
 
 {% block content %}
+	<table class="table">
+		<tbody>
+			<tr>
+				<th scope="col">
+					Likely value of your asset
+				</th>
+				<td>{{ asset_est_value }}</td>
+			</tr>
+
+			<tr>
+				<th scope="col">
+					Your budget
+				</th>
+				<td>{{ player.budget }}</td>
+			</tr>
+		</tbody>
+	</table>
+
 	<p>The most likely value of your asset is {{ asset_est_value }}. The actual value of your asset is determined by drawing from a distribution of outcomes around {{ asset_est_value }}.</p>
 
 	<!-- Show different text based on seller's reporting option -->
