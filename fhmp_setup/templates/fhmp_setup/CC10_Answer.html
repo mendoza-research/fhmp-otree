@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Comprehension Check Question 10 Answer
+{% endblock %}
+
+{% block content %}
+
+    {% if cc10_choice %}
+		<p><font color="red"><strong>INCORRECT.</strong></font></p>
+	{% else %}
+	    <p>CORRECT!</p>
+	{% endif %}
+
+    <p><strong>The fact checker can only see whether the number falls between 1-5, 6-10, 11-15, or 16-20.</strong></p>
+
+    {% next_button %}
+
+{% endblock %}
+
+

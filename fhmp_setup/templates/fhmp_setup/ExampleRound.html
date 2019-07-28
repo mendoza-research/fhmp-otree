@@ -1,0 +1,14 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Example Round
+{% endblock %}
+
+{% block content %}
+
+    <img src="{% static 'ExampleRound.PNG' %}"/>
+    <p> </p>
+    {% next_button %}
+
+{% endblock %}

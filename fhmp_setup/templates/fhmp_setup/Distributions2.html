@@ -1,0 +1,29 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    What do we mean by Distributions in this Study?
+{% endblock %}
+
+{% block content %}
+	<p>
+        The specific likelihoods in our “distribution of outcomes around #” mean the following:
+    </p>
+
+    <ul>
+        <li>There is a 30% chance the asset will be worth #</li>
+        <li>There is a 18% chance the asset will be worth # + 1</li>
+        <li>There is a 18% chance the asset will be worth # - 1</li>
+        <li>There is a 2% chance the asset will be worth any other number from 1 to 20*</li>
+    </ul>
+
+    <p>
+        *Note: Possible values are 1-20, so if # is either 1 or 20, then the last line is "There is a 3% chance the asset will be worth any other number from 1 to 20".
+    </p>
+
+    <p>The distribution generally looks like this around #</p>
+    <img src="{% static 'GenDist.png' %}"/>
+    <p> </p>
+    {% next_button %}
+
+{% endblock %}

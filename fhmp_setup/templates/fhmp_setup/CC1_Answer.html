@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Comprehension Check Question 1 Answer
+{% endblock %}
+
+{% block content %}
+
+    {% if cc1_choice %}
+    <p><font color="red"><strong>INCORRECT.</strong></font></p>
+	{% else %}
+	    <p>CORRECT!</p>
+	{% endif %}
+
+    <p><strong>Each seller receives a number # between 1 and 20.</strong></p>
+
+    {% next_button %}
+
+{% endblock %}
+
+

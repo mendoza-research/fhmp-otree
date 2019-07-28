@@ -1,0 +1,28 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Comprehension Check Question 2
+{% endblock %}
+
+{% block content %}
+
+    <p>Please select whether the following statement is True of False:</p>
+
+    <p>Only the seller knows the number # they are given.</p>
+
+	{% for field in form %}
+		<div class="controls">
+			<ul>
+			{% for choice in field %}
+				<li>{{ choice }}</li>
+			{% endfor %}
+			</ul>
+		</div>
+	{% endfor %}
+
+    {% next_button %}
+
+{% endblock %}
+
+

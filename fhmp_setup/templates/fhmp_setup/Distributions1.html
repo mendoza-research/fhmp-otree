@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    What do we mean by Distributions in this Study?
+{% endblock %}
+
+{% block content %}
+	<p>
+        In the instructions we will refer to a “distribution of outcomes around #”. At a high level, this distribution
+        means that the seller does not know the <i><u>exact</u></i> value of the asset to be sold, but knows the most likely outcome.
+        Other numbers are possible outcomes, but as you move away from #, the likelihood of these numbers decreases
+        (i.e., while possible, they are not as likely to occur as #).
+    </p>
+
+    {% next_button %}
+
+{% endblock %}

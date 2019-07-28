@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Comprehension Check Question 13 Answer
+{% endblock %}
+
+{% block content %}
+
+    {% if cc13_choice %}
+		<p><font color="red"><strong>INCORRECT.</strong></font></p>
+	{% else %}
+        <p>CORRECT!</p>
+	{% endif %}
+
+    <p>Buyers can bid on as many assets as they want.</p>
+
+    {% next_button %}
+
+{% endblock %}
+
+

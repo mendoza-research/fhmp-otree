@@ -246,26 +246,26 @@ class Group(BaseGroup):
 	# F: within 4 or more outside the range
 	@staticmethod
 	def calculate_seller_grade(disclose_min, disclose_max, est_value):
-		# Describes the padding added to left and right to the
-		# reported asset range
-		# Change the values below to adjust how seller grades are determined
-		# Note that the condition D > C > B > A must be met
-		grade_a_padding = 0
-		grade_b_padding = 1
-		grade_c_padding = 2
-		grade_d_padding = 3
 
-		if disclose_min - grade_a_padding <= est_value <= disclose_max + grade_a_padding:
-			return 'A'
-		elif disclose_min - grade_b_padding <= est_value <= disclose_max + grade_b_padding:
-			return 'B'
-		elif disclose_min - grade_c_padding <= est_value <= disclose_max + grade_c_padding:
-			return 'C'
-		elif disclose_min - grade_d_padding <= est_value <= disclose_max + grade_d_padding:
-			return 'D'
+		if est_value > 15:
+			aud_max = 20
+		elif est_value > 10:
+			aud_max = 15
+		elif est_value > 5:
+			aud_max = 10
 		else:
-			# Anything else
+			aud_max = 5
+
+		if disclose_min > aud_max:
 			return 'F'
+		elif disclose_min == aud_max:
+			return 'D'
+		elif disclose_min - 1 == aud_max:
+			return 'C'
+		elif disclose_min - 2 == aud_max:
+			return 'B'
+		else:
+			return 'A'
 
 	def get_seller_grade(self, seller_id):
 		grade_dict = {

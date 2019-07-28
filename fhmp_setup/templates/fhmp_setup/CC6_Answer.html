@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Comprehension Check Question 6 Answer
+{% endblock %}
+
+{% block content %}
+
+    {% if cc6_choice %}
+		<p><font color="red"><strong>INCORRECT.</strong></font></p>
+	{% else %}
+	    <p>CORRECT!</p>
+	{% endif %}
+
+    <p><strong>Sellers choose between a 3 number range and a 5 number range. </strong></p>
+
+    {% next_button %}
+
+{% endblock %}
+
+

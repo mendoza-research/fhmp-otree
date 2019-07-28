@@ -1,0 +1,19 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions: The Fact Checker
+{% endblock %}
+
+{% block content %}
+	<p>
+		A fact checker is able to see in which quartile (5 number range) the seller’s number falls
+        (i.e., Q1: 1-5, Q2: 6-10, Q3: 11-15, or Q4: 16-20), but not the exact number. The fact checker compares the
+        range the seller discloses to the range they have, and then provides a grade (A, B, C, D, or F)
+        about how accurate the range is with A being the most accurate. Because the fact checker only knows a range,
+        the grade is based on the midpoint of their range. The fact checker is automated and therefore is accurate.
+	</p>
+
+    {% next_button %}
+
+{% endblock %}

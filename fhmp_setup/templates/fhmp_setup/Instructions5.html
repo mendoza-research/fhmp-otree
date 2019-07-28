@@ -1,0 +1,16 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions: End of the Round
+{% endblock %}
+
+{% block content %}
+	<p>
+		All sellers and buyers learn the top bids and who won each asset. Then the next round begins
+        with all sellers receiving a new number # between 1 and 20.
+	</p>
+
+    {% next_button %}
+
+{% endblock %}

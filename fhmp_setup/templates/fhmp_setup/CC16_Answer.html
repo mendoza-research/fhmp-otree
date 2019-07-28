@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Comprehension Check Question 16 Answer
+{% endblock %}
+
+{% block content %}
+
+    {% if cc16_choice %}
+		<p>CORRECT!</p>
+	{% else %}
+        <p><font color="red"><strong>INCORRECT.</strong></font></p>
+	{% endif %}
+
+    <p>Buyers earn the value of the asset less the amount they bid.</p>
+
+    {% next_button %}
+
+{% endblock %}
+
+

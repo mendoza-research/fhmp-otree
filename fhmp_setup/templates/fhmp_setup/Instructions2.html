@@ -1,0 +1,21 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions: Seller Chooses a Range
+{% endblock %}
+
+{% block content %}
+	<p>
+		After the sellers receives the number #, each seller chooses to report a range to let buyers know what their
+        asset value is likely to be. Sellers choose to eithe rreport a wider 5-number range (e.g., 3-7) or a more
+        precise 3 number range (e.g., 4-6).
+	</p>
+    <ol type="a">
+        <li><u><strong>The seller must pay 2 coins in order to report the more precise range.</strong></u></li>
+        <li>The seller can report any range, it does not have to contain the numbers they were given.</li>
+    </ol>
+
+    {% next_button %}
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    What do we mean by Distributions in this Study?
+{% endblock %}
+
+{% block content %}
+	<p>
+        As an example, if you were told that you have a probability distribution around , it would mean:
+    </p>
+    <ul>
+        <li>There is a 30% chance the asset will be worth 6</li>
+        <li>There is a 18% chance the asset will be worth 7</li>
+        <li>There is a 18% chance the asset will be worth 5</li>
+        <li>There is a 2% chance the asset will be worth any other number from 1 to 20*</li>
+    </ul>
+
+    <p>The distribution generally looks like this around #</p>
+    <img src="{% static 'SixDist.png' %}"/>
+    <p> </p>
+    {% next_button %}
+
+{% endblock %}

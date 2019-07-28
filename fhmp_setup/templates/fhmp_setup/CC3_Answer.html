@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Comprehension Check Question 3 Answer
+{% endblock %}
+
+{% block content %}
+
+    {% if cc3_choice %}
+		<p><font color="red"><strong>INCORRECT.</strong></font></p>
+	{% else %}
+	    <p>CORRECT!</p>
+	{% endif %}
+
+    <p><strong>The number # is the most likely value of the asset, but it could be any number between 1 and 20.</strong></p>
+
+    {% next_button %}
+
+{% endblock %}
+
+

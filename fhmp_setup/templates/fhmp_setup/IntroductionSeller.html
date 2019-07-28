@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Introduction
+{% endblock %}
+
+{% block content %}
+	<p>
+        In this study there are 4 sellers, 5 buyers, and an automated fact checker. You are a <strong>seller</strong>.
+        You will play a seller for 24 rounds (4 practice rounds and 20 actual rounds).
+	</p>
+
+    <p>
+        Every round, each seller has one asset to sell (this is how the seller earns money). Every round, buyers bid
+        on assets and can bid on as many assets as they want (the buyer earns money by winning assets but must pay
+        money to cover the cost of their purchases).
+    </p>
+
+    {% next_button %}
+
+{% endblock %}

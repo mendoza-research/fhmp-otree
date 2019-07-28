@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Comprehension Check Question 9 Answer
+{% endblock %}
+
+{% block content %}
+
+    {% if cc9_choice %}
+		<p>CORRECT!</p>
+	{% else %}
+	    <p><font color="red"><strong>INCORRECT.</strong></font></p>
+	{% endif %}
+
+    <p>The fact checker is automated.</p>
+
+    {% next_button %}
+
+{% endblock %}
+
+

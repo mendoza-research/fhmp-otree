@@ -1,0 +1,23 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions: Seller Receives a Number
+{% endblock %}
+
+{% block content %}
+	<p>
+		On this page and the next few pages, you will read through the steps for each round.
+	</p>
+
+    <p>
+        First, each seller receives a number # between 1 and 20. This number # represents the most likely value of
+        their asset. Only the seller knows the number #; no other person in the study knows the number the seller was
+        given. While this number # is the most likely value of the asset, it is not guaranteed to be the actual value
+        of their asset. The actual value of their asset is determined by drawing from a distribution of outcomes around
+        #. Therefore although # is the most likely outcome, it is possible it will not be the actual value of the asset.
+    </p>
+
+    {% next_button %}
+
+{% endblock %}

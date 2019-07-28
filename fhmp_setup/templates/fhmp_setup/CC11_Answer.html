@@ -1,0 +1,23 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Comprehension Check Question 11 Answer
+{% endblock %}
+
+{% block content %}
+
+    {% if cc11_choice %}
+		<p>CORRECT!</p>
+	{% else %}
+	    <p><font color="red"><strong>INCORRECT.</strong></font></p>
+	{% endif %}
+
+    <p>The fact checker provides a grade (A, B, C, D, F) designating how close the seller’s disclosed
+        range is to their quartile.</p>
+
+    {% next_button %}
+
+{% endblock %}
+
+
