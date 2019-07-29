@@ -184,6 +184,7 @@ class Group(BaseGroup):
 
 		# Use numpy's random.choice() to pick a random value from a list
 		# with probabilities list
+		# and convert the value back to currency
 		return c(float(choice(possible_values, p=weights)))
 
 	# Get sellers
@@ -246,7 +247,6 @@ class Group(BaseGroup):
 	# F: within 4 or more outside the range
 	@staticmethod
 	def calculate_seller_grade(disclose_min, disclose_max, est_value):
-
 		if est_value > 15:
 			aud_max = 20
 		elif est_value > 10:
