@@ -2,27 +2,25 @@
 {% load otree static %}
 
 {% block title %}
-    Comprehension Check Question 3
+Comprehension Check
 {% endblock %}
 
 {% block content %}
+<p>Please answer the questions below:</p>
 
-    <p>Please select whether the following statement is True of False:</p>
+<div class="comprehension-check-questions">
+    {% for field in form %}
+    <div class="question">
+        <label>{{ field.label }}</label>
+        <ul>
+            {% for choice in field %}
+            <li>{{ choice }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</div>
 
-    <p>The number # the seller is given is always the value of the asset.</p>
-
-	{% for field in form %}
-		<div class="controls">
-			<ul>
-			{% for choice in field %}
-				<li>{{ choice }}</li>
-			{% endfor %}
-			</ul>
-		</div>
-	{% endfor %}
-
-    {% next_button %}
+{% next_button %}
 
 {% endblock %}
-
-

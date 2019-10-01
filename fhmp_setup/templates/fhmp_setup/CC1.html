@@ -2,27 +2,25 @@
 {% load otree static %}
 
 {% block title %}
-    Comprehension Check Question 1
+Comprehension Check
 {% endblock %}
 
 {% block content %}
+<p>Please select whether the following statements are True or False:</p>
 
-    <p>Please select whether the following statement is True of False:</p>
-
-    <p>Each seller receives a number # between 1 and 50.</p>
-
+<div class="comprehension-check-questions">
 	{% for field in form %}
-		<div class="controls">
-			<ul>
+	<div class="question">
+		<label>{{ field.label }}</label>
+		<ul>
 			{% for choice in field %}
-				<li>{{ choice }}</li>
+			<li>{{ choice }}</li>
 			{% endfor %}
-			</ul>
-		</div>
+		</ul>
+	</div>
 	{% endfor %}
+</div>
 
-    {% next_button %}
+{% next_button %}
 
 {% endblock %}
-
-

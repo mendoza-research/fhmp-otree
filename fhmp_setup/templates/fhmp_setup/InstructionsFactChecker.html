@@ -1,0 +1,30 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Instructions: The Fact Checker
+{% endblock %}
+
+{% block content %}
+<p>
+    The fact checker is automated. It is not biased but it does not have perfect knowledge. That is, it does not know
+    the true value and it does not know the seller's number #. Instead the fact checker knows a 5-number range
+    containing the seller's number. The 5 number range is drawn from a distribution of ranges surrounding the seller's
+    number.
+</p>
+
+<p>
+    The fact checker compares the Reported Range the seller discloses to the Fact Checker Range, and then provides a
+    grade (A, B, C, or F) about how accurate the fact checker believes the Reported Range that the seller gave is.
+</p>
+
+<p>
+    An "A" grade is the best grade since it signals the Seller's Reported Range provides information to buyers that is
+    more likely to be accurate, while a grade of “F” is the worst grade since it signals the Seller's Reported Range
+    provides information to buyers that is not likely to be accurate. Because the fact checker only knows the Fact
+    Checker Range, the grade is based on how much the Reported Range overlaps with the Fact Checker Range.
+</p>
+
+{% next_button %}
+
+{% endblock %}

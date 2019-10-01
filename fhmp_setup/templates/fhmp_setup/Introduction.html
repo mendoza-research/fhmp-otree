@@ -1,0 +1,29 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Introduction
+{% endblock %}
+
+{% block content %}
+<p>
+    In this study there are 3 sellers, 5 buyers, and an automated fact checker. You are a either a seller or a buyer.
+    You will play that role for 24 rounds (4 practice rounds and 20 actual rounds). At the end of the instructions you
+    will be told which role you have-either a seller or a buyer. The computer is the fact checker.
+</p>
+
+<p>
+    Every round, each seller has one asset to sell and buyers bid on those sellers’ assets. Buyers can bid on as many
+    assets as they want.
+</p>
+
+<p>
+    Sellers earn points by selling assets. Sellers will earn more points by selling assets for higher prices.
+    <br />
+    Buyers earn points by winning the assets they bid on. But, winning buyers must pay so buyers earn more points when
+    they win assets at lower prices.
+</p>
+
+{% next_button %}
+
+{% endblock %}

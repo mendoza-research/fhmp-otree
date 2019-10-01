@@ -1,0 +1,25 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Likelihood of Asset Value Being Selected
+{% endblock %}
+
+{% block content %}
+<p>
+    The true value is always between 1 and 20. The number # the seller is told is usually very close to the true value.
+    Specifically,
+</p>
+
+<ul>
+    <li>There is a 30% chance the asset’s true value will be #</li>
+    <li>There is a 18% chance the asset’s true value will be one more than #</li>
+    <li>There is a 18% chance the asset’s true value will be one less than #</li>
+    <li>There is about a 2% chance the asset’s true value will be any other number from 1 to 20</li>
+</ul>
+
+<img src="{% static 'GenDist.png' %}" />
+<p> </p>
+{% next_button %}
+
+{% endblock %}

@@ -14,6 +14,30 @@ body {
 	margin-bottom: 20px;
 }
 
+.comprehension-check-questions label {
+	display: block;
+	margin-bottom: 20px;
+}
+
+.line-through {
+	text-decoration: line-through;
+}
+
+.comprehension-check-questions .question {
+	margin-top: 10px;
+	border-top: 3px solid #ddd;
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+
+.comprehension-check-questions .correct {
+	color: #28B463;
+}
+
+.comprehension-check-questions .incorrect {
+	color: #E74C3C;
+}
+
 .red {
 	color: #E74C3C;
 }

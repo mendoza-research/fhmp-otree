@@ -2,21 +2,38 @@
 {% load otree static %}
 
 {% block title %}
-    Comprehension Check Question 2 Answer
+Comprehension Check
 {% endblock %}
 
 {% block content %}
+<div class="comprehension-check-questions">
+    {% for qa in questions_answers %}
+    <div class="question">
+        <label>{{ qa.label }}</label>
+        <ul>
+            {% for choice in qa.choices %}
+            <li>
+                {% if choice == qa.correct_answer %}
+                <strong>{{ choice }}</strong>
+                {% elif choice == qa.player_choice %}
+                <span class="line-through">{{ choice }}</span>
+                {% else %}
+                {{ choice }}
+                {% endif %}
 
-    {% if cc2_choice %}
-		<p>CORRECT!</p>
-	{% else %}
-	    <p><font color="red"><strong>INCORRECT.</strong></font></p>
-	{% endif %}
-
-    <p>Only the seller knows the number # they are given.</p>
-
-    {% next_button %}
-
+                {% if choice == qa.player_choice %}
+                {% if qa.is_correct %}
+                <span class="correct">- Correct!</span>
+                {% else %}
+                <span class="incorrect">- Incorrect, see explanation below.</span>
+                {% endif %}
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="answer-label">{{ qa.answer_label }}</div>
+    </div>
+    {% endfor %}
+</div>
+{% next_button %}
 {% endblock %}
-
-

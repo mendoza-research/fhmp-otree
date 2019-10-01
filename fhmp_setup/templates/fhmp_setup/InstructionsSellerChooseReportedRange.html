@@ -1,0 +1,41 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Instructions: Seller Chooses a Reported Range
+{% endblock %}
+
+{% block content %}
+<p>
+    After each seller receives the number #, the seller does two things. First, the seller chooses to report a range of
+    numbers to let buyers know what their asset value is likely to be. We will call the range the seller reports to
+    buyers the Reported Range. In other words, the seller cannot tell buyers exactly what # is; they can only tell
+    buyers a range of numbers.
+</p>
+
+<p>
+    Second, the seller chooses whether to make their Reported Range less or more precise. A <strong><em>less
+            precise</em></strong> Reported Range is 5-numbers wide (for example 4-8) while a <strong><em>more
+            precise</em></strong> Reported Range is only 3 numbers wide (for example 5-7).
+</p>
+
+<p>Here are two important points:</p>
+<ol type="a">
+    <li>The seller must pay 2 points if they choose to report the more precise (3-number) range. The seller does not pay
+        any points (0 points) if they choose to report the less precise (5-number) range.</li>
+    <li>The seller can report any range. That is, the seller's Reported Range does not have to contain the number # they
+        were given. For example, if # is 10, a seller could report a range of 0-5 or 8-12 or 16-20.</li>
+</ol>
+
+<p>
+    In summary, the seller does two things each round:
+</p>
+<ol>
+    <li>Report a range: after seeing #, pick any range to report to buyers.</li>
+    <li>Pick a precision: that range can be 5 numbers long (this is free) or 3 numbers long (this costs the seller 2
+        points).</li>
+</ol>
+
+{% next_button %}
+
+{% endblock %}
