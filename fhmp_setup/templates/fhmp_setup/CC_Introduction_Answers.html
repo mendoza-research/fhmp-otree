@@ -1,0 +1,40 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Comprehension Check
+{% endblock %}
+
+{% block content %}
+<div class="comprehension-check-questions">
+    {% for qa in questions_answers %}
+    <div class="question">
+        <label>{{ qa.label }}</label>
+
+        <ol type="A">
+            {% for choice in qa.choices %}
+            <li>
+                {% if choice == qa.correct_answer %}
+                <strong>{{ choice }}</strong>
+                {% elif choice == qa.player_choice %}
+                <span class="line-through">{{ choice }}</span>
+                {% else %}
+                {{ choice }}
+                {% endif %}
+
+                {% if choice == qa.player_choice %}
+                {% if qa.is_correct %}
+                <span class="correct">- Correct!</span>
+                {% else %}
+                <span class="incorrect">- Incorrect, see explanation below.</span>
+                {% endif %}
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ol>
+        <div class="answer-label">{{ qa.answer_label }}</div>
+    </div>
+    {% endfor %}
+</div>
+{% next_button %}
+{% endblock %}

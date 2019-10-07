@@ -1,0 +1,55 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Instructions: The Fact Checker - Examples
+{% endblock %}
+
+{% block content %}
+<p>
+    Here is an example of how the Fact Checker works. For all three examples below, assume that:
+    <br />
+    (1) the asset True Value is 12 (but remember, this is unknown until after all bids are made)
+    <br />
+    (2) the # (given to the seller only) is 13
+    <br />
+    (3)the Fact Checker’s range is 11-15
+    <br />
+    Please note that these are just examples, and the numbers we picked are not more or less likely than any other
+    numbers we could have picked.
+</p>
+
+<p>
+    <h4>Example 1</h4>
+
+    <ul>
+        <li>The seller gives a Reported Range of 7-11</li>
+        <li>The Fact Checker’s grade is C, because the Fact Checker’s Range and the Reported Range over overlap a
+            little.</li>
+    </ul>
+</p>
+
+<p>
+    <h4>Example 2</h4>
+
+    <ul>
+        <li></li>The seller gives a Reported Range of 11-15</li>
+        <li>The Fact Checker’s grade is A, because Fact Checker’s Range and the Reported Range over overlap a lot.</li>
+
+    </ul>
+</p>
+
+<p>
+    <h4>Example 3</h4>
+
+    <ul>
+        <li>The seller gives a Reported Range of 16-20</li>
+        <li>The Fact Checker’s grade is F, because the Fact Checker’s Range and the Reported Range do not overlap at
+            all.</li>
+
+    </ul>
+</p>
+
+{% next_button %}
+
+{% endblock %}

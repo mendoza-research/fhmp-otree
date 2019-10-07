@@ -30,6 +30,13 @@ body {
 	padding-bottom: 10px;
 }
 
+
+
+.comprehension-check-questions .question li label {
+	display: inline-block;
+	padding-left: 30px;
+}
+
 .comprehension-check-questions .correct {
 	color: #28B463;
 }

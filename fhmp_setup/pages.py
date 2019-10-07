@@ -19,34 +19,34 @@ class Introduction(Page):
 
 
 # Comprehension Check 1
-class CC1(Page):
+class CC_Introduction(Page):
     form_model = 'player'
 
     def get_form_fields(self):
         form_fields = [
-            'CC0_ans',
-            'CC1_ans',
-            'CC2_ans',
-            'CC3_ans'
+            'CC_Intro0',
+            'CC_Intro1',
+            'CC_Intro2',
+            'CC_Intro3'
         ]
         return form_fields
 
 
 # Comprehension Check 1 - Answer
-class CC1_Answer(Page):
+class CC_Introduction_Answers(Page):
     form_model = 'player'
 
     def vars_for_template(self):
         player_choices = [
-            self.player.CC0_ans,
-            self.player.CC1_ans,
-            self.player.CC2_ans,
-            self.player.CC3_ans
+            self.player.CC_Intro0,
+            self.player.CC_Intro1,
+            self.player.CC_Intro2,
+            self.player.CC_Intro3
         ]
 
         questions_answers = []
 
-        for idx, qa in enumerate(Constants.CC_QuestionsAnswers[0:4]):
+        for idx, qa in enumerate(Constants.CC_QuestionsAnswers['Introduction']):
             qa_copy = qa.copy()
             qa_copy['player_choice'] = player_choices[idx]
             qa_copy['is_correct'] = player_choices[idx] == qa['correct_answer']
@@ -72,32 +72,32 @@ class AssetDistributionExample(Page):
 
 
 # Comprehension Check 2
-class CC2(Page):
+class CC_AssetDistribution(Page):
     form_model = 'player'
 
     def get_form_fields(self):
         form_fields = [
-            'CC4_ans',
-            'CC5_ans',
-            'CC6_ans'
+            'CC_Asset0',
+            'CC_Asset1',
+            'CC_Asset2'
         ]
         return form_fields
 
 
 # Comprehension Check 2 - Answer
-class CC2_Answer(Page):
+class CC_AssetDistribution_Answers(Page):
     form_model = 'player'
 
     def vars_for_template(self):
         player_choices = [
-            self.player.CC4_ans,
-            self.player.CC5_ans,
-            self.player.CC6_ans
+            self.player.CC_Asset0,
+            self.player.CC_Asset1,
+            self.player.CC_Asset2
         ]
 
         questions_answers = []
 
-        for idx, qa in enumerate(Constants.CC_QuestionsAnswers[4:7]):
+        for idx, qa in enumerate(Constants.CC_QuestionsAnswers['AssetDistribution']):
             qa_copy = qa.copy()
             qa_copy['player_choice'] = player_choices[idx]
             qa_copy['is_correct'] = player_choices[idx] == qa['correct_answer']
@@ -118,34 +118,34 @@ class InstructionsSellerChooseReportedRange(Page):
 
 
 # Comprehension Check 2
-class CC3(Page):
+class CC_SellerReporting(Page):
     form_model = 'player'
 
     def get_form_fields(self):
         form_fields = [
-            'CC7_ans',
-            'CC8_ans',
-            'CC9_ans',
-            'CC10_ans'
+            'CC_Seller0',
+            'CC_Seller1',
+            'CC_Seller2',
+            'CC_Seller3'
         ]
         return form_fields
 
 
 # Comprehension Check 2 - Answer
-class CC3_Answer(Page):
+class CC_SellerReporting_Answers(Page):
     form_model = 'player'
 
     def vars_for_template(self):
         player_choices = [
-            self.player.CC7_ans,
-            self.player.CC8_ans,
-            self.player.CC9_ans,
-            self.player.CC10_ans
+            self.player.CC_Seller0,
+            self.player.CC_Seller1,
+            self.player.CC_Seller2,
+            self.player.CC_Seller3
         ]
 
         questions_answers = []
 
-        for idx, qa in enumerate(Constants.CC_QuestionsAnswers[7:11]):
+        for idx, qa in enumerate(Constants.CC_QuestionsAnswers['SellerReporting']):
             qa_copy = qa.copy()
             qa_copy['player_choice'] = player_choices[idx]
             qa_copy['is_correct'] = player_choices[idx] == qa['correct_answer']
@@ -161,12 +161,135 @@ class InstructionsFactChecker(Page):
     pass
 
 
-class Instructions4(Page):
+class InstructionsFactCheckerExamples(Page):
     pass
 
 
-class Instructions5(Page):
+class CC_FactChecker(Page):
+    form_model = 'player'
+
+    def get_form_fields(self):
+        form_fields = [
+            'CC_FactChecker0',
+            'CC_FactChecker1',
+            'CC_FactChecker2'
+        ]
+        return form_fields
+
+
+class CC_FactChecker_Answers(Page):
+    form_model = 'player'
+
+    def vars_for_template(self):
+        player_choices = [
+            self.player.CC_FactChecker0,
+            self.player.CC_FactChecker1,
+            self.player.CC_FactChecker2
+        ]
+
+        questions_answers = []
+
+        for idx, qa in enumerate(Constants.CC_QuestionsAnswers['FactChecker']):
+            qa_copy = qa.copy()
+            qa_copy['player_choice'] = player_choices[idx]
+            qa_copy['is_correct'] = player_choices[idx] == qa['correct_answer']
+            qa_copy['choices'] = list(map(lambda x: x[0], qa['choices']))
+            questions_answers.append(qa_copy)
+
+        return {
+            'questions_answers': questions_answers
+        }
+
+
+class InstructionsBuyersBidOnAssets(Page):
     pass
+
+
+class CC_BuyerBid(Page):
+    form_model = 'player'
+
+    def get_form_fields(self):
+        form_fields = [
+            'CC_BuyerBid0',
+            'CC_BuyerBid1',
+            'CC_BuyerBid2',
+            'CC_BuyerBid3'
+        ]
+        return form_fields
+
+
+class CC_BuyerBid_Answers(Page):
+    form_model = 'player'
+
+    def vars_for_template(self):
+        player_choices = [
+            self.player.CC_BuyerBid0,
+            self.player.CC_BuyerBid1,
+            self.player.CC_BuyerBid2,
+            self.player.CC_BuyerBid3
+        ]
+
+        questions_answers = []
+
+        for idx, qa in enumerate(Constants.CC_QuestionsAnswers['BuyerBid']):
+            qa_copy = qa.copy()
+            qa_copy['player_choice'] = player_choices[idx]
+            qa_copy['is_correct'] = player_choices[idx] == qa['correct_answer']
+            qa_copy['choices'] = list(map(lambda x: x[0], qa['choices']))
+            questions_answers.append(qa_copy)
+
+        return {
+            'questions_answers': questions_answers
+        }
+
+
+class InstructionsEndOfTheRound(Page):
+    pass
+
+
+class HowWillIEarnPoints(Page):
+    pass
+
+
+class CC_EarnPoints(Page):
+    form_model = 'player'
+
+    def get_form_fields(self):
+        form_fields = [
+            'CC_EarnPoints0',
+            'CC_EarnPoints1',
+        ]
+        return form_fields
+
+
+class CC_EarnPoints_Answers(Page):
+    form_model = 'player'
+
+    def vars_for_template(self):
+        player_choices = [
+            self.player.CC_EarnPoints0,
+            self.player.CC_EarnPoints1,
+        ]
+
+        questions_answers = []
+
+        for idx, qa in enumerate(Constants.CC_QuestionsAnswers['EarnPoints']):
+            qa_copy = qa.copy()
+            qa_copy['player_choice'] = player_choices[idx]
+            qa_copy['is_correct'] = player_choices[idx] == qa['correct_answer']
+            qa_copy['choices'] = list(map(lambda x: x[0], qa['choices']))
+            questions_answers.append(qa_copy)
+
+        return {
+            'questions_answers': questions_answers
+        }
+
+
+class PlayerRole(Page):
+    def vars_for_template(self):
+        return {
+            'role': 'Buyer/Seller'
+        }
 
 
 # Wait for all players to arrive
@@ -176,31 +299,32 @@ class ResultsWaitPage(WaitPage):
 
 
 page_sequence = [
-    GroundRules,
-    HowWillIGetPaid,
-    Introduction,
-    CC1,
-    CC1_Answer,
-    HowMuchIsAssetWorth,
-    AssetDistribution,
-    AssetDistributionExample,
-    CC2,
-    CC2_Answer,
-    InstructionsSellerReceivesNumber,
-    InstructionsSellerChooseReportedRange,
-    CC3,
-    CC3_Answer,
-    InstructionsFactChecker,
-    Instructions4,
-    Instructions5,
+    # GroundRules,
+    # HowWillIGetPaid,
+    # Introduction,
+    # CC_Introduction,
+    # CC_Introduction_Answers,
+    # HowMuchIsAssetWorth,
+    # AssetDistribution,
+    # AssetDistributionExample,
+    # CC_AssetDistribution,
+    # CC_AssetDistribution_Answers,
+    # InstructionsSellerReceivesNumber,
+    # InstructionsSellerChooseReportedRange,
+    # CC_SellerReporting,
+    # CC_SellerReporting_Answers,
+    # InstructionsFactChecker,
+    # InstructionsFactCheckerExamples,
+    # CC_FactChecker,
+    # CC_FactChecker_Answers,
+    # InstructionsBuyersBidOnAssets,
+    CC_BuyerBid,
+    CC_BuyerBid_Answers,
+    InstructionsEndOfTheRound,
+    HowWillIEarnPoints,
+    CC_EarnPoints,
+    CC_EarnPoints_Answers,
+    PlayerRole,
     # ExampleRound,
-    # CC2,
-    # CC2_Answer,
-    # CC3,
-    # CC3_Answer,
-    # CC4,
-    # CC4_Answer,
-    # CC5,
-    # CC5_Answer,
     ResultsWaitPage
 ]

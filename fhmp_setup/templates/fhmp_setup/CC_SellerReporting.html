@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Comprehension Check
+{% endblock %}
+
+{% block content %}
+<p>Please answer the questions below:</p>
+
+<div class="comprehension-check-questions">
+    {% for field in form %}
+    <div class="question">
+        <label>{{ field.label }}</label>
+
+        <ol type="A">
+            {% for choice in field %}
+            <li>{{ choice }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+    {% endfor %}
+</div>
+
+{% next_button %}
+
+{% endblock %}

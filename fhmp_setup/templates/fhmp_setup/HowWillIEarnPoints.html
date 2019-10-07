@@ -1,0 +1,34 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% block title %}
+How will I get paid?
+{% endblock %}
+{% block content %}
+<p>
+    Next, let’s review how you earn points.
+</p>
+
+<p>
+    In each round, each seller and each buyer is given an initial endowment of points.
+</p>
+
+<p>
+    In exchange for a winning bid, the winning <strong>buyer</strong> earns the true value of the asset less the amount
+    paid for the asset. Losing buyers and buyers that did not bid pay nothing and win nothing.
+</p>
+
+<p>
+    <strong>Sellers</strong> earn whatever the highest bid was for their asset.
+</p>
+
+<p>
+    These points accumulate each round. After the whole study is over you will be paid cash based upon your total
+    accumulated points.
+</p>
+
+<p>
+    Finally, the more points you earn today the more cash you will receive when the study is over.
+</p>
+
+{% next_button %}
+{% endblock %}

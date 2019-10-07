@@ -1,0 +1,28 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Instructions: Buyers Bid on Assets
+{% endblock %}
+
+{% block content %}
+<p>
+    All buyers see each seller's Reported Range and the fact checker's grade.
+</p>
+
+<p>
+    Next, all buyers bid on the sellers' assets. The buyer can bid on as many assets as they want.
+</p>
+
+<p>
+    For each asset, the buyer that bids the highest amount of points wins that asset. The winning buyer pays the points
+    they bid to the seller and receives the asset.
+</p>
+
+<p>
+    Buyers that bid below the winning bid or do not bid do not win the asset and do not pay anything.
+</p>
+
+{% next_button %}
+
+{% endblock %}

@@ -6,17 +6,18 @@ Comprehension Check
 {% endblock %}
 
 {% block content %}
-<p>Please select whether the following statements are True or False:</p>
+<p>Please answer the questions below:</p>
 
 <div class="comprehension-check-questions">
 	{% for field in form %}
 	<div class="question">
 		<label>{{ field.label }}</label>
-		<ul>
+
+		<ol type="A">
 			{% for choice in field %}
 			<li>{{ choice }}</li>
 			{% endfor %}
-		</ul>
+		</ol>
 	</div>
 	{% endfor %}
 </div>

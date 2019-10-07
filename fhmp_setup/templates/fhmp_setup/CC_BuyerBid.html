@@ -12,11 +12,12 @@ Comprehension Check
     {% for field in form %}
     <div class="question">
         <label>{{ field.label }}</label>
-        <ul>
+
+        <ol type="A">
             {% for choice in field %}
             <li>{{ choice }}</li>
             {% endfor %}
-        </ul>
+        </ol>
     </div>
     {% endfor %}
 </div>

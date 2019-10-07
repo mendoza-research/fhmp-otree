@@ -10,7 +10,8 @@ Comprehension Check
     {% for qa in questions_answers %}
     <div class="question">
         <label>{{ qa.label }}</label>
-        <ul>
+
+        <ol type="A">
             {% for choice in qa.choices %}
             <li>
                 {% if choice == qa.correct_answer %}
@@ -30,7 +31,7 @@ Comprehension Check
                 {% endif %}
             </li>
             {% endfor %}
-        </ul>
+        </ol>
         <div class="answer-label">{{ qa.answer_label }}</div>
     </div>
     {% endfor %}
