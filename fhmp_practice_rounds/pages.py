@@ -218,6 +218,11 @@ class RoundResult(Page):
         }
 
 
+class PracticeOutro(Page):
+    def is_displayed(self):
+        return self.subsession.round_number == 2
+
+
 page_sequence = [
     BeginWaitPage,
     SellerChoiceNotEnoughBudget,
@@ -226,5 +231,6 @@ page_sequence = [
     SellerChoiceResultWaitPage,
     BuyerChoice,
     RoundResultWaitPage,
-    RoundResult
+    RoundResult,
+    PracticeOutro
 ]
