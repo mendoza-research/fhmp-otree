@@ -28,25 +28,25 @@ class Constants(BaseConstants):
     # Generate disclose intervals dict
     disclose_intervals = {}
 
-    low_range = 4
-    high_range = 2
+    low_range = 5
+    high_range = 3
 
-    for min_value in range(1, 20 - low_range + 1):
-        key = str(min_value) + '-' + str(min_value + low_range)
+    for min_value in range(1, 20 - low_range + 2):
+        key = str(min_value) + '-' + str(min_value + low_range - 1)
 
         disclose_intervals[key] = {
             'label': 'Low ' + key,
             'min': min_value,
-            'max': min_value + low_range
+            'max': min_value + low_range - 1
         }
 
-    for min_value in range(1, 20 - high_range + 1):
-        key = str(min_value) + '-' + str(min_value + high_range)
+    for min_value in range(1, 20 - high_range + 2):
+        key = str(min_value) + '-' + str(min_value + high_range - 1)
 
         disclose_intervals[key] = {
             'label': 'High ' + key,
             'min': min_value,
-            'max': min_value + high_range
+            'max': min_value + high_range - 1
         }
 
     # Create a list of strings to be displayed in form fields
@@ -56,8 +56,8 @@ class Constants(BaseConstants):
 
     # Choices for disclose levels
     reporting_option_choices = [
-        [False, 'Low (No cost)'],
-        [True, 'High (2 points)'],
+        [False, 'Less Precise (5 numbers wide) (No cost)'],
+        [True, 'More Precise (3 numbers wide) (Cost: 2 points)'],
     ]
 
 

@@ -288,7 +288,7 @@ class CC_EarnPoints_Answers(Page):
 class PlayerRole(Page):
     def vars_for_template(self):
         return {
-            'role': 'Buyer/Seller'
+            'role': self.player.role()
         }
 
 
@@ -318,12 +318,12 @@ page_sequence = [
     # CC_FactChecker,
     # CC_FactChecker_Answers,
     # InstructionsBuyersBidOnAssets,
-    CC_BuyerBid,
-    CC_BuyerBid_Answers,
+    # CC_BuyerBid,
+    # CC_BuyerBid_Answers,
     InstructionsEndOfTheRound,
-    HowWillIEarnPoints,
-    CC_EarnPoints,
-    CC_EarnPoints_Answers,
+    # HowWillIEarnPoints,
+    # CC_EarnPoints,
+    # CC_EarnPoints_Answers,
     PlayerRole,
     # ExampleRound,
     ResultsWaitPage

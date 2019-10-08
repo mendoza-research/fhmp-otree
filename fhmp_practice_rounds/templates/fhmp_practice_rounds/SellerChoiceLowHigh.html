@@ -2,41 +2,41 @@
 {% load otree static %}
 
 {% block title %}
-	Choose how to disclose the probability
+Choose how to disclose the probability
 {% endblock %}
 
 {% block content %}
-	<table class="table">
-		<tbody>
-			<tr>
-				<th scope="col">
-					Likely value of your asset
-				</th>
-				<td>{{ asset_est_value }}</td>
-			</tr>
+<table class="table">
+	<tbody>
+		<tr>
+			<th scope="col">
+				Likely value of your asset
+			</th>
+			<td>{{ asset_est_value }}</td>
+		</tr>
 
-			<tr>
-				<th scope="col">
-					Your budget
-				</th>
-				<td>{{ player.budget }}</td>
-			</tr>
-		</tbody>
-	</table>
+		<tr>
+			<th scope="col">
+				Your budget
+			</th>
+			<td>{{ player.budget }}</td>
+		</tr>
+	</tbody>
+</table>
 
-	<p>The actual value of your asset is determined by drawing from a distribution of outcomes around {{ asset_est_value }}.</p>
+<p>The actual value of your asset is determined by drawing from possible true values around {{ asset_est_value }}.</p>
 
-	<p>Which type of reporting option do you want to choose?</p>
+<p>Which type of reporting option do you want to choose?</p>
 
-	{% for field in form %}
-		<div class="controls">
-			<ul>
-			{% for choice in field %}
-				<li>{{ choice }}</li>
-			{% endfor %}
-			</ul>
-		</div>
-	{% endfor %}
+{% for field in form %}
+<div class="controls">
+	<ul>
+		{% for choice in field %}
+		<li>{{ choice }}</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endfor %}
 
-	{% next_button %}
+{% next_button %}
 {% endblock %}

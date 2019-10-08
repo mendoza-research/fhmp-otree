@@ -179,6 +179,8 @@ class RoundResult(Page):
                     'id': 1,
                     'disclose_interval': self.group.asset1_disclose_interval,
                     'true_value': self.group.asset1_true_value,
+                    'seller_grade': self.group.seller1_grade,
+                    'winning_bid': self.group.asset1_max_bid,
                     'bids': list(map(lambda b: {
                         'player_id': b.id_in_group,
                         'amount': b.bid_asset1,
@@ -190,6 +192,8 @@ class RoundResult(Page):
                     'id': 2,
                     'disclose_interval': self.group.asset2_disclose_interval,
                     'true_value': self.group.asset2_true_value,
+                    'seller_grade': self.group.seller2_grade,
+                    'winning_bid': self.group.asset2_max_bid,
                     'bids': list(map(lambda b: {
                         'player_id': b.id_in_group,
                         'amount': b.bid_asset2,
@@ -201,6 +205,8 @@ class RoundResult(Page):
                     'id': 3,
                     'disclose_interval': self.group.asset2_disclose_interval,
                     'true_value': self.group.asset3_true_value,
+                    'seller_grade': self.group.seller3_grade,
+                    'winning_bid': self.group.asset3_max_bid,
                     'bids': list(map(lambda b: {
                         'player_id': b.id_in_group,
                         'amount': b.bid_asset3,

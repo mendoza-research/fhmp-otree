@@ -2,48 +2,38 @@
 {% load otree static %}
 
 {% block title %}
-    Round Results
+Round Results
 {% endblock %}
 
 {% block content %}
-	<div class="row">
+<div class="row">
 
-		{% for asset in assets %}
-			<div class="col-md-12">
-				<h3><u>Asset {{ asset.id }}</u></h3>
-				<p><strong>Seller {{asset.id}}</strong> disclosed a range of <strong>{{ asset.disclose_interval }} points</strong> for their asset.</p>
-				<p>The true value of their asset after drawing from a distribution is <strong>{{ asset.true_value }}</strong>.</p>
+	{% for asset in assets %}
+	<div class="col-md-12">
+		<h3><u>Asset {{ asset.id }}</u></h3>
+		<p><strong>Seller {{asset.id}}</strong> disclosed a range of <strong>{{ asset.disclose_interval }}
+				points</strong> for their asset.</p>
+		<p>The fact checker grade was {{ asset.seller_grade }}.</p>
+		<p>The true value of their asset is <strong>{{ asset.true_value }}</strong>.</p>
 
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Winning Bid</th>
+				</tr>
+			</thead>
 
-				<table class="table">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Player</th>
-							<th scope="col">Bid</th>
-							<th scope="col">Win</th>
-						</tr>
-					</thead>
-
-					<tbody>
-				{% for bid in asset.bids %}
-						<tr class="{% if bid.did_win %}table-success{% endif %}">
-							<td>
-								{{ bid.player_id }}
-								{% if bid.is_self %}
-									(you)
-								{% endif %}
-							</td>
-							<td>{{ bid.amount }}</td>
-							<td>{{ bid.did_win | yesno:"Yes,No,Unknown" }}</td>
-						</tr>
-				{% endfor %}
-					</tbody>
-				</table>
-			</div>
-		{% endfor %}
+			<tbody>
+				<tr class="table-success">
+					<td>{{ asset.winning_bid }}</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
+	{% endfor %}
+</div>
 
-    <p>Your payoff from this round is {{ player.payoff }}.</p>
+<p>Your payoff from this round is {{ player.payoff }}.</p>
 
-    {% next_button %}
+{% next_button %}
 {% endblock %}
