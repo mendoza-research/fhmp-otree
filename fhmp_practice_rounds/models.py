@@ -1,4 +1,5 @@
 import random
+import numpy as np
 from numpy.random import choice
 
 from otree.api import (
@@ -32,21 +33,23 @@ class Constants(BaseConstants):
     high_range = 3
 
     for min_value in range(1, 20 - low_range + 2):
-        key = str(min_value) + '-' + str(min_value + low_range - 1)
+        max_value = min_value + low_range - 1
+        key = str(min_value) + '-' + str(max_value)
 
         disclose_intervals[key] = {
             'label': 'Low ' + key,
             'min': min_value,
-            'max': min_value + low_range - 1
+            'max': max_value
         }
 
     for min_value in range(1, 20 - high_range + 2):
-        key = str(min_value) + '-' + str(min_value + high_range - 1)
+        max_value = min_value + high_range - 1
+        key = str(min_value) + '-' + str(max_value)
 
         disclose_intervals[key] = {
             'label': 'High ' + key,
             'min': min_value,
-            'max': min_value + high_range - 1
+            'max': max_value
         }
 
     # Create a list of strings to be displayed in form fields
@@ -118,6 +121,10 @@ class Group(BaseGroup):
     asset2_est_value = models.CurrencyField(min=1, max=20)
     asset3_est_value = models.CurrencyField(min=1, max=20)
 
+    asset1_fact_checker_midpoint = models.IntegerField(min=1, max=20)
+    asset2_fact_checker_midpoint = models.IntegerField(min=1, max=20)
+    asset3_fact_checker_midpoint = models.IntegerField(min=1, max=20)
+
     seller1_grade = models.StringField()
     seller2_grade = models.StringField()
     seller3_grade = models.StringField()
@@ -156,6 +163,25 @@ class Group(BaseGroup):
             else:
                 p.budget = Constants.buyer_initial_endowment if is_first_round else p.in_round(
                     self.round_number - 1).budget
+
+    # A static method to draw a fact checker range given an estimated value
+    @staticmethod
+    def draw_fact_checker_range_midpoint(est_value):
+        weights = [1, 2, 3, 2, 1]
+        possible_midpoints = [est_value - 2, est_value -
+                              1, est_value, est_value + 1, est_value + 2]
+
+        for i in range(5):
+            midpoint = possible_midpoints[i]
+
+            if midpoint - 2 <= 0 or midpoint + 2 > 20:
+                weights[i] = 0
+
+        # Normalize weights array to sum to 1
+        # If the array is not normalized, numpy's choice() method will throw an error
+        weights = weights / np.sum(weights)
+
+        return int(choice(possible_midpoints, p=weights))
 
     # A static method to get a true asset value given an estimated value
     # 30% prob chance that true == estimated
@@ -225,26 +251,32 @@ class Group(BaseGroup):
     def get_buyer_ids(self):
         return list(map(lambda b: b.id_in_group, self.get_buyers()))
 
+    # Set fact checker mipdoints for each asset
+    # The fact checker ranges are drawn from the possible ranges
+    def set_fact_checker_midpoints(self):
+        self.asset1_fact_checker_midpoint = self.draw_fact_checker_range_midpoint(
+            self.asset1_est_value)
+
+        self.asset2_fact_checker_midpoint = self.draw_fact_checker_range_midpoint(
+            self.asset2_est_value)
+
+        self.asset3_fact_checker_midpoint = self.draw_fact_checker_range_midpoint(
+            self.asset3_est_value)
+
     # Set seller grades based on differences between estimated/disclosed asset values
     # This method should be called from a WaitPage after sellers select reporting options
     def set_seller_grades(self):
+        # Need to draw fact checker ranges and set midpoints first
+        self.set_fact_checker_midpoints()
+
         self.seller1_grade = self.calculate_seller_grade(
-            Constants.disclose_intervals[self.asset1_disclose_interval]['min'],
-            Constants.disclose_intervals[self.asset1_disclose_interval]['max'],
-            self.asset1_est_value
-        )
+            int(Constants.disclose_intervals[self.asset1_disclose_interval]['min'] + (Constants.disclose_intervals[self.asset1_disclose_interval]['max'] - Constants.disclose_intervals[self.asset1_disclose_interval]['min']) / 2), self.asset1_est_value)
 
         self.seller2_grade = self.calculate_seller_grade(
-            Constants.disclose_intervals[self.asset2_disclose_interval]['min'],
-            Constants.disclose_intervals[self.asset2_disclose_interval]['max'],
-            self.asset2_est_value
-        )
+            int(Constants.disclose_intervals[self.asset2_disclose_interval]['min'] + (Constants.disclose_intervals[self.asset2_disclose_interval]['max'] - Constants.disclose_intervals[self.asset2_disclose_interval]['min']) / 2), self.asset1_est_value)
 
         self.seller3_grade = self.calculate_seller_grade(
-            Constants.disclose_intervals[self.asset3_disclose_interval]['min'],
-            Constants.disclose_intervals[self.asset3_disclose_interval]['max'],
-            self.asset3_est_value
-        )
+            int(Constants.disclose_intervals[self.asset3_disclose_interval]['min'] + (Constants.disclose_intervals[self.asset3_disclose_interval]['max'] - Constants.disclose_intervals[self.asset3_disclose_interval]['min']) / 2), self.asset1_est_value)
 
     # A: in range
     # B: within 1 outside the range
@@ -252,26 +284,20 @@ class Group(BaseGroup):
     # D: within 3 outside the range
     # F: within 4 or more outside the range
     @staticmethod
-    def calculate_seller_grade(disclose_min, disclose_max, est_value):
-        if est_value > 15:
-            aud_max = 20
-        elif est_value > 10:
-            aud_max = 15
-        elif est_value > 5:
-            aud_max = 10
-        else:
-            aud_max = 5
+    def calculate_seller_grade(reported_range_midpoint, fact_checker_range_midpoint):
+        midpoint_diff = abs(reported_range_midpoint -
+                            fact_checker_range_midpoint)
 
-        if disclose_min > aud_max:
-            return 'F'
-        elif disclose_min == aud_max:
-            return 'D'
-        elif disclose_min - 1 == aud_max:
-            return 'C'
-        elif disclose_min - 2 == aud_max:
-            return 'B'
-        else:
+        print('midpoint_diff=' + str(midpoint_diff))
+
+        if midpoint_diff <= 1:
             return 'A'
+        elif midpoint_diff <= 3:
+            return 'B'
+        elif midpoint_diff <= 4:
+            return 'C'
+        else:
+            return 'F'
 
     def get_seller_grade(self, seller_id):
         grade_dict = {
