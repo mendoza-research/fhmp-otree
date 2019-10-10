@@ -26,4 +26,12 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    gpa = models.StringField()
+    gender = models.StringField()
+    is_english_fisrt_language = models.BooleanField()
+    major = models.StringField()
+    years_in_college = models.StringField()
+    age = models.IntegerField()
+    comments = models.StringField()
+
     pass

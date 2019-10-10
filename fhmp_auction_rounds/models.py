@@ -20,10 +20,16 @@ class Constants(BaseConstants):
 
     # Practice = 2 rounds
     # Main = 20 rounds
-    num_rounds = 2
+    # num_rounds should be # practice rounds + # main rounds
+    num_rounds = 4
+
     # Currency definitions
-    buyer_initial_endowment = c(20) * num_rounds
-    seller_initial_endowment = c(5)
+    buyer_initial_endowment_practice_rounds = c(40)
+    seller_initial_endowment_practice_rounds = c(5)
+
+    buyer_initial_endowment_main_rounds = c(100)
+    seller_initial_endowment_main_rounds = c(5)
+
     high_detail_disclosure_cost = c(2)
 
     # Generate disclose intervals dict
@@ -154,15 +160,24 @@ class Group(BaseGroup):
         self.asset3_true_value = self.draw_asset_true_value(
             self.asset3_est_value)
 
-        is_first_round = self.round_number == 1
+        is_start_of_practice_rounds = self.round_number == 1
+        is_start_of_main_rounds = self.round_number == 3
 
         for p in self.get_players():
-            if p.role() == 'seller':
-                p.budget = Constants.seller_initial_endowment if is_first_round else p.in_round(
-                    self.round_number - 1).budget
+            if is_start_of_practice_rounds:
+                if p.role() == 'seller':
+                    p.budget = Constants.seller_initial_endowment_practice_rounds
+                else:
+                    p.budget = Constants.buyer_initial_endowment_practice_rounds
+
+            elif is_start_of_main_rounds:
+                if p.role() == 'seller':
+                    p.budget = Constants.seller_initial_endowment_main_rounds
+                else:
+                    p.budget = Constants.buyer_initial_endowment_main_rounds
+
             else:
-                p.budget = Constants.buyer_initial_endowment if is_first_round else p.in_round(
-                    self.round_number - 1).budget
+                p.budget = p.in_round(self.round_number - 1).budget
 
     # A static method to draw a fact checker range given an estimated value
     @staticmethod
@@ -270,25 +285,22 @@ class Group(BaseGroup):
         self.set_fact_checker_midpoints()
 
         self.seller1_grade = self.calculate_seller_grade(
-            int(Constants.disclose_intervals[self.asset1_disclose_interval]['min'] + (Constants.disclose_intervals[self.asset1_disclose_interval]['max'] - Constants.disclose_intervals[self.asset1_disclose_interval]['min']) / 2), self.asset1_est_value)
+            int(Constants.disclose_intervals[self.asset1_disclose_interval]['min'] + (Constants.disclose_intervals[self.asset1_disclose_interval]['max'] - Constants.disclose_intervals[self.asset1_disclose_interval]['min']) / 2), int(self.asset1_fact_checker_midpoint))
 
         self.seller2_grade = self.calculate_seller_grade(
-            int(Constants.disclose_intervals[self.asset2_disclose_interval]['min'] + (Constants.disclose_intervals[self.asset2_disclose_interval]['max'] - Constants.disclose_intervals[self.asset2_disclose_interval]['min']) / 2), self.asset1_est_value)
+            int(Constants.disclose_intervals[self.asset2_disclose_interval]['min'] + (Constants.disclose_intervals[self.asset2_disclose_interval]['max'] - Constants.disclose_intervals[self.asset2_disclose_interval]['min']) / 2), int(self.asset2_fact_checker_midpoint))
 
         self.seller3_grade = self.calculate_seller_grade(
-            int(Constants.disclose_intervals[self.asset3_disclose_interval]['min'] + (Constants.disclose_intervals[self.asset3_disclose_interval]['max'] - Constants.disclose_intervals[self.asset3_disclose_interval]['min']) / 2), self.asset1_est_value)
+            int(Constants.disclose_intervals[self.asset3_disclose_interval]['min'] + (Constants.disclose_intervals[self.asset3_disclose_interval]['max'] - Constants.disclose_intervals[self.asset3_disclose_interval]['min']) / 2), int(self.asset3_fact_checker_midpoint))
 
-    # A: in range
-    # B: within 1 outside the range
-    # C: within 2 outside the range
-    # D: within 3 outside the range
-    # F: within 4 or more outside the range
+    # A: if the midpoint of the reported range is equal to, + 1 or - 1 of the midpoint of the fact checker’s range
+    # B: if the midpoint of the reported range is + or - 2 or 3 from the midpoint of the fact checker’s range
+    # C: if the midpoint of the reported range is + or – 4 from the midpoint of the fact checker’s range
+    # F: everything else
     @staticmethod
     def calculate_seller_grade(reported_range_midpoint, fact_checker_range_midpoint):
         midpoint_diff = abs(reported_range_midpoint -
                             fact_checker_range_midpoint)
-
-        print('midpoint_diff=' + str(midpoint_diff))
 
         if midpoint_diff <= 1:
             return 'A'
@@ -429,10 +441,8 @@ class Player(BasePlayer):
         if self.role() == 'seller':
             seller_asset_max_bid = self.group.get_asset_max_bid(
                 self.id_in_group)
-            seller_asset_true_value = self.group.get_asset_true_value(
-                self.id_in_group)
 
-            self.round_earning = seller_asset_max_bid - seller_asset_true_value
+            self.round_earning = seller_asset_max_bid
 
         # Buyer payoffs
         elif self.role() == 'buyer':

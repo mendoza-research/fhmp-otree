@@ -6,24 +6,22 @@ from os import environ
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = {
-	'real_world_currency_per_point': 1.00,
-	'participation_fee': 0.00,
-	'doc': "",
+    'real_world_currency_per_point': 1.00,
+    'participation_fee': 0.00,
+    'doc': "",
 }
 
 SESSION_CONFIGS = [
-	{
-		'name': 'fhmp',
-		'display_name': 'FHMP',
-		'num_demo_participants': 3,
-		'app_sequence': [
-			'fhmp_setup',
-			'fhmp_practice_rounds',
-
-			# 'fhmp_main_study',
-			# 'fhmp_exit_survey',
-		]
-	},
+    {
+        'name': 'fhmp',
+        'display_name': 'FHMP',
+                        'num_demo_participants': 3,
+                        'app_sequence': [
+                            'fhmp_setup',
+                            'fhmp_auction_rounds',
+                            'fhmp_exit_survey',
+                        ]
+    },
 ]
 
 # ISO-639 code
