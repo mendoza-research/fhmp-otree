@@ -26,12 +26,15 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    gpa = models.StringField()
-    gender = models.StringField()
-    is_english_fisrt_language = models.BooleanField()
-    major = models.StringField()
-    years_in_college = models.StringField()
-    age = models.IntegerField()
-    comments = models.StringField()
+    gpa = models.StringField(label='What is your GPA? ')
+    gender = models.StringField(label='Gender: ')
+    is_english_first_language = models.BooleanField(
+        label='Is English your first language?')
+    major = models.StringField(label='What is your major?')
+    years_in_college = models.StringField(
+        label='How many years have you been in college?')
+    age = models.IntegerField(label='What is your age?')
+    comments = models.StringField(
+        label='Do you have any questions or comments about the study? If so, please specify below. ')
 
     pass
