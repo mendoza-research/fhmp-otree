@@ -92,7 +92,7 @@ class Constants(BaseConstants):
                 'label': 'Sellers can choose any range they want, as long as it is either 3 or 5 numbers wide, and sellers\' Reported Range does not have to contain the number # they were given.',
                 'choices': CC_tf_choices,
                 'correct_answer': True,
-                'answer_label': 'True! The seller can report either 3 or 5 numbers wide. The seller can also report any range. That is, the seller\'s Reported Range does not have to contain the number # they were given.'
+                'answer_label': 'True! The seller can report either a range that is 3 or 5 numbers wide. The seller can also report any range. That is, the seller\'s Reported Range does not have to contain the number # they were given.'
             },
             {
                 'label': 'To report a more precise range, sellers must pay 2 points.',
@@ -124,7 +124,7 @@ class Constants(BaseConstants):
                     ]
                 ],
                 'correct_answer': 'B or C',
-                'answer_label': 'B or C! The seller can report either 3 or 5 numbers range. To report 5 numbers range, the seller must pay 2 points.'
+                'answer_label': 'B or C! The seller can report either 3 or 5 numbers range. To report a 3 number range, the seller must pay 2 points.'
             }
         ],
         'FactChecker': [
