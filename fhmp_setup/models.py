@@ -165,7 +165,7 @@ class Constants(BaseConstants):
                 'label': 'Buyers can bid on assets.',
                 'choices': CC_tf_choices,
                 'correct_answer': True,
-                'answer_label': 'True! The buyer can also bid on as many assets as they want.'
+                'answer_label': 'True! The buyer can bid on as many assets as they want.'
             },
             {
                 'label': 'The buyer who bids the most for an asset wins that asset.',
