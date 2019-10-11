@@ -138,7 +138,7 @@ class Constants(BaseConstants):
                 'label': 'The fact checker\'s grade (A, B, C, or F) designating how close the seller\'s Reported Range is to the midpoint of the Fact Checker Range always perfectly corresponds to the true value of the asset.',
                 'choices': CC_tf_choices,
                 'correct_answer': False,
-                'answer_label': 'False. The Fact Checker\'s 5 number range is drawn from a distribution of ranges surrounding the seller\'s number #, it does not perfectly correspond to the true value of the asset.'
+                'answer_label': 'False. The Fact Checker\'s 5 number range is drawn from a distribution of ranges surrounding the seller\'s number #, and it does not perfectly correspond to the true value of the asset.'
             },
             {
                 'label': 'The fact checker knows',
