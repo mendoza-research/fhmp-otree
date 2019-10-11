@@ -189,7 +189,7 @@ class Constants(BaseConstants):
                     ['5 and 5', '5 and 5']
                 ],
                 'correct_answer': "2 and 2",
-                'answer_label': 'For each asset, the buyer that bids the highest amount of points wins the asset. Since the buyer had the highest bids on two assets, he pays for and receives 2 assets.'
+                'answer_label': 'For each asset, the buyer that bids the highest amount of points wins the asset. Since the buyer had the highest bids on 2 assets, he pays for and receives 2 assets.'
             }
         ],
         'EarnPoints': [
