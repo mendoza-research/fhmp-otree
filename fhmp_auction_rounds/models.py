@@ -24,11 +24,11 @@ class Constants(BaseConstants):
     num_rounds = 4
 
     # Currency definitions
-    buyer_initial_endowment_practice_rounds = c(40)
-    seller_initial_endowment_practice_rounds = c(5)
+    buyer_initial_endowment_practice_rounds = c(200)
+    seller_initial_endowment_practice_rounds = c(20)
 
-    buyer_initial_endowment_main_rounds = c(100)
-    seller_initial_endowment_main_rounds = c(5)
+    buyer_initial_endowment_main_rounds = c(200)
+    seller_initial_endowment_main_rounds = c(20)
 
     high_detail_disclosure_cost = c(2)
 
@@ -212,22 +212,22 @@ class Group(BaseGroup):
 
         # When estimated value is 1
         if est_value_int == 1:
-            weights = [((1 - 0.3 - 0.18) / 18) for _ in range(20)]
-            weights[est_value_int - 1] = 0.3
-            weights[1] = 0.18
+            weights = [((1 - 0.43 - 0.2) / 18) for _ in range(20)]
+            weights[est_value_int - 1] = 0.43
+            weights[1] = 0.20
 
         # When estimated value is 20
         elif est_value_int == 20:
-            weights = [((1 - 0.3 - 0.18) / 18) for _ in range(20)]
-            weights[est_value_int - 1] = 0.3
-            weights[18] = 0.18
+            weights = [((1 - 0.43 - 0.2) / 18) for _ in range(20)]
+            weights[est_value_int - 1] = 0.43
+            weights[18] = 0.20
 
         # When estimated value is between 2 and 19
         else:
-            weights = [0.02 for _ in range(20)]
-            weights[est_value_int - 1] = 0.3
-            weights[est_value_int - 2] = 0.18
-            weights[est_value_int] = 0.18
+            weights = [0.01 for _ in range(20)]
+            weights[est_value_int - 1] = 0.43
+            weights[est_value_int - 2] = 0.2
+            weights[est_value_int] = 0.2
 
         # Use numpy's random.choice() to pick a random value from a list
         # with probabilities list
