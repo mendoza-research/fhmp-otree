@@ -10,9 +10,9 @@
 		<tbody>
 			<tr>
 				<th scope="col">
-					Likely value of your asset
+					Your Private Range (Likely values for your asset)
 				</th>
-				<td>{{ asset_est_value }}</td>
+				<td>{{ asset_est_value - 1 }}-{{ asset_est_value + 1 }}</td>
 			</tr>
 
 			<tr>
@@ -24,7 +24,7 @@
 		</tbody>
 	</table>
 
-	<p>The actual value of your asset is determined by drawing from a distribution of outcomes around {{ asset_est_value }}.</p>
+	<p>The actual value of your asset is determined by drawing from a distribution of outcomes around your Private Range.</p>
 
 	<p>Since you do not have enough budget to choose high reporting option, low reporting option will be automatically selected for you.</p>
 
