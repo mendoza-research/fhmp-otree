@@ -53,46 +53,46 @@ class Constants(BaseConstants):
         ],
         'AssetDistribution': [
             {
-                'label': 'If the seller receives the number 12, what is the likelihood 18 will be the true value of the asset?',
+                'label': 'If the seller receives the Private Range 11-13, what is the likelihood 18 will be the true value of the asset?',
                 'choices': [
-                    ["30%", "30%"],
-                    ["18%", "18%"],
+                    ["43%", "43%"],
+                    ["20%", "20%"],
                     ["5%", "5%"],
-                    ["2%", "2%"]
+                    ["1%", "1%"]
                 ],
-                'correct_answer': "2%",
-                'answer_label': '2%! There is about a 2% chance the asset\'s true value will be any other number than 11, 12, or 13.'
+                'correct_answer': "1%",
+                'answer_label': '1%! There is about a 1% chance the asset\'s true value will be any other number than 11, 12, or 13.'
             },
             {
-                'label': 'If the seller receives the number 12, what is the likelihood 11 will be the true value of the asset?',
+                'label': 'If the seller receives the Private Range 11-13, what is the likelihood 11 will be the true value of the asset?',
                 'choices': [
-                    ["30%", "30%"],
-                    ["18%", "18%"],
+                    ["43%", "43%"],
+                    ["20%", "20%"],
                     ["5%", "5%"],
-                    ["2%", "2%"]
+                    ["1%", "1%"]
                 ],
-                'correct_answer': '18%',
-                'answer_label': '18%! There is a 18% chance the asset\'s true value will be one less than #.'
+                'correct_answer': '20%',
+                'answer_label': '20%! There is a 20% chance the asset\'s true value will be the lowest number in the Private Range.'
             },
             {
-                'label': 'If a seller receives the number 14, then 14 is the most likely value to be drawn for the asset.',
+                'label': 'If a seller receives the Private Range 13-15, then 14 is the most likely value to be drawn for the asset.',
                 'choices': CC_tf_choices,
                 'correct_answer': True,
-                'answer_label': 'True! The number seller receives has the highest chance (30%) of being the value drawn for the asset.'
+                'answer_label': 'True! The midpoint of the Private Range the seller receives has the highest chance (43%) of being the value drawn for the asset.'
             }
         ],
         'SellerReporting': [
             {
-                'label': 'Only the seller knows the number # they are given.',
+                'label': 'Only the seller knows the Private Range they are given.',
                 'choices': CC_tf_choices,
                 'correct_answer': True,
-                'answer_label': 'True! Only the seller knows the number #; no other person in the study knows the number the seller was given.'
+                'answer_label': 'True! Only the seller knows the Private Range; no other person in the study knows the Private Range the seller was given.'
             },
             {
-                'label': 'Sellers can choose any range they want, as long as it is either 3 or 5 numbers wide, and sellers\' Reported Range does not have to contain the number # they were given.',
+                'label': 'Sellers can choose any range they want, as long as it is either 3 or 5 numbers wide, and sellers\' Reported Range does not have to contain any number from the Private Range they were given.',
                 'choices': CC_tf_choices,
                 'correct_answer': True,
-                'answer_label': 'True! The seller can report either a range that is 3 or 5 numbers wide. The seller can also report any range. That is, the seller\'s Reported Range does not have to contain the number # they were given.'
+                'answer_label': 'True! The seller can report either a range that is 3 or 5 numbers wide. The seller can also report any range. That is, the seller\'s Reported Range does not have to contain any number from the Private Range they were given.'
             },
             {
                 'label': 'To report a more precise range, sellers must pay 2 points.',
@@ -138,26 +138,26 @@ class Constants(BaseConstants):
                 'label': 'The fact checker\'s grade (A, B, C, or F) designating how close the seller\'s Reported Range is to the midpoint of the Fact Checker Range always perfectly corresponds to the true value of the asset.',
                 'choices': CC_tf_choices,
                 'correct_answer': False,
-                'answer_label': 'False. The Fact Checker\'s 5 number range is drawn from a distribution of ranges surrounding the seller\'s number #, and it does not perfectly correspond to the true value of the asset.'
+                'answer_label': 'False. The Fact Checker\'s 5 number range is drawn from a distribution of ranges surrounding the midpoint of the seller\'s Private Range, and it does not perfectly correspond to the true value of the asset.'
             },
             {
                 'label': 'The fact checker knows',
                 'choices': [
                     [
-                        'the number # the seller receives',
-                        'the number # the seller receives'
+                        'the Private Range the seller receives',
+                        'the Private Range the seller receives'
                     ],
                     [
-                        'The Fact Checker Range that contains the seller\'s number #',
-                        'The Fact Checker Range that contains the seller\'s number #'
+                        'The Fact Checker Range that contains the midpoint of the seller\'s Private Range',
+                        'The Fact Checker Range that contains the midpoint of the seller\'s Private Range'
                     ],
                     [
                         'The true value of the asset',
                         'The true value of the asset'
                     ]
                 ],
-                'correct_answer': 'The Fact Checker Range that contains the seller\'s number #',
-                'answer_label': 'The Fact Checker knows a 5-number range containing the seller\'s number. It does not know the number # the seller receives nor the true value of the asset.'
+                'correct_answer': 'The Fact Checker Range that contains the midpoint of the seller\'s Private Range',
+                'answer_label': 'The Fact Checker knows a 5-number range containing the midpoint of the seller\'s Private Range. It does not know the Private Range the seller receives nor the true value of the asset.'
             }
         ],
         'BuyerBid': [
