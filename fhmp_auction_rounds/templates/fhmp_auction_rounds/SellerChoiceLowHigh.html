@@ -10,9 +10,9 @@ Choose how to disclose the probability
 	<tbody>
 		<tr>
 			<th scope="col">
-				Likely value of your asset
+				Your Private Range (Likely values for your asset)
 			</th>
-			<td>{{ asset_est_value }}</td>
+			<td>{{ asset_est_value - 1 }}-{{ asset_est_value + 1 }}</td>
 		</tr>
 
 		<tr>
@@ -24,7 +24,7 @@ Choose how to disclose the probability
 	</tbody>
 </table>
 
-<p>The actual value of your asset is determined by drawing from possible true values around {{ asset_est_value }}.</p>
+<p>The actual value of your asset is determined by drawing from possible true values between 1 and 20.</p>
 
 <p>Which type of reporting option do you want to choose?</p>
 
