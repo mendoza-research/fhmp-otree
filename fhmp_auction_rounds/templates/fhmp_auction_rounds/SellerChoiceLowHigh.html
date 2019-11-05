@@ -1,42 +1,36 @@
-{% extends "global/Page.html" %}
-{% load otree static %}
-
-{% block title %}
-Choose how to disclose the probability
-{% endblock %}
-
-{% block content %}
+{% extends "global/Page.html" %} {% load otree static %} {% block title %}
+Choose how to disclose the probability {% endblock %} {% block content %}
 <table class="table">
-	<tbody>
-		<tr>
-			<th scope="col">
-				Your Private Range (Likely values for your asset)
-			</th>
-			<td>{{ asset_est_value }}</td>
-		</tr>
+  <tbody>
+    <tr>
+      <th scope="col">
+        Your Private Range (Likely values for your asset)
+      </th>
+      <td>{{ seller_private_range }}</td>
+    </tr>
 
-		<tr>
-			<th scope="col">
-				Your budget
-			</th>
-			<td>{{ player.budget }}</td>
-		</tr>
-	</tbody>
+    <tr>
+      <th scope="col">
+        Your budget
+      </th>
+      <td>{{ player.budget }}</td>
+    </tr>
+  </tbody>
 </table>
 
-<p>The actual value of your asset is determined by drawing from possible true values between 1 and 20.</p>
+<p>
+  The actual value of your asset is determined by drawing from possible true
+  values between 1 and 20.
+</p>
 
 <p>Which type of reporting option do you want to choose?</p>
 
 {% for field in form %}
 <div class="controls">
-	<ul>
-		{% for choice in field %}
-		<li>{{ choice }}</li>
-		{% endfor %}
-	</ul>
+  <ul>
+    {% for choice in field %}
+    <li>{{ choice }}</li>
+    {% endfor %}
+  </ul>
 </div>
-{% endfor %}
-
-{% next_button %}
-{% endblock %}
+{% endfor %} {% next_button %} {% endblock %}

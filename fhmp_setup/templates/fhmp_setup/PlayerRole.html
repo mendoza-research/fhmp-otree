@@ -1,20 +1,14 @@
-{% extends "global/Page.html" %}
-{% load otree static %}
-
-{% block title %}
-Your Role
-{% endblock %}
-
-{% block content %}
-<h4>
-    Your role is a <strong>{{ role }}</strong>. You will have this role in every round. Every participant has an assigned role and ID that will stay the same throughout the study.
-
-</h4>
-
-<p>
-    You will now practice for a few rounds (no points are earned or lost for the practice) and then you will start the
-    real study.
+{% extends "global/Page.html" %} {% load otree static %} {% block title %} Your
+Role {% endblock %} {% block content %}
+<p style="font-size: 24px; line-height: 1.6; ">
+  Your role is a <strong style="color: blue; ">{{ role }}</strong
+  >. You will have this role in every round. Every participant has an assigned
+  role and ID that will stay the same throughout the study.
 </p>
 
-{% next_button %}
-{% endblock %}
+<p>
+  You will now practice for a few rounds (no points are earned or lost for the
+  practice) and then you will start the real study.
+</p>
+
+{% next_button %} {% endblock %}

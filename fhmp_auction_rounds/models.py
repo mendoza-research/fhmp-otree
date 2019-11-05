@@ -123,9 +123,9 @@ class Group(BaseGroup):
     asset3_true_value = models.CurrencyField()
 
     # Since there is a fixed number of assets, each asset's probability and disclose_interval should be listed here
-    asset1_est_value = models.CurrencyField(min=1, max=20)
-    asset2_est_value = models.CurrencyField(min=1, max=20)
-    asset3_est_value = models.CurrencyField(min=1, max=20)
+    seller1_private_range_midpoint = models.CurrencyField(min=2, max=19)
+    seller2_private_range_midpoint = models.CurrencyField(min=2, max=19)
+    seller3_private_range_midpoint = models.CurrencyField(min=2, max=19)
 
     asset1_fact_checker_midpoint = models.IntegerField(min=1, max=20)
     asset2_fact_checker_midpoint = models.IntegerField(min=1, max=20)
@@ -148,17 +148,17 @@ class Group(BaseGroup):
     # Generate estimated/true values
     def init_round(self):
         # High asset probabilities
-        self.asset1_est_value = c(random.randint(1, 20))
-        self.asset2_est_value = c(random.randint(1, 20))
-        self.asset3_est_value = c(random.randint(1, 20))
+        self.seller1_private_range_midpoint = c(random.randint(2, 19))
+        self.seller2_private_range_midpoint = c(random.randint(2, 19))
+        self.seller3_private_range_midpoint = c(random.randint(2, 19))
 
         # Asset true values
         self.asset1_true_value = self.draw_asset_true_value(
-            self.asset1_est_value)
+            self.seller1_private_range_midpoint)
         self.asset2_true_value = self.draw_asset_true_value(
-            self.asset2_est_value)
+            self.seller2_private_range_midpoint)
         self.asset3_true_value = self.draw_asset_true_value(
-            self.asset3_est_value)
+            self.seller3_private_range_midpoint)
 
         is_start_of_practice_rounds = self.round_number == 1
         is_start_of_main_rounds = self.round_number == 3
@@ -181,13 +181,13 @@ class Group(BaseGroup):
 
     # A static method to draw a fact checker range given an estimated value
     @staticmethod
-    def draw_fact_checker_range_midpoint(est_value):
+    def draw_fact_checker_range_midpoint(private_range_midpoint):
         weights = [1, 2, 3, 2, 1]
-        possible_midpoints = [est_value - 2, est_value -
-                              1, est_value, est_value + 1, est_value + 2]
+        possible_fact_checker_midpoints = [private_range_midpoint - 2, private_range_midpoint -
+                              1, private_range_midpoint, private_range_midpoint + 1, private_range_midpoint + 2]
 
         for i in range(5):
-            midpoint = possible_midpoints[i]
+            midpoint = possible_fact_checker_midpoints[i]
 
             if midpoint - 2 <= 0 or midpoint + 2 > 20:
                 weights[i] = 0
@@ -196,38 +196,24 @@ class Group(BaseGroup):
         # If the array is not normalized, numpy's choice() method will throw an error
         weights = weights / np.sum(weights)
 
-        return int(choice(possible_midpoints, p=weights))
+        return int(choice(possible_fact_checker_midpoints, p=weights))
 
     # A static method to get a true asset value given an estimated value
     # 30% prob chance that true == estimated
     # 18% prob chance for true == estimated + 1 or true == estimated - 1
     # Remaining probabilities are equally split
     @staticmethod
-    def draw_asset_true_value(est_value):
-        # Convert estimated value to int since est_value is a Currency type
-        est_value_int = int(est_value)
+    def draw_asset_true_value(private_range_midpoint):
+        # Convert estimated value to int since private_range_midpoint is a Currency type
+        private_range_midpoint_int = int(private_range_midpoint)
 
         # Possible true value range is [1, 2, ..., 19, 20]
         possible_values = [_ for _ in range(1, 21)]
 
-        # When estimated value is 1
-        if est_value_int == 1:
-            weights = [((1 - 0.43 - 0.2) / 18) for _ in range(20)]
-            weights[est_value_int - 1] = 0.43
-            weights[1] = 0.20
-
-        # When estimated value is 20
-        elif est_value_int == 20:
-            weights = [((1 - 0.43 - 0.2) / 18) for _ in range(20)]
-            weights[est_value_int - 1] = 0.43
-            weights[18] = 0.20
-
-        # When estimated value is between 2 and 19
-        else:
-            weights = [0.01 for _ in range(20)]
-            weights[est_value_int - 1] = 0.43
-            weights[est_value_int - 2] = 0.2
-            weights[est_value_int] = 0.2
+        weights = [0.01 for _ in range(20)]
+        weights[private_range_midpoint_int - 2] = 0.2
+        weights[private_range_midpoint_int - 1] = 0.43
+        weights[private_range_midpoint_int] = 0.2
 
         # Use numpy's random.choice() to pick a random value from a list
         # with probabilities list
@@ -270,13 +256,13 @@ class Group(BaseGroup):
     # The fact checker ranges are drawn from the possible ranges
     def set_fact_checker_midpoints(self):
         self.asset1_fact_checker_midpoint = self.draw_fact_checker_range_midpoint(
-            self.asset1_est_value)
+            self.seller1_private_range_midpoint)
 
         self.asset2_fact_checker_midpoint = self.draw_fact_checker_range_midpoint(
-            self.asset2_est_value)
+            self.seller2_private_range_midpoint)
 
         self.asset3_fact_checker_midpoint = self.draw_fact_checker_range_midpoint(
-            self.asset3_est_value)
+            self.seller3_private_range_midpoint)
 
     # Set seller grades based on differences between estimated/disclosed asset values
     # This method should be called from a WaitPage after sellers select reporting options

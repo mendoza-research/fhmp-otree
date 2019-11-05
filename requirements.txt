@@ -1,4 +1,9 @@
 # this is for Heroku and other servers.
 # Locally, you should install requirements_base.txt
 -r requirements_base.txt
+
 psycopg2>=2.5.1
+
+# In some environments, installing psycopg2 will throw an error while building the package from source
+# In the case, use psycopg2-binary instead
+# psycopg2-binary>=2.8.4

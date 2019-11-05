@@ -33,17 +33,17 @@ class SellerChoiceNotEnoughBudget(Page):
         return self.player.role() == 'seller' and self.player.budget < self.group.get_high_detail_disclosure_cost()
 
     def vars_for_template(self):
-        asset_est_values_by_player_id = {
-            1: self.group.asset1_est_value,
-            2: self.group.asset2_est_value,
-            3: self.group.asset3_est_value
+        seller_private_range_midpoints_by_player_id = {
+            1: self.group.seller1_private_range_midpoint,
+            2: self.group.seller2_private_range_midpoint,
+            3: self.group.seller3_private_range_midpoint
         }
 
-        asset_est_value_text = "{0:.0f}".format(
-            asset_est_values_by_player_id[self.player.id_in_group])
+        seller_private_range_text = "{0:.0f}".format(
+            seller_private_range_midpoints_by_player_id[self.player.id_in_group])
 
         return {
-            'asset_est_value': asset_est_value_text
+            'seller_private_range': seller_private_range_text
         }
 
 
@@ -64,17 +64,18 @@ class SellerChoiceLowHigh(Page):
         return form_fields_by_player_id[self.player.id_in_group]
 
     def vars_for_template(self):
-        asset_est_values_by_player_id = {
-            1: self.group.asset1_est_value,
-            2: self.group.asset2_est_value,
-            3: self.group.asset3_est_value
+        asset_private_range_midpoints_by_player_id = {
+            1: self.group.seller1_private_range_midpoint,
+            2: self.group.seller2_private_range_midpoint,
+            3: self.group.seller3_private_range_midpoint
         }
 
-        asset_est_value_text = "{0:.0f}".format(
-            asset_est_values_by_player_id[self.player.id_in_group])
+        asset_private_range_midpoint = asset_private_range_midpoints_by_player_id[self.player.id_in_group]
+
+        seller_private_range_text = "%d-%d" % (asset_private_range_midpoint - 1, asset_private_range_midpoint + 1)
 
         return {
-            'asset_est_value': asset_est_value_text
+            'seller_private_range': seller_private_range_text
         }
 
     def before_next_page(self):
@@ -99,10 +100,10 @@ class SellerChoiceDiscloseRange(Page):
         return form_fields_by_player_id[self.player.id_in_group]
 
     def vars_for_template(self):
-        asset_est_values_by_player_id = {
-            1: self.group.asset1_est_value,
-            2: self.group.asset2_est_value,
-            3: self.group.asset3_est_value
+        seller_private_range_midpoints_by_player_id = {
+            1: self.group.seller1_private_range_midpoint,
+            2: self.group.seller2_private_range_midpoint,
+            3: self.group.seller3_private_range_midpoint
         }
 
         asset_disclose_high = {
@@ -111,11 +112,11 @@ class SellerChoiceDiscloseRange(Page):
             3: self.group.asset3_disclose_high
         }
 
-        asset_est_value_text = "{0:.0f}".format(
-            asset_est_values_by_player_id[self.player.id_in_group])
+        seller_private_range_text = "{0:.0f}".format(
+            seller_private_range_midpoints_by_player_id[self.player.id_in_group])
 
         return {
-            'asset_est_value': asset_est_value_text,
+            'seller_private_range': seller_private_range_text,
             'asset_disclose_high': asset_disclose_high[self.player.id_in_group]
         }
 
