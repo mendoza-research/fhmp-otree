@@ -139,37 +139,39 @@ class BuyerChoice(Page):
     # Input text fields to be shown to buyers
     form_fields = ['bid_asset1', 'bid_asset2', 'bid_asset3']
 
+    def get_seller_history(self, player_id):
+        rounds = range(2, Constants.num_practice_rounds + 1) if self.round_number <= Constants.num_practice_rounds else range(Constants.num_practice_rounds + 1, Constnats.num_rounds + 1)
+
+        return list(rounds)
+
     # is_displayed() is used to show this page only to the buyers
     def is_displayed(self):
         return self.player.role() == 'buyer'
 
     def vars_for_template(self):
-        return {
-            'sellers': [
+        sellers_info = [
                 {
                     'id': 1,
                     'reported_range': self.group.seller1_reported_range,
-                    'seller_grade': self.group.seller1_grade,
+                    'grade': self.group.seller1_grade,
+                    'history': self.get_seller_history(1),
                 },
                 {
                     'id': 2,
                     'reported_range': self.group.seller2_reported_range,
-                    'seller_grade': self.group.seller2_grade
+                    'grade': self.group.seller2_grade,
+                    'history': self.get_seller_history(2),
                 },
                 {
                     'id': 3,
                     'reported_range': self.group.seller3_reported_range,
-                    'seller_grade': self.group.seller3_grade
+                    'grade': self.group.seller3_grade,
+                    'history': self.get_seller_history(3),
                 },
-            ],
+            ]
 
-
-            'seller1_reported_range': self.group.seller1_reported_range,
-            'seller2_reported_range': self.group.seller2_reported_range,
-            'seller3_reported_range': self.group.seller3_reported_range,
-            'seller1_grade': self.group.seller1_grade,
-            'seller2_grade': self.group.seller2_grade,
-            'seller3_grade': self.group.seller3_grade
+        return {
+            'sellers': sellers_info
         }
 
     def error_message(self, values):

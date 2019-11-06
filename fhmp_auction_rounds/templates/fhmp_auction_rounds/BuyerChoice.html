@@ -26,7 +26,7 @@
 			<div class="col-md-12">
 					<p><strong><u>Seller {{ seller.id }}</u></strong></p>
 					<p>Seller {{ seller.id }} has chosen to disclose a range of {{ seller.reported_range }} points. </p>
-					<p>Based on this range, the fact checker has given the Seller a grade of {{ seller.seller_grade }}.</p>
+					<p>Based on this range, the fact checker has given the Seller a grade of {{ seller.grade }}.</p>
 
 					{% if seller.id == 1 %}
 						{% formfield player.bid_asset1 label="How much will you bid for Seller 1's Asset?" %}
@@ -35,6 +35,10 @@
 					{% else %}
 						{% formfield player.bid_asset3 label="How much will you bid for Seller 3's Asset?" %}
 					{% endif %}
+
+					{% for round_history in seller.history %} 
+						{{ round_history }}
+					{% endfor %}
 				</div>
 		{% endfor %}
 	</div>
