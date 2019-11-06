@@ -7,21 +7,25 @@ from otree.api import (
     Currency as c
 )
 
-author = 'Your name here'
+author = 'Kimberly Mendoza'
 
 doc = """
-Practice rounds
+Models for auction rounds
 """
-
+# Set the number of practice/main rounds here
+num_practice_rounds = 2
+num_main_rounds = 2
 
 class Constants(BaseConstants):
     name_in_url = 'fhmp_practice_rounds'
     players_per_group = None
 
-    # Practice = 2 rounds
-    # Main = 20 rounds
-    # num_rounds should be # practice rounds + # main rounds
-    num_rounds = 4
+    # Define the number of rounds class variables
+    num_practice_rounds=num_practice_rounds
+    num_main_rounds=num_main_rounds
+
+    # number of total rounds (practice + main)
+    num_rounds = num_practice_rounds + num_main_rounds
 
     # Currency definitions
     buyer_initial_endowment_practice_rounds = c(200)

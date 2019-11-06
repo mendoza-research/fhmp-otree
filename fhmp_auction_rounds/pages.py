@@ -1,4 +1,5 @@
 from ._builtin import Page, WaitPage
+from .models import Constants
 
 # Each page that a player sees is defined in this file
 # Each class in this file represents a page
@@ -223,7 +224,7 @@ class RoundResult(Page):
 
 class PracticeOutro(Page):
     def is_displayed(self):
-        return self.subsession.round_number == 2
+        return self.subsession.round_number == Constants.num_practice_rounds
 
 
 page_sequence = [

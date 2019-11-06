@@ -3,7 +3,7 @@ from otree.api import (
     Currency as c, currency_range
 )
 
-author = 'Your name here'
+author = 'Kimberly Mendoza'
 
 doc = """
 Setup rounds
