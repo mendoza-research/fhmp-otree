@@ -2,31 +2,37 @@
 {% load otree static %}
 
 {% block title %}
-	Choose how to disclose the probability
+Choose how to disclose the probability
 {% endblock %}
 
 {% block content %}
-	<table class="table">
-		<tbody>
-			<tr>
-				<th scope="col">
-					Likely value of your asset
-				</th>
-				<td>{{ asset_est_value }}</td>
-			</tr>
+<table class="table">
+  <tbody>
+    <tr>
+      <th scope="col">
+        Your Private Range (Likely values for your asset)
+      </th>
+      <td>{{ seller_private_range }}</td>
+    </tr>
 
-			<tr>
-				<th scope="col">
-					Your budget
-				</th>
-				<td>{{ player.budget }}</td>
-			</tr>
-		</tbody>
-	</table>
+    <tr>
+      <th scope="col">
+        Your budget
+      </th>
+      <td>{{ player.budget }}</td>
+    </tr>
+  </tbody>
+</table>
 
-	<p>The actual value of your asset is determined by drawing from a distribution of outcomes around {{ asset_est_value }}.</p>
+<p>
+  The actual value of your asset is determined by drawing from a distribution of
+  outcomes around your Private Range.
+</p>
 
-	<p>Since you do not have enough budget to choose high reporting option, low reporting option will be automatically selected for you.</p>
+<p>
+  Since you do not have enough budget to choose high reporting option, low
+  reporting option will be automatically selected for you.
+</p>
 
-	{% next_button %}
+{% next_button %}
 {% endblock %}

@@ -1,0 +1,82 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Choose how to disclose the probability
+{% endblock %}
+
+{% block content %}
+<table class="table">
+  <tbody>
+    <tr>
+      <th scope="col">
+        Your Private Range (Likely values for your asset)
+      </th>
+      <td>{{ seller_private_range }}</td>
+    </tr>
+
+    <tr>
+      <th scope="col">
+        Your budget
+      </th>
+      <td>{{ player.budget }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  The most likely values of your asset are {{ seller_private_range }}. The
+  actual value of your asset is determined by drawing from possible true values
+  between 1 and 20.
+</p>
+
+<!-- Show different text based on seller's reporting option -->
+{% if did_seller_report_more_precise %}
+<p>
+  You have chosen the <strong class="red">more precise</strong> reporting
+  option.
+</p>
+{% else %}
+<p>
+  You have chosen the <strong class="red">less precise</strong> reporting
+  option.
+</p>
+{% endif %}
+
+<p>Please select an option.</p>
+
+<!-- Show different radioboxes based on seller's reporting option -->
+{% for field in form %}
+<div class="controls">
+  <ul>
+    {% for choice in field %}
+      {% if did_seller_report_more_precise %}
+        {% if 'High' in choice.data.label %}
+          <li>{{ choice }}</li>
+        {% endif %}
+      {% else %}
+        {% if 'Low' in choice.data.label %}
+          <li>{{ choice }}</li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+{% endfor %}
+
+<script>
+  $(function() {
+    var textNodes = $(".controls ul li label")
+      .contents()
+      .filter(function() {
+        return this.nodeType === 3; //Node.TEXT_NODE
+      });
+
+    Array.prototype.forEach.call(textNodes, function(el, idx) {
+      el.nodeValue = el.nodeValue.replace("Low ", "").replace("High ", "");
+    });
+  });
+</script>
+
+{% next_button %}
+{% endblock %}

@@ -7,14 +7,13 @@ Round Results
 
 {% block content %}
 <div class="row">
-
 	{% for asset in assets %}
 	<div class="col-md-12">
 		<h3><u>Asset {{ asset.id }}</u></h3>
-		<p><strong>Seller {{asset.id}}</strong> disclosed a range of <strong>{{ asset.disclose_interval }}
+		<p><strong>Seller {{asset.id}}</strong> disclosed a range of <strong>{{ asset.reported_range }}
 				points</strong> for their asset.</p>
 		<p>The fact checker grade was {{ asset.seller_grade }}.</p>
-		<p>The true value of their asset is <strong>{{ asset.true_value }}</strong>.</p>
+		<p>The true value of asset {{ asset.id }} is <strong>{{ asset.true_value }}</strong>.</p>
 
 		<table class="table">
 			<thead class="thead-dark">
