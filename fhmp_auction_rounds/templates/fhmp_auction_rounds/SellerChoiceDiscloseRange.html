@@ -1,5 +1,11 @@
-{% extends "global/Page.html" %} {% load otree static %} {% block title %}
-Choose how to disclose the probability {% endblock %} {% block content %}
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Choose how to disclose the probability
+{% endblock %}
+
+{% block content %}
 <table class="table">
   <tbody>
     <tr>
@@ -19,9 +25,9 @@ Choose how to disclose the probability {% endblock %} {% block content %}
 </table>
 
 <p>
-  The most likely values of your asset are PUT PRIVATE RANGE HERE!!!. The actual
-  value of your asset is determined by drawing from possible true values between
-  1 and 20.
+  The most likely values of your asset are {{ seller_private_range }}. The
+  actual value of your asset is determined by drawing from possible true values
+  between 1 and 20.
 </p>
 
 <!-- Show different text based on seller's reporting option -->
@@ -43,12 +49,17 @@ Choose how to disclose the probability {% endblock %} {% block content %}
 {% for field in form %}
 <div class="controls">
   <ul>
-    {% for choice in field %} {% if asset_disclose_high %} {% if 'High' in
-    choice.data.label %}
-    <li>{{ choice }}</li>
-    {% endif %} {% else %} {% if 'Low' in choice.data.label %}
-    <li>{{ choice }}</li>
-    {% endif %} {% endif %} {% endfor %}
+    {% for choice in field %}
+      {% if asset_disclose_high %}
+        {% if 'High' in choice.data.label %}
+          <li>{{ choice }}</li>
+        {% endif %}
+      {% else %}
+        {% if 'Low' in choice.data.label %}
+          <li>{{ choice }}</li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
   </ul>
 </div>
 {% endfor %}
@@ -67,4 +78,5 @@ Choose how to disclose the probability {% endblock %} {% block content %}
   });
 </script>
 
-{% next_button %} {% endblock %}
+{% next_button %}
+{% endblock %}

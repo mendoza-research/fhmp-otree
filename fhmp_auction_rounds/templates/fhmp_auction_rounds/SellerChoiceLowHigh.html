@@ -1,5 +1,11 @@
-{% extends "global/Page.html" %} {% load otree static %} {% block title %}
-Choose how to disclose the probability {% endblock %} {% block content %}
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Choose how to disclose the probability
+{% endblock %}
+
+{% block content %}
 <table class="table">
   <tbody>
     <tr>
@@ -29,8 +35,10 @@ Choose how to disclose the probability {% endblock %} {% block content %}
 <div class="controls">
   <ul>
     {% for choice in field %}
-    <li>{{ choice }}</li>
+      <li>{{ choice }}</li>
     {% endfor %}
   </ul>
 </div>
-{% endfor %} {% next_button %} {% endblock %}
+{% endfor %}
+{% next_button %}
+{% endblock %}

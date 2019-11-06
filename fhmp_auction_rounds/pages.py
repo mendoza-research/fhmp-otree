@@ -39,8 +39,9 @@ class SellerChoiceNotEnoughBudget(Page):
             3: self.group.seller3_private_range_midpoint
         }
 
-        seller_private_range_text = "{0:.0f}".format(
-            seller_private_range_midpoints_by_player_id[self.player.id_in_group])
+        seller_private_range_midpoint = seller_private_range_midpoints_by_player_id[self.player.id_in_group]
+
+        seller_private_range_text = "%d-%d" % (seller_private_range_midpoint - 1, seller_private_range_midpoint + 1)
 
         return {
             'seller_private_range': seller_private_range_text
@@ -64,15 +65,15 @@ class SellerChoiceLowHigh(Page):
         return form_fields_by_player_id[self.player.id_in_group]
 
     def vars_for_template(self):
-        asset_private_range_midpoints_by_player_id = {
+        seller_private_range_midpoints_by_player_id = {
             1: self.group.seller1_private_range_midpoint,
             2: self.group.seller2_private_range_midpoint,
             3: self.group.seller3_private_range_midpoint
         }
 
-        asset_private_range_midpoint = asset_private_range_midpoints_by_player_id[self.player.id_in_group]
+        seller_private_range_midpoint = seller_private_range_midpoints_by_player_id[self.player.id_in_group]
 
-        seller_private_range_text = "%d-%d" % (asset_private_range_midpoint - 1, asset_private_range_midpoint + 1)
+        seller_private_range_text = "%d-%d" % (seller_private_range_midpoint - 1, seller_private_range_midpoint + 1)
 
         return {
             'seller_private_range': seller_private_range_text
@@ -112,8 +113,9 @@ class SellerChoiceDiscloseRange(Page):
             3: self.group.asset3_disclose_high
         }
 
-        seller_private_range_text = "{0:.0f}".format(
-            seller_private_range_midpoints_by_player_id[self.player.id_in_group])
+        seller_private_range_midpoint = seller_private_range_midpoints_by_player_id[self.player.id_in_group]
+
+        seller_private_range_text = "%d-%d" % (seller_private_range_midpoint - 1, seller_private_range_midpoint + 1)
 
         return {
             'seller_private_range': seller_private_range_text,
