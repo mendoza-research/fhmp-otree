@@ -140,9 +140,33 @@ class BuyerChoice(Page):
     form_fields = ['bid_asset1', 'bid_asset2', 'bid_asset3']
 
     def get_seller_history(self, player_id):
-        rounds = range(2, Constants.num_practice_rounds + 1) if self.round_number <= Constants.num_practice_rounds else range(Constants.num_practice_rounds + 1, Constnats.num_rounds + 1)
+        previous_rounds = range(2, Constants.num_practice_rounds + 1) if self.round_number <= Constants.num_practice_rounds else range(Constants.num_practice_rounds + 1, Constnats.num_rounds + 1)
 
-        return list(rounds)
+        history = [] 
+
+        for round_number in previous_rounds:
+            player = self.player.in_round(round_number)
+            group = self.group.in_round(round_number)
+
+            seller_reported_ranges_by_id = {
+                1: group.seller1_reported_range,
+                2: group.seller2_reported_range,
+                3: group.seller3_reported_range
+            }
+
+            seller_did_report_more_precise_by_id = {
+                1: group.seller1_did_report_more_precise,
+                2: group.seller2_did_report_more_precise,
+                3: group.seller3_did_report_more_precise,
+            }
+
+            history.append({
+                'round_number': round_number, 
+                'reported_range': seller_reported_ranges_by_id[player_id], 
+                'did_report_more_precise': seller_did_report_more_precise_by_id[player_id]
+            })
+
+        return list(previous_rounds)
 
     # is_displayed() is used to show this page only to the buyers
     def is_displayed(self):
@@ -195,7 +219,6 @@ class RoundResult(Page):
             # This array of objects is used in the Results page
             # to display range of high asset probabilities, true asset value,
             # other buyers' bids, and winners
-
             'assets': [
                 {
                     'id': 1,
