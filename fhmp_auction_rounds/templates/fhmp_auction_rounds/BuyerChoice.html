@@ -24,22 +24,53 @@
 	<div class="row">
 		{% for seller in sellers %}
 			<div class="col-md-12">
-					<p><strong><u>Seller {{ seller.id }}</u></strong></p>
-					<p>Seller {{ seller.id }} has chosen to disclose a range of {{ seller.reported_range }} points. </p>
-					<p>Based on this range, the fact checker has given the Seller a grade of {{ seller.grade }}.</p>
+				<p><strong><u>Seller {{ seller.id }}</u></strong></p>
+				<p>Seller {{ seller.id }} has chosen to disclose a range of {{ seller.reported_range }} points. </p>
+				<p>Based on this range, the fact checker has given the Seller a grade of {{ seller.grade }}.</p>
 
-					{% if seller.id == 1 %}
-						{% formfield player.bid_asset1 label="How much will you bid for Seller 1's Asset?" %}
-					{% elif seller.id == 2 %}
-						{% formfield player.bid_asset2 label="How much will you bid for Seller 2's Asset?" %}
-					{% else %}
-						{% formfield player.bid_asset3 label="How much will you bid for Seller 3's Asset?" %}
-					{% endif %}
+				{% if seller.id == 1 %}
+					{% formfield player.bid_asset1 label="How much will you bid for Seller 1's Asset?" %}
+				{% elif seller.id == 2 %}
+					{% formfield player.bid_asset2 label="How much will you bid for Seller 2's Asset?" %}
+				{% else %}
+					{% formfield player.bid_asset3 label="How much will you bid for Seller 3's Asset?" %}
+				{% endif %}
 
-					{% for round_history in seller.history %} 
-						{{ round_history }}
-					{% endfor %}
-				</div>
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">Round</th>
+							<th scope="col">Reported Range</th>
+							<th scope="col">Precision</th>
+							<th scope="col">Seller Grade</th>
+							<th scope="col">True Value</th>
+						</tr>
+					</thead>
+			
+						<tbody>
+							{% for round_history in seller.history %}
+								<tr>
+									<th scope="row">
+										{{ round_history.round_number }}
+									</th>
+									<td>
+										{{ round_history.reported_range }}
+									</td>
+									<td>
+										{{ round_history.precision }}
+									</td>
+									<td>
+										{{ round_history.seller_grade }}
+									</td>
+									<td>
+										{{ round_history.asset_true_value }}
+									</td>
+								</tr>
+							{% endfor %}
+
+					</tbody>
+				</table>
+			</div>
 		{% endfor %}
 	</div>
 
