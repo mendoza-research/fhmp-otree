@@ -16,6 +16,8 @@ from .models import Constants
 # For detailed documentation regarding pages, please refer to oTree's documentation page below
 # https://otree.readthedocs.io/en/latest/pages.html
 
+def get_private_range_string(seller_private_range_midpoint):
+    return "%d-%d" % (seller_private_range_midpoint - 1, seller_private_range_midpoint + 1)
 
 # This is a transition page that is not shown to the end-user
 class BeginWaitPage(WaitPage):
@@ -40,12 +42,10 @@ class SellerChoiceNotEnoughBudget(Page):
             3: self.group.seller3_private_range_midpoint
         }
 
-        seller_private_range_midpoint = seller_private_range_midpoints_by_player_id[self.player.id_in_group]
-
-        seller_private_range_text = "%d-%d" % (seller_private_range_midpoint - 1, seller_private_range_midpoint + 1)
+        seller_private_range = get_private_range_string(seller_private_range_midpoints_by_player_id[self.player.id_in_group])
 
         return {
-            'seller_private_range': seller_private_range_text
+            'seller_private_range': seller_private_range
         }
 
 
@@ -72,12 +72,10 @@ class SellerChoiceLowHigh(Page):
             3: self.group.seller3_private_range_midpoint
         }
 
-        seller_private_range_midpoint = seller_private_range_midpoints_by_player_id[self.player.id_in_group]
-
-        seller_private_range_text = "%d-%d" % (seller_private_range_midpoint - 1, seller_private_range_midpoint + 1)
+        seller_private_range = get_private_range_string(seller_private_range_midpoints_by_player_id[self.player.id_in_group])
 
         return {
-            'seller_private_range': seller_private_range_text
+            'seller_private_range': seller_private_range
         }
 
     def before_next_page(self):
@@ -108,19 +106,18 @@ class SellerChoiceReportingRange(Page):
             3: self.group.seller3_private_range_midpoint
         }
 
-        did_seller_report_more_precise = {
+        did_seller_report_more_precise_by_id = {
             1: self.group.seller1_did_report_more_precise,
             2: self.group.seller2_did_report_more_precise,
             3: self.group.seller3_did_report_more_precise
         }
 
-        seller_private_range_midpoint = seller_private_range_midpoints_by_player_id[self.player.id_in_group]
-
-        seller_private_range_text = "%d-%d" % (seller_private_range_midpoint - 1, seller_private_range_midpoint + 1)
+        seller_private_range = get_private_range_string(seller_private_range_midpoints_by_player_id[self.player.id_in_group])
+        did_seller_report_more_precise = did_seller_report_more_precise_by_id[self.player.id_in_group]
 
         return {
-            'seller_private_range': seller_private_range_text,
-            'did_seller_report_more_precise': did_seller_report_more_precise[self.player.id_in_group]
+            'seller_private_range': seller_private_range,
+            'did_seller_report_more_precise': did_seller_report_more_precise
         }
 
     def before_next_page(self):
@@ -148,6 +145,25 @@ class BuyerChoice(Page):
 
     def vars_for_template(self):
         return {
+            'sellers': [
+                {
+                    'id': 1,
+                    'reported_range': self.group.seller1_reported_range,
+                    'seller_grade': self.group.seller1_grade,
+                },
+                {
+                    'id': 2,
+                    'reported_range': self.group.seller2_reported_range,
+                    'seller_grade': self.group.seller2_grade
+                },
+                {
+                    'id': 3,
+                    'reported_range': self.group.seller3_reported_range,
+                    'seller_grade': self.group.seller3_grade
+                },
+            ],
+
+
             'seller1_reported_range': self.group.seller1_reported_range,
             'seller2_reported_range': self.group.seller2_reported_range,
             'seller3_reported_range': self.group.seller3_reported_range,

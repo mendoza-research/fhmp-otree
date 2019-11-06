@@ -22,51 +22,21 @@
 	</p>
 
 	<div class="row">
-		<div class="col-md-12">
-			<p><strong><u>Seller 1</u></strong></p>
-			<p>Seller 1 has chosen to disclose a range of {{ seller1_reported_range }} points.</p>
-			<p>Based on this range, the fact checker has given the Seller a grade of {{ seller1_grade }}.</p>
-	{% formfield player.bid_asset1 label="How much will you bid for Seller 1's Asset?" %}
-		</div>
+		{% for seller in sellers %}
+			<div class="col-md-12">
+					<p><strong><u>Seller {{ seller.id }}</u></strong></p>
+					<p>Seller {{ seller.id }} has chosen to disclose a range of {{ seller.reported_range }} points. </p>
+					<p>Based on this range, the fact checker has given the Seller a grade of {{ seller.seller_grade }}.</p>
 
-		<div>
-			<table>
-				<thead>
-					<tr>
-						<th>Round</th>
-						<th>Reported Range</th>
-						<th>Precision</th>
-						<th>FactChecker Grade</th>
-						<th>True Asset Value</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>1</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-12">
-			<p><strong><u>Seller 2</u></strong></p>
-			<p>Seller 2 has chosen to disclose a range of {{ seller2_reported_range }} points. </p>
-			<p>Based on this range, the fact checker has given the Seller a grade of {{ seller2_grade }}.</p>
-	{% formfield player.bid_asset2 label="How much will you bid for Seller 2's Asset?" %}
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-12">
-			<p><strong><u>Seller 3</u></strong></p>
-			<p>Seller 3 has chosen to disclose a range of {{ seller3_reported_range }} points.</p>
-			<p>Based on this range, the fact checker has given the Seller a grade of {{ seller3_grade }}.</p>
-	{% formfield player.bid_asset3 label="How much will you bid for Seller 3's Asset?" %}
-		</div>
+					{% if seller.id == 1 %}
+						{% formfield player.bid_asset1 label="How much will you bid for Seller 1's Asset?" %}
+					{% elif seller.id == 2 %}
+						{% formfield player.bid_asset2 label="How much will you bid for Seller 2's Asset?" %}
+					{% else %}
+						{% formfield player.bid_asset3 label="How much will you bid for Seller 3's Asset?" %}
+					{% endif %}
+				</div>
+		{% endfor %}
 	</div>
 
 	{% next_button %}
