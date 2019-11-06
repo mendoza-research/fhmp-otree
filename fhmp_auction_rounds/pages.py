@@ -31,7 +31,7 @@ class BeginWaitPage(WaitPage):
 
 class SellerChoiceNotEnoughBudget(Page):
     def is_displayed(self):
-        return self.player.role() == 'seller' and self.player.budget < self.group.get_high_detail_disclosure_cost()
+        return self.player.role() == 'seller' and self.player.budget < Constants.more_precise_reporting_cost
 
     def vars_for_template(self):
         seller_private_range_midpoints_by_player_id = {
@@ -53,14 +53,14 @@ class SellerChoiceLowHigh(Page):
     form_model = 'group'
 
     def is_displayed(self):
-        return self.player.role() == 'seller' and self.player.budget >= self.group.get_high_detail_disclosure_cost()
+        return self.player.role() == 'seller' and self.player.budget >= Constants.more_precise_reporting_cost
 
-    # Return disclose level form field based on player id
+    # Return reporting precision level form field based on player id
     def get_form_fields(self):
         form_fields_by_player_id = {
-            1: ['asset1_disclose_high'],
-            2: ['asset2_disclose_high'],
-            3: ['asset3_disclose_high']
+            1: ['seller1_did_report_more_precise'],
+            2: ['seller2_did_report_more_precise'],
+            3: ['seller3_did_report_more_precise']
         }
 
         return form_fields_by_player_id[self.player.id_in_group]
@@ -85,18 +85,18 @@ class SellerChoiceLowHigh(Page):
             self.player.update_seller_budget_after_reporting()
 
 
-class SellerChoiceDiscloseRange(Page):
+class SellerChoiceReportingRange(Page):
     form_model = 'group'
 
     def is_displayed(self):
         return self.player.role() == 'seller'
 
-    # Return disclose interval form field based on player id
+    # Return reported ranges form field based on player id
     def get_form_fields(self):
         form_fields_by_player_id = {
-            1: ['asset1_disclose_interval'],
-            2: ['asset2_disclose_interval'],
-            3: ['asset3_disclose_interval']
+            1: ['seller1_reported_range'],
+            2: ['seller2_reported_range'],
+            3: ['seller3_reported_range']
         }
 
         return form_fields_by_player_id[self.player.id_in_group]
@@ -108,10 +108,10 @@ class SellerChoiceDiscloseRange(Page):
             3: self.group.seller3_private_range_midpoint
         }
 
-        asset_disclose_high = {
-            1: self.group.asset1_disclose_high,
-            2: self.group.asset2_disclose_high,
-            3: self.group.asset3_disclose_high
+        did_seller_report_more_precise = {
+            1: self.group.seller1_did_report_more_precise,
+            2: self.group.seller2_did_report_more_precise,
+            3: self.group.seller3_did_report_more_precise
         }
 
         seller_private_range_midpoint = seller_private_range_midpoints_by_player_id[self.player.id_in_group]
@@ -120,7 +120,7 @@ class SellerChoiceDiscloseRange(Page):
 
         return {
             'seller_private_range': seller_private_range_text,
-            'asset_disclose_high': asset_disclose_high[self.player.id_in_group]
+            'did_seller_report_more_precise': did_seller_report_more_precise[self.player.id_in_group]
         }
 
     def before_next_page(self):
@@ -129,7 +129,7 @@ class SellerChoiceDiscloseRange(Page):
 
 # This is a transition page that is not shown to the end-user
 # By the time all players arrive on this page, sellers have finished
-# picking reporting options and disclose range
+# picking reporting options and reported ranges
 # Seller grade calculation should be done in this step
 class SellerChoiceResultWaitPage(WaitPage):
     def after_all_players_arrive(self):
@@ -148,9 +148,9 @@ class BuyerChoice(Page):
 
     def vars_for_template(self):
         return {
-            'asset1_disclose_interval': self.group.asset1_disclose_interval,
-            'asset2_disclose_interval': self.group.asset2_disclose_interval,
-            'asset3_disclose_interval': self.group.asset3_disclose_interval,
+            'seller1_reported_range': self.group.seller1_reported_range,
+            'seller2_reported_range': self.group.seller2_reported_range,
+            'seller3_reported_range': self.group.seller3_reported_range,
             'seller1_grade': self.group.seller1_grade,
             'seller2_grade': self.group.seller2_grade,
             'seller3_grade': self.group.seller3_grade
@@ -181,7 +181,7 @@ class RoundResult(Page):
             'assets': [
                 {
                     'id': 1,
-                    'disclose_interval': self.group.asset1_disclose_interval,
+                    'reported_range': self.group.seller1_reported_range,
                     'true_value': self.group.asset1_true_value,
                     'seller_grade': self.group.seller1_grade,
                     'winning_bid': self.group.asset1_max_bid,
@@ -194,7 +194,7 @@ class RoundResult(Page):
                 },
                 {
                     'id': 2,
-                    'disclose_interval': self.group.asset2_disclose_interval,
+                    'reported_range': self.group.seller2_reported_range,
                     'true_value': self.group.asset2_true_value,
                     'seller_grade': self.group.seller2_grade,
                     'winning_bid': self.group.asset2_max_bid,
@@ -207,7 +207,7 @@ class RoundResult(Page):
                 },
                 {
                     'id': 3,
-                    'disclose_interval': self.group.asset2_disclose_interval,
+                    'reported_range': self.group.seller3_reported_range,
                     'true_value': self.group.asset3_true_value,
                     'seller_grade': self.group.seller3_grade,
                     'winning_bid': self.group.asset3_max_bid,
@@ -231,7 +231,7 @@ page_sequence = [
     BeginWaitPage,
     SellerChoiceNotEnoughBudget,
     SellerChoiceLowHigh,
-    SellerChoiceDiscloseRange,
+    SellerChoiceReportingRange,
     SellerChoiceResultWaitPage,
     BuyerChoice,
     RoundResultWaitPage,

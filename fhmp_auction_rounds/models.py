@@ -34,10 +34,10 @@ class Constants(BaseConstants):
     buyer_initial_endowment_main_rounds = c(200)
     seller_initial_endowment_main_rounds = c(20)
 
-    high_detail_disclosure_cost = c(2)
+    more_precise_reporting_cost = c(2)
 
-    # Generate disclose intervals dict
-    disclose_intervals = {}
+    # Generate reporting ranges dict
+    reporting_ranges = {}
 
     low_range = 5
     high_range = 3
@@ -46,7 +46,7 @@ class Constants(BaseConstants):
         max_value = min_value + low_range - 1
         key = str(min_value) + '-' + str(max_value)
 
-        disclose_intervals[key] = {
+        reporting_ranges[key] = {
             'label': 'Low ' + key,
             'min': min_value,
             'max': max_value
@@ -56,7 +56,7 @@ class Constants(BaseConstants):
         max_value = min_value + high_range - 1
         key = str(min_value) + '-' + str(max_value)
 
-        disclose_intervals[key] = {
+        reporting_ranges[key] = {
             'label': 'High ' + key,
             'min': min_value,
             'max': max_value
@@ -64,11 +64,11 @@ class Constants(BaseConstants):
 
     # Create a list of strings to be displayed in form fields
     # shown to users
-    disclose_interval_choices = list(
-        map(lambda x: [x[0], x[1]['label']], disclose_intervals.items()))
+    reporting_range_choices = list(
+        map(lambda x: [x[0], x[1]['label']], reporting_ranges.items()))
 
-    # Choices for disclose levels
-    reporting_option_choices = [
+    # Choices for reporting precision
+    reporting_precision_choices = [
         [False, 'Less Precise (5 numbers wide) (No cost)'],
         [True, 'More Precise (3 numbers wide) (Cost: 2 points)'],
     ]
@@ -76,49 +76,48 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
     def creating_session(self):
-        print('creating_session')
+        # print('creating_session')
+        pass
 
 
 class Group(BaseGroup):
-    print('running Group init')
-
-    # These boolean fields indicate whether the user has selected high level of disclosure
-    asset1_disclose_high = models.BooleanField(
-        choices=Constants.reporting_option_choices,
+    # These boolean fields indicate whether the user has selected more precise reporting option
+    seller1_did_report_more_precise = models.BooleanField(
+        choices=Constants.reporting_precision_choices,
         widget=widgets.RadioSelect,
         initial=False
     )
 
-    asset2_disclose_high = models.BooleanField(
-        choices=Constants.reporting_option_choices,
+    seller2_did_report_more_precise = models.BooleanField(
+        choices=Constants.reporting_precision_choices,
         widget=widgets.RadioSelect,
         initial=False
     )
 
-    asset3_disclose_high = models.BooleanField(
-        choices=Constants.reporting_option_choices,
+    seller3_did_report_more_precise = models.BooleanField(
+        choices=Constants.reporting_precision_choices,
         widget=widgets.RadioSelect,
         initial=False
     )
 
-    # Disclose intervals
-    asset1_disclose_interval = models.StringField(
-        choices=Constants.disclose_interval_choices,
+    # Reported ranges
+    seller1_reported_range = models.StringField(
+        choices=Constants.reporting_range_choices,
         widget=widgets.RadioSelect,
         blank=False
     )
 
-    asset2_disclose_interval = models.StringField(
-        choices=Constants.disclose_interval_choices,
+    seller2_reported_range = models.StringField(
+        choices=Constants.reporting_range_choices,
         widget=widgets.RadioSelect,
         blank=False
     )
 
-    asset3_disclose_interval = models.StringField(
-        choices=Constants.disclose_interval_choices,
+    seller3_reported_range = models.StringField(
+        choices=Constants.reporting_range_choices,
         widget=widgets.RadioSelect,
         blank=False,
-        initial=list(Constants.disclose_intervals.keys())[0]
+        initial=list(Constants.reporting_ranges.keys())[0]
     )
 
     # Assets' true values based on each probability
@@ -126,7 +125,6 @@ class Group(BaseGroup):
     asset2_true_value = models.CurrencyField()
     asset3_true_value = models.CurrencyField()
 
-    # Since there is a fixed number of assets, each asset's probability and disclose_interval should be listed here
     seller1_private_range_midpoint = models.CurrencyField(min=2, max=19)
     seller2_private_range_midpoint = models.CurrencyField(min=2, max=19)
     seller3_private_range_midpoint = models.CurrencyField(min=2, max=19)
@@ -142,12 +140,6 @@ class Group(BaseGroup):
     asset1_max_bid = models.CurrencyField()
     asset2_max_bid = models.CurrencyField()
     asset3_max_bid = models.CurrencyField()
-
-    # A simple getter for the cost of high reporting option
-    # Since there is no way to access the value of Constants.high_detail_disclosure_cost
-    # from pages.py, this method is used to proxy the value
-    def get_high_detail_disclosure_cost(self):
-        return Constants.high_detail_disclosure_cost
 
     # Generate estimated/true values
     def init_round(self):
@@ -268,20 +260,20 @@ class Group(BaseGroup):
         self.asset3_fact_checker_midpoint = self.draw_fact_checker_range_midpoint(
             self.seller3_private_range_midpoint)
 
-    # Set seller grades based on differences between estimated/disclosed asset values
+    # Set seller grades based on differences between private range/fact checker range
     # This method should be called from a WaitPage after sellers select reporting options
     def set_seller_grades(self):
         # Need to draw fact checker ranges and set midpoints first
         self.set_fact_checker_midpoints()
 
         self.seller1_grade = self.calculate_seller_grade(
-            int(Constants.disclose_intervals[self.asset1_disclose_interval]['min'] + (Constants.disclose_intervals[self.asset1_disclose_interval]['max'] - Constants.disclose_intervals[self.asset1_disclose_interval]['min']) / 2), int(self.asset1_fact_checker_midpoint))
+            int(Constants.reporting_ranges[self.seller1_reported_range]['min'] + (Constants.reporting_ranges[self.seller1_reported_range]['max'] - Constants.reporting_ranges[self.seller1_reported_range]['min']) / 2), int(self.asset1_fact_checker_midpoint))
 
         self.seller2_grade = self.calculate_seller_grade(
-            int(Constants.disclose_intervals[self.asset2_disclose_interval]['min'] + (Constants.disclose_intervals[self.asset2_disclose_interval]['max'] - Constants.disclose_intervals[self.asset2_disclose_interval]['min']) / 2), int(self.asset2_fact_checker_midpoint))
+            int(Constants.reporting_ranges[self.seller2_reported_range]['min'] + (Constants.reporting_ranges[self.seller2_reported_range]['max'] - Constants.reporting_ranges[self.seller2_reported_range]['min']) / 2), int(self.asset2_fact_checker_midpoint))
 
         self.seller3_grade = self.calculate_seller_grade(
-            int(Constants.disclose_intervals[self.asset3_disclose_interval]['min'] + (Constants.disclose_intervals[self.asset3_disclose_interval]['max'] - Constants.disclose_intervals[self.asset3_disclose_interval]['min']) / 2), int(self.asset3_fact_checker_midpoint))
+            int(Constants.reporting_ranges[self.seller3_reported_range]['min'] + (Constants.reporting_ranges[self.seller3_reported_range]['max'] - Constants.reporting_ranges[self.seller3_reported_range]['min']) / 2), int(self.asset3_fact_checker_midpoint))
 
     # A: if the midpoint of the reported range is equal to, + 1 or - 1 of the midpoint of the fact checker’s range
     # B: if the midpoint of the reported range is + or - 2 or 3 from the midpoint of the fact checker’s range
@@ -386,14 +378,14 @@ class Group(BaseGroup):
         return assets[seller_id]
 
     # Get the reporting cost of a seller
-    def get_seller_disclosure_cost(self, seller_id):
-        seller_disclose_high = {
-            1: self.asset1_disclose_high,
-            2: self.asset2_disclose_high,
-            3: self.asset3_disclose_high
+    def get_seller_reporting_cost(self, seller_id):
+        did_seller_report_more_precise = {
+            1: self.seller1_did_report_more_precise,
+            2: self.seller2_did_report_more_precise,
+            3: self.seller3_did_report_more_precise
         }
 
-        return Constants.high_detail_disclosure_cost if seller_disclose_high[seller_id] else 0
+        return Constants.more_precise_reporting_cost if did_seller_report_more_precise[seller_id] else 0
 
 
 class Player(BasePlayer):
@@ -422,7 +414,7 @@ class Player(BasePlayer):
 
     # Update budget after the seller chooses a reporting option
     def update_seller_budget_after_reporting(self):
-        self.budget -= self.group.get_seller_disclosure_cost(self.id_in_group)
+        self.budget -= self.group.get_seller_reporting_cost(self.id_in_group)
 
     # Calculate earning and add to payoffs
     # This method is run at the end of each round
