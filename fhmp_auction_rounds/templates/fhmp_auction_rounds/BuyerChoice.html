@@ -24,7 +24,7 @@
 	<div class="row">
 		{% for seller in sellers %}
 			<div class="col-md-12">
-				<p><strong><u>Seller {{ seller.id }}</u></strong></p>
+				<h3><u>Seller {{ seller.id }}</u></h3>
 				<p>Seller {{ seller.id }} has chosen to disclose a range of {{ seller.reported_range }} points. </p>
 				<p>Based on this range, the fact checker has given the Seller a grade of {{ seller.grade }}.</p>
 
@@ -36,6 +36,7 @@
 					{% formfield player.bid_asset3 label="How much will you bid for Seller 3's Asset?" %}
 				{% endif %}
 
+				<h4>Seller {{ seller.id }} History</h4>
 				<table class="table">
 					<thead class="thead-dark">
 						<tr>

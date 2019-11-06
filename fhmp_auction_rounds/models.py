@@ -39,6 +39,7 @@ class Constants(BaseConstants):
     # Generate reporting ranges dict
     reporting_ranges = {}
 
+    # The ranges must be odd numbers
     low_range = 5
     high_range = 3
 
