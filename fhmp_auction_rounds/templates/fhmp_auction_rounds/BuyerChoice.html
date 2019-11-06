@@ -36,6 +36,7 @@
 					{% formfield player.bid_asset3 label="How much will you bid for Seller 3's Asset?" %}
 				{% endif %}
 
+				{% if seller.history %}
 				<h4>Seller {{ seller.id }} History</h4>
 				<table class="table">
 					<thead class="thead-dark">
@@ -71,6 +72,7 @@
 
 					</tbody>
 				</table>
+				{% endif %}
 			</div>
 		{% endfor %}
 	</div>

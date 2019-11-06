@@ -388,6 +388,47 @@ class Group(BaseGroup):
 
         return Constants.more_precise_reporting_cost if did_seller_report_more_precise[seller_id] else 0
 
+    def get_seller_history(self, player_id):
+        previous_rounds = range(1, self.round_number) if self.round_number <= Constants.num_practice_rounds else range(Constants.num_practice_rounds + 1, self.round_number)
+
+        history = [] 
+
+        for round_number in previous_rounds:
+            group = self.in_round(round_number)
+
+            seller_reported_ranges_by_id = {
+                1: group.seller1_reported_range,
+                2: group.seller2_reported_range,
+                3: group.seller3_reported_range
+            }
+
+            seller_did_report_more_precise_by_id = {
+                1: group.seller1_did_report_more_precise,
+                2: group.seller2_did_report_more_precise,
+                3: group.seller3_did_report_more_precise,
+            }
+
+            seller_grade_by_id = {
+                1: group.seller1_grade, 
+                2: group.seller2_grade, 
+                3: group.seller3_grade
+            }
+
+            asset_true_value_by_id = {
+                1: group.asset1_true_value, 
+                2: group.asset2_true_value, 
+                3: group.asset3_true_value
+            }
+
+            history.append({
+                'round_number': round_number if round_number <= Constants.num_practice_rounds else round_number - Constants.num_practice_rounds, 
+                'reported_range': seller_reported_ranges_by_id[player_id], 
+                'precision': 'More precise' if seller_did_report_more_precise_by_id[player_id] else 'Less precise',
+                'seller_grade': seller_grade_by_id[player_id],
+                'asset_true_value': asset_true_value_by_id[player_id]
+            })
+
+        return history
 
 class Player(BasePlayer):
     # Buyer budget for all rounds

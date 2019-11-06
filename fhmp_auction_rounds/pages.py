@@ -133,74 +133,31 @@ class BuyerChoice(Page):
     # Input text fields to be shown to buyers
     form_fields = ['bid_asset1', 'bid_asset2', 'bid_asset3']
 
-    def get_seller_history(self, player_id):
-        previous_rounds = range(1, self.round_number) if self.round_number <= Constants.num_practice_rounds else range(Constants.num_practice_rounds + 1, self.round_number)
-
-        history = [] 
-
-        for round_number in previous_rounds:
-            player = self.player.in_round(round_number)
-            group = self.group.in_round(round_number)
-
-            seller_reported_ranges_by_id = {
-                1: group.seller1_reported_range,
-                2: group.seller2_reported_range,
-                3: group.seller3_reported_range
-            }
-
-            seller_did_report_more_precise_by_id = {
-                1: group.seller1_did_report_more_precise,
-                2: group.seller2_did_report_more_precise,
-                3: group.seller3_did_report_more_precise,
-            }
-
-            seller_grade_by_id = {
-                1: group.seller1_grade, 
-                2: group.seller2_grade, 
-                3: group.seller3_grade
-            }
-
-            asset_true_value_by_id = {
-                1: group.asset1_true_value, 
-                2: group.asset2_true_value, 
-                3: group.asset3_true_value
-            }
-
-            history.append({
-                'round_number': round_number if round_number <= Constants.num_practice_rounds else round_number - Constants.num_practice_rounds, 
-                'reported_range': seller_reported_ranges_by_id[player_id], 
-                'precision': 'More precise' if seller_did_report_more_precise_by_id[player_id] else 'Less precise',
-                'seller_grade': seller_grade_by_id[player_id],
-                'asset_true_value': asset_true_value_by_id[player_id]
-            })
-
-        return history
-
     # is_displayed() is used to show this page only to the buyers
     def is_displayed(self):
         return self.player.role() == 'buyer'
 
     def vars_for_template(self):
         sellers_info = [
-                {
-                    'id': 1,
-                    'reported_range': self.group.seller1_reported_range,
-                    'grade': self.group.seller1_grade,
-                    'history': self.get_seller_history(1),
-                },
-                {
-                    'id': 2,
-                    'reported_range': self.group.seller2_reported_range,
-                    'grade': self.group.seller2_grade,
-                    'history': self.get_seller_history(2),
-                },
-                {
-                    'id': 3,
-                    'reported_range': self.group.seller3_reported_range,
-                    'grade': self.group.seller3_grade,
-                    'history': self.get_seller_history(3),
-                },
-            ]
+            {
+                'id': 1,
+                'reported_range': self.group.seller1_reported_range,
+                'grade': self.group.seller1_grade,
+                'history': self.group.get_seller_history(1),
+            },
+            {
+                'id': 2,
+                'reported_range': self.group.seller2_reported_range,
+                'grade': self.group.seller2_grade,
+                'history': self.group.get_seller_history(2),
+            },
+            {
+                'id': 3,
+                'reported_range': self.group.seller3_reported_range,
+                'grade': self.group.seller3_grade,
+                'history': self.group.get_seller_history(3),
+            },
+        ]
 
         return {
             'sellers': sellers_info
