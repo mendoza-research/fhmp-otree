@@ -14,13 +14,6 @@ Choose how to disclose the probability
       </th>
       <td>{{ seller_private_range }}</td>
     </tr>
-
-    <tr>
-      <th scope="col">
-        Your budget
-      </th>
-      <td>{{ player.budget }}</td>
-    </tr>
   </tbody>
 </table>
 
@@ -78,5 +71,15 @@ Choose how to disclose the probability
   });
 </script>
 
+<table class="table">
+  <tbody>
+    <tr>
+      <th scope="col">
+        Your budget
+      </th>
+      <td>{{ player.budget }}</td>
+    </tr>
+  </tbody>
+</table>
 {% next_button %}
 {% endblock %}
