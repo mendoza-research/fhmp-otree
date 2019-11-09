@@ -135,7 +135,7 @@ class Constants(BaseConstants):
                 'answer_label': 'True! The fact checker is automated.'
             },
             {
-                'label': 'The fact checker\'s grade (A, B, C, or F) designating how close the seller\'s Reported Range is to the midpoint of the Fact Checker Range always perfectly corresponds to the true value of the asset.',
+                'label': 'The fact checker\'s grade (Pass or Fail) designating how close the seller\'s Reported Range is to the midpoint of the Fact Checker Range always perfectly corresponds to the true value of the asset.',
                 'choices': CC_tf_choices,
                 'correct_answer': False,
                 'answer_label': 'False. The Fact Checker\'s 5 number range is drawn from a distribution of ranges surrounding the midpoint of the seller\'s Private Range, and it does not perfectly correspond to the true value of the asset.'
