@@ -86,19 +86,19 @@ class Group(BaseGroup):
     seller1_did_report_more_precise = models.BooleanField(
         choices=Constants.reporting_precision_choices,
         widget=widgets.RadioSelect,
-        initial=False
+        initial=True
     )
 
     seller2_did_report_more_precise = models.BooleanField(
         choices=Constants.reporting_precision_choices,
         widget=widgets.RadioSelect,
-        initial=False
+        initial=True
     )
 
     seller3_did_report_more_precise = models.BooleanField(
         choices=Constants.reporting_precision_choices,
         widget=widgets.RadioSelect,
-        initial=False
+        initial=True
     )
 
     # Reported ranges
