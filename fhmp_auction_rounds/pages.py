@@ -236,7 +236,7 @@ class PracticeOutro(Page):
 page_sequence = [
     BeginWaitPage,
     SellerChoiceNotEnoughBudget,
-    SellerChoiceLowHigh,
+    #SellerChoiceLowHigh,
     SellerChoiceReportingRange,
     SellerChoiceResultWaitPage,
     BuyerChoice,
