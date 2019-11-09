@@ -89,42 +89,10 @@ class Constants(BaseConstants):
                 'answer_label': 'True! Only the seller knows the Private Range; no other person in the study knows the Private Range the seller was given.'
             },
             {
-                'label': 'Sellers can choose any range they want, as long as it is either 3 or 5 numbers wide, and sellers\' Reported Range does not have to contain any number from the Private Range they were given.',
+                'label': 'Sellers can choose any range they want, and sellers\' Reported Range does not have to contain any number from the Private Range they were given.',
                 'choices': CC_tf_choices,
                 'correct_answer': True,
-                'answer_label': 'True! The seller can report either a range that is 3 or 5 numbers wide. The seller can also report any range. That is, the seller\'s Reported Range does not have to contain any number from the Private Range they were given.'
-            },
-            {
-                'label': 'To report a more precise range, sellers must pay 2 points.',
-                'choices': CC_tf_choices,
-                'correct_answer': True,
-                'answer_label': 'True! The seller must pay 2 points if they choose to report the more precise (3-number) range.'
-            },
-            {
-                'label': 'Sellers report ',
-                'choices': [
-                    [
-                        'a single number to the buyers',
-                        'a single number to the buyers'],
-                    [
-                        'a range of 3 numbers(if they pay 2 points)',
-                        'a range of 3 numbers(if they pay 2 points)'
-                    ],
-                    [
-                        'a range of 5 numbers',
-                        'a range of 5 numbers'
-                    ],
-                    [
-                        'the true value',
-                        'the true value'
-                    ],
-                    [
-                        'B or C',
-                        'B or C'
-                    ]
-                ],
-                'correct_answer': 'B or C',
-                'answer_label': 'B or C! The seller can report either 3 or 5 numbers range. To report a 3 number range, the seller must pay 2 points.'
+                'answer_label': 'True! The seller can also report any range. That is, the seller\'s Reported Range does not have to contain any number from the Private Range they were given.'
             }
         ],
         'FactChecker': [
@@ -135,7 +103,7 @@ class Constants(BaseConstants):
                 'answer_label': 'True! The fact checker is automated.'
             },
             {
-                'label': 'The fact checker\'s grade (A, B, C, or F) designating how close the seller\'s Reported Range is to the midpoint of the Fact Checker Range always perfectly corresponds to the true value of the asset.',
+                'label': 'The fact checker\'s grade (Pass or Fail) designating how close the seller\'s Reported Range is to the midpoint of the Fact Checker Range always perfectly corresponds to the true value of the asset.',
                 'choices': CC_tf_choices,
                 'correct_answer': False,
                 'answer_label': 'False. The Fact Checker\'s 5 number range is drawn from a distribution of ranges surrounding the midpoint of the seller\'s Private Range, and it does not perfectly correspond to the true value of the asset.'
