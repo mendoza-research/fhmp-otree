@@ -276,23 +276,23 @@ class Group(BaseGroup):
         self.seller3_grade = self.calculate_seller_grade(
             int(Constants.reporting_ranges[self.seller3_reported_range]['min'] + (Constants.reporting_ranges[self.seller3_reported_range]['max'] - Constants.reporting_ranges[self.seller3_reported_range]['min']) / 2), int(self.asset3_fact_checker_midpoint))
 
-    # A: if the midpoint of the reported range is equal to, + 1 or - 1 of the midpoint of the fact checker’s range
-    # B: if the midpoint of the reported range is + or - 2 or 3 from the midpoint of the fact checker’s range
-    # C: if the midpoint of the reported range is + or – 4 from the midpoint of the fact checker’s range
-    # F: everything else
+    # Pass: if the midpoint of the reported range is equal to, + 1 or - 1 of the midpoint of the fact checker’s range
+    # Pass: if the midpoint of the reported range is + or - 2 or 3 from the midpoint of the fact checker’s range
+    # Pass: if the midpoint of the reported range is + or – 4 from the midpoint of the fact checker’s range
+    # Fail: everything else
     @staticmethod
     def calculate_seller_grade(reported_range_midpoint, fact_checker_range_midpoint):
         midpoint_diff = abs(reported_range_midpoint -
                             fact_checker_range_midpoint)
 
         if midpoint_diff <= 1:
-            return 'A'
+            return 'Pass'
         elif midpoint_diff <= 3:
-            return 'B'
+            return 'Pass'
         elif midpoint_diff <= 4:
-            return 'C'
+            return 'Pass'
         else:
-            return 'F'
+            return 'Fail'
 
     def get_seller_grade(self, seller_id):
         grade_dict = {
