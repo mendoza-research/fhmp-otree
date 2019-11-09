@@ -13,8 +13,8 @@ doc = """
 Models for auction rounds
 """
 # Set the number of practice/main rounds here
-num_practice_rounds = 2
-num_main_rounds = 4
+num_practice_rounds = 4
+num_main_rounds = 20
 
 class Constants(BaseConstants):
     name_in_url = 'fhmp_practice_rounds'
