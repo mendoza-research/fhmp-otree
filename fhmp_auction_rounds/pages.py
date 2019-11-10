@@ -43,40 +43,6 @@ class SellerChoiceNotEnoughBudget(Page):
         }
 
 
-class SellerChoiceLowHigh(Page):
-    form_model = 'group'
-
-    def is_displayed(self):
-        return self.player.role() == 'seller' and self.player.budget >= Constants.more_precise_reporting_cost
-
-    # Return reporting precision level form field based on player id
-    def get_form_fields(self):
-        form_fields_by_player_id = {
-            1: ['seller1_did_report_more_precise'],
-            2: ['seller2_did_report_more_precise'],
-            3: ['seller3_did_report_more_precise']
-        }
-
-        return form_fields_by_player_id[self.player.id_in_group]
-
-    def vars_for_template(self):
-        seller_private_range_midpoints_by_player_id = {
-            1: self.group.seller1_private_range_midpoint,
-            2: self.group.seller2_private_range_midpoint,
-            3: self.group.seller3_private_range_midpoint
-        }
-
-        seller_private_range = get_private_range_string(seller_private_range_midpoints_by_player_id[self.player.id_in_group])
-
-        return {
-            'seller_private_range': seller_private_range
-        }
-
-    def before_next_page(self):
-        if self.player.role() == 'seller':
-            self.player.update_seller_budget_after_reporting()
-
-
 class SellerChoiceReportingRange(Page):
     form_model = 'group'
 
@@ -100,18 +66,10 @@ class SellerChoiceReportingRange(Page):
             3: self.group.seller3_private_range_midpoint
         }
 
-        did_seller_report_more_precise_by_id = {
-            1: self.group.seller1_did_report_more_precise,
-            2: self.group.seller2_did_report_more_precise,
-            3: self.group.seller3_did_report_more_precise
-        }
-
         seller_private_range = get_private_range_string(seller_private_range_midpoints_by_player_id[self.player.id_in_group])
-        did_seller_report_more_precise = did_seller_report_more_precise_by_id[self.player.id_in_group]
 
         return {
             'seller_private_range': seller_private_range,
-            'did_seller_report_more_precise': did_seller_report_more_precise
         }
 
     def before_next_page(self):
