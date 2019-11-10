@@ -379,14 +379,6 @@ class Group(BaseGroup):
         return assets[seller_id]
 
     # Get the reporting cost of a seller
-    def get_seller_reporting_cost(self, seller_id):
-        did_seller_report_more_precise = {
-            1: self.seller1_did_report_more_precise,
-            2: self.seller2_did_report_more_precise,
-            3: self.seller3_did_report_more_precise
-        }
-
-        return Constants.more_precise_reporting_cost if did_seller_report_more_precise[seller_id] else 0
 
     def get_seller_history(self, player_id):
         previous_rounds = range(1, self.round_number) if self.round_number <= Constants.num_practice_rounds else range(Constants.num_practice_rounds + 1, self.round_number)
@@ -402,11 +394,6 @@ class Group(BaseGroup):
                 3: group.seller3_reported_range
             }
 
-            seller_did_report_more_precise_by_id = {
-                1: group.seller1_did_report_more_precise,
-                2: group.seller2_did_report_more_precise,
-                3: group.seller3_did_report_more_precise,
-            }
 
             seller_grade_by_id = {
                 1: group.seller1_grade, 
