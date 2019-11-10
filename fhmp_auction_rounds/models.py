@@ -34,8 +34,6 @@ class Constants(BaseConstants):
     buyer_initial_endowment_main_rounds = c(200)
     seller_initial_endowment_main_rounds = c(20)
 
-    more_precise_reporting_cost = c(2)
-
     # Generate reporting ranges dict
     reporting_ranges = {}
 
@@ -68,11 +66,6 @@ class Constants(BaseConstants):
     reporting_range_choices = list(
         map(lambda x: [x[0], x[1]['label']], reporting_ranges.items()))
 
-    # Choices for reporting precision
-    reporting_precision_choices = [
-        [False, 'Less Precise (5 numbers wide) (No cost)'],
-        [True, 'More Precise (3 numbers wide) (Cost: 2 points)'],
-    ]
 
 
 class Subsession(BaseSubsession):
@@ -82,24 +75,6 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    # These boolean fields indicate whether the user has selected more precise reporting option
-    seller1_did_report_more_precise = models.BooleanField(
-        choices=Constants.reporting_precision_choices,
-        widget=widgets.RadioSelect,
-        initial=False
-    )
-
-    seller2_did_report_more_precise = models.BooleanField(
-        choices=Constants.reporting_precision_choices,
-        widget=widgets.RadioSelect,
-        initial=False
-    )
-
-    seller3_did_report_more_precise = models.BooleanField(
-        choices=Constants.reporting_precision_choices,
-        widget=widgets.RadioSelect,
-        initial=False
-    )
 
     # Reported ranges
     seller1_reported_range = models.StringField(
