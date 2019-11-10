@@ -24,17 +24,6 @@ Choose how to disclose the probability
 </p>
 
 <!-- Show different text based on seller's reporting option -->
-{% if did_seller_report_more_precise %}
-<p>
-  You have chosen the <strong class="red">more precise</strong> reporting
-  option.
-</p>
-{% else %}
-<p>
-  You have chosen the <strong class="red">less precise</strong> reporting
-  option.
-</p>
-{% endif %}
 
 <p>Please select an option.</p>
 
@@ -43,12 +32,8 @@ Choose how to disclose the probability
 <div class="controls">
   <ul>
     {% for choice in field %}
-      {% if did_seller_report_more_precise %}
+      {% if True %}
         {% if 'High' in choice.data.label %}
-          <li>{{ choice }}</li>
-        {% endif %}
-      {% else %}
-        {% if 'Low' in choice.data.label %}
           <li>{{ choice }}</li>
         {% endif %}
       {% endif %}
