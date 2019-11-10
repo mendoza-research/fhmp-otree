@@ -16,13 +16,14 @@ Models for auction rounds
 num_practice_rounds = 2
 num_main_rounds = 4
 
+
 class Constants(BaseConstants):
     name_in_url = 'fhmp_practice_rounds'
     players_per_group = None
 
     # Define the number of rounds class variables
-    num_practice_rounds=num_practice_rounds
-    num_main_rounds=num_main_rounds
+    num_practice_rounds = num_practice_rounds
+    num_main_rounds = num_main_rounds
 
     # number of total rounds (practice + main)
     num_rounds = num_practice_rounds + num_main_rounds
@@ -181,7 +182,7 @@ class Group(BaseGroup):
     def draw_fact_checker_range_midpoint(private_range_midpoint):
         weights = [1, 2, 3, 2, 1]
         possible_fact_checker_midpoints = [private_range_midpoint - 2, private_range_midpoint -
-                              1, private_range_midpoint, private_range_midpoint + 1, private_range_midpoint + 2]
+                                           1, private_range_midpoint, private_range_midpoint + 1, private_range_midpoint + 2]
 
         for i in range(5):
             midpoint = possible_fact_checker_midpoints[i]
@@ -389,9 +390,10 @@ class Group(BaseGroup):
         return Constants.more_precise_reporting_cost if did_seller_report_more_precise[seller_id] else 0
 
     def get_seller_history(self, player_id):
-        previous_rounds = range(1, self.round_number) if self.round_number <= Constants.num_practice_rounds else range(Constants.num_practice_rounds + 1, self.round_number)
+        previous_rounds = range(1, self.round_number) if self.round_number <= Constants.num_practice_rounds else range(
+            Constants.num_practice_rounds + 1, self.round_number)
 
-        history = [] 
+        history = []
 
         for round_number in previous_rounds:
             group = self.in_round(round_number)
@@ -409,26 +411,27 @@ class Group(BaseGroup):
             }
 
             seller_grade_by_id = {
-                1: group.seller1_grade, 
-                2: group.seller2_grade, 
+                1: group.seller1_grade,
+                2: group.seller2_grade,
                 3: group.seller3_grade
             }
 
             asset_true_value_by_id = {
-                1: group.asset1_true_value, 
-                2: group.asset2_true_value, 
+                1: group.asset1_true_value,
+                2: group.asset2_true_value,
                 3: group.asset3_true_value
             }
 
             history.append({
-                'round_number': round_number if round_number <= Constants.num_practice_rounds else round_number - Constants.num_practice_rounds, 
-                'reported_range': seller_reported_ranges_by_id[player_id], 
+                'round_number': round_number if round_number <= Constants.num_practice_rounds else round_number - Constants.num_practice_rounds,
+                'reported_range': seller_reported_ranges_by_id[player_id],
                 'precision': 'More precise' if seller_did_report_more_precise_by_id[player_id] else 'Less precise',
                 'seller_grade': seller_grade_by_id[player_id],
                 'asset_true_value': asset_true_value_by_id[player_id]
             })
 
         return history
+
 
 class Player(BasePlayer):
     # Buyer budget for all rounds

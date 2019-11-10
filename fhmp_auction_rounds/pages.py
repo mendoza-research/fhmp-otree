@@ -16,9 +16,11 @@ from .models import Constants
 # For detailed documentation regarding pages, please refer to oTree's documentation page below
 # https://otree.readthedocs.io/en/latest/pages.html
 
+
 # Get the formatted string of a private range based on the midpoint
 def get_private_range_string(seller_private_range_midpoint):
     return "%d-%d" % (seller_private_range_midpoint - 1, seller_private_range_midpoint + 1)
+
 
 class BeginWaitPage(WaitPage):
     def after_all_players_arrive(self):
@@ -36,7 +38,8 @@ class SellerChoiceNotEnoughBudget(Page):
             3: self.group.seller3_private_range_midpoint
         }
 
-        seller_private_range = get_private_range_string(seller_private_range_midpoints_by_player_id[self.player.id_in_group])
+        seller_private_range = get_private_range_string(
+            seller_private_range_midpoints_by_player_id[self.player.id_in_group])
 
         return {
             'seller_private_range': seller_private_range
@@ -66,7 +69,8 @@ class SellerChoiceLowHigh(Page):
             3: self.group.seller3_private_range_midpoint
         }
 
-        seller_private_range = get_private_range_string(seller_private_range_midpoints_by_player_id[self.player.id_in_group])
+        seller_private_range = get_private_range_string(
+            seller_private_range_midpoints_by_player_id[self.player.id_in_group])
 
         return {
             'seller_private_range': seller_private_range
@@ -106,8 +110,10 @@ class SellerChoiceReportingRange(Page):
             3: self.group.seller3_did_report_more_precise
         }
 
-        seller_private_range = get_private_range_string(seller_private_range_midpoints_by_player_id[self.player.id_in_group])
-        did_seller_report_more_precise = did_seller_report_more_precise_by_id[self.player.id_in_group]
+        seller_private_range = get_private_range_string(
+            seller_private_range_midpoints_by_player_id[self.player.id_in_group])
+        did_seller_report_more_precise = did_seller_report_more_precise_by_id[
+            self.player.id_in_group]
 
         return {
             'seller_private_range': seller_private_range,
