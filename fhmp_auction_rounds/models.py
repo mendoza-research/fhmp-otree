@@ -30,10 +30,10 @@ class Constants(BaseConstants):
     num_rounds = num_practice_rounds + num_main_rounds
 
     # Currency definitions
-    buyer_initial_endowment_practice_rounds = c(200)
+    buyer_initial_endowment_practice_rounds = c(300)
     seller_initial_endowment_practice_rounds = c(20)
 
-    buyer_initial_endowment_main_rounds = c(200)
+    buyer_initial_endowment_main_rounds = c(300)
     seller_initial_endowment_main_rounds = c(20)
 
     # If the sellers are forced to select the more precise reporting option, the cost should be 0
