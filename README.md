@@ -16,6 +16,16 @@ To test locally using split windows, set the `num_demo_participants` to 3 in `se
 
 ![image](https://user-images.githubusercontent.com/1064036/68621295-b3a97980-0512-11ea-8da7-226a3004f121.png)
 
+### Setting environment variables to test different treatments
+
+In `treatments.py`, uncomment the lines below, and set the values to either `'True'` or `'False'` (note that they should be string values, not boolean since environment variables can only be strings).  
+
+```python
+# For local testing
+os.environ['CAN_CHOOSE_PRECISION'] = 'False'
+os.environ['IS_GRADE_PASS_FAIL'] = 'True'
+```
+
 
 ## Setting treatment environment variables in Heroku
 - For just the `No-Choice-Grades` and `No-Choice-Pass-Fail` conditions, there should be no SellerChoiceHighLow page shown, as they are not given the choice. All Sellers are forced to see the more precise options.
