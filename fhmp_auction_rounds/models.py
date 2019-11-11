@@ -1,6 +1,7 @@
 import random
 import numpy as np
 from numpy.random import choice
+from .treatments import Treatments
 
 from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
@@ -35,7 +36,9 @@ class Constants(BaseConstants):
     buyer_initial_endowment_main_rounds = c(200)
     seller_initial_endowment_main_rounds = c(20)
 
-    more_precise_reporting_cost = c(2)
+    # If the sellers are forced to select the more precise reporting option, the cost should be 0
+    more_precise_reporting_cost = c(
+        2) if Treatments.can_choose_precision else c(0)
 
     # Generate reporting ranges dict
     reporting_ranges = {}
@@ -87,19 +90,19 @@ class Group(BaseGroup):
     seller1_did_report_more_precise = models.BooleanField(
         choices=Constants.reporting_precision_choices,
         widget=widgets.RadioSelect,
-        initial=False
+        initial=False if Treatments.can_choose_precision else True
     )
 
     seller2_did_report_more_precise = models.BooleanField(
         choices=Constants.reporting_precision_choices,
         widget=widgets.RadioSelect,
-        initial=False
+        initial=False if Treatments.can_choose_precision else True
     )
 
     seller3_did_report_more_precise = models.BooleanField(
         choices=Constants.reporting_precision_choices,
         widget=widgets.RadioSelect,
-        initial=False
+        initial=False if Treatments.can_choose_precision else True
     )
 
     # Reported ranges
@@ -159,7 +162,7 @@ class Group(BaseGroup):
             self.seller3_private_range_midpoint)
 
         is_start_of_practice_rounds = self.round_number == 1
-        is_start_of_main_rounds = self.round_number == 3
+        is_start_of_main_rounds = self.round_number == Constants.num_practice_rounds + 1
 
         for p in self.get_players():
             if is_start_of_practice_rounds:
@@ -197,8 +200,8 @@ class Group(BaseGroup):
         return int(choice(possible_fact_checker_midpoints, p=weights))
 
     # A static method to get a true asset value given an estimated value
-    # 30% prob chance that true == estimated
-    # 18% prob chance for true == estimated + 1 or true == estimated - 1
+    # 43% prob chance that true == estimated
+    # 20% prob chance for true == estimated + 1 or true == estimated - 1
     # Remaining probabilities are equally split
     @staticmethod
     def draw_asset_true_value(private_range_midpoint):
@@ -286,14 +289,18 @@ class Group(BaseGroup):
         midpoint_diff = abs(reported_range_midpoint -
                             fact_checker_range_midpoint)
 
-        if midpoint_diff <= 1:
-            return 'A'
-        elif midpoint_diff <= 3:
-            return 'B'
-        elif midpoint_diff <= 4:
-            return 'C'
+        if Treatments.is_grade_pass_fail:
+            return 'Pass' if midpoint_diff <= 4 else 'Fail'
+
         else:
-            return 'F'
+            if midpoint_diff <= 1:
+                return 'A'
+            elif midpoint_diff <= 3:
+                return 'B'
+            elif midpoint_diff <= 4:
+                return 'C'
+            else:
+                return 'F'
 
     def get_seller_grade(self, seller_id):
         grade_dict = {
@@ -456,6 +463,16 @@ class Player(BasePlayer):
     # Returns 'seller' or 'buyer'
     def role(self):
         return self.participant.vars['role']
+
+    # Returns a string in 'Role #1' format
+    # Examples: 'Seller #1', 'Buyer #1'
+    def get_role_and_number(self):
+        num_sellers = len(self.group.get_sellers())
+
+        if self.id_in_group <= num_sellers:
+            return 'Seller #' + str(self.id_in_group)
+        else:
+            return 'Buyer #' + str(self.id_in_group - num_sellers)
 
     # Update budget after the seller chooses a reporting option
     def update_seller_budget_after_reporting(self):

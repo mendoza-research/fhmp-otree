@@ -1,5 +1,6 @@
 from ._builtin import Page, WaitPage
 from .models import Constants
+from .treatments import Treatments
 
 # Each page that a player sees is defined in this file
 # Each class in this file represents a page
@@ -42,6 +43,7 @@ class SellerChoiceNotEnoughBudget(Page):
             seller_private_range_midpoints_by_player_id[self.player.id_in_group])
 
         return {
+            'role_and_number': self.player.get_role_and_number(),
             'seller_private_range': seller_private_range
         }
 
@@ -50,7 +52,7 @@ class SellerChoiceLowHigh(Page):
     form_model = 'group'
 
     def is_displayed(self):
-        return self.player.role() == 'seller' and self.player.budget >= Constants.more_precise_reporting_cost
+        return Treatments.can_choose_precision and self.player.role() == 'seller' and self.player.budget >= Constants.more_precise_reporting_cost
 
     # Return reporting precision level form field based on player id
     def get_form_fields(self):
@@ -73,6 +75,7 @@ class SellerChoiceLowHigh(Page):
             seller_private_range_midpoints_by_player_id[self.player.id_in_group])
 
         return {
+            'role_and_number': self.player.get_role_and_number(),
             'seller_private_range': seller_private_range
         }
 
@@ -116,6 +119,7 @@ class SellerChoiceReportingRange(Page):
             self.player.id_in_group]
 
         return {
+            'role_and_number': self.player.get_role_and_number(),
             'seller_private_range': seller_private_range,
             'did_seller_report_more_precise': did_seller_report_more_precise
         }
@@ -166,6 +170,7 @@ class BuyerChoice(Page):
         ]
 
         return {
+            'role_and_number': self.player.get_role_and_number(),
             'sellers': sellers_info
         }
 
@@ -186,10 +191,32 @@ class RoundResult(Page):
     def vars_for_template(self):
         buyers = self.group.get_buyers()
 
+        did_win_assets = [
+            self.player.did_win_asset1,
+            self.player.did_win_asset2,
+            self.player.did_win_asset3
+        ]
+
+        num_won_assets = sum(did_win_assets)
+
+        if num_won_assets == 0:
+            buyer_won_assets_message = 'You did not win any asset this round. Your payoff is 0.'
+        elif num_won_assets == 1:
+            won_asset_id = did_win_assets.index(True) + 1
+            buyer_won_assets_message = 'You won asset {}. Your payoff is {}.'.format(
+                won_asset_id, self.player.payoff)
+        else:
+            won_asset_ids = [i + 1 for i, x in enumerate(did_win_assets) if x]
+            won_asset_ids_str = ', '.join(
+                map(str, won_asset_ids[:-1])) + ' and ' + str(won_asset_ids[-1])
+            buyer_won_assets_message = 'You won assets {}. Your payoff is {}.'.format(
+                won_asset_ids_str, self.player.payoff)
+
         return {
             # This array of objects is used in the Results page
             # to display range of high asset probabilities, true asset value,
             # other buyers' bids, and winners
+            'buyer_won_assets_message': buyer_won_assets_message,
             'assets': [
                 {
                     'id': 1,

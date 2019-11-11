@@ -4,7 +4,7 @@ from otree.api import (
 )
 
 
-author = 'Your name here'
+author = 'Kimberly Mendoza'
 
 doc = """
 Exit survey

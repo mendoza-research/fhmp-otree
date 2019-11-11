@@ -6,77 +6,81 @@
 {% endblock %}
 
 {% block content %}
+<div class="role-box">
+	You are <strong>{{role_and_number}}</strong>.
+</div>
 
-	<p>
-		These bids are private to other buyers.
-	</p>
+<p>
+	These bids are private to other buyers.
+</p>
 
-	<div class="row">
-		{% for seller in sellers %}
-			<div class="col-md-12">
-				<h3><u>Seller {{ seller.id }}</u></h3>
-				<p>Seller {{ seller.id }} has chosen to disclose a range of {{ seller.reported_range }} points. </p>
-				<p>Based on this range, the fact checker has given the Seller a grade of {{ seller.grade }}.</p>
+<div class="row">
+	{% for seller in sellers %}
+		<div class="col-md-12">
+			<h3><u>Seller {{ seller.id }}</u></h3>
+			<p>Seller {{ seller.id }} has chosen to disclose a range of {{ seller.reported_range }} points. </p>
+			<p>Based on this range, the fact checker has given the Seller a grade of {{ seller.grade }}.</p>
 
-				{% if seller.id == 1 %}
-					{% formfield player.bid_asset1 label="How much will you bid for Seller 1's Asset?" %}
-				{% elif seller.id == 2 %}
-					{% formfield player.bid_asset2 label="How much will you bid for Seller 2's Asset?" %}
-				{% else %}
-					{% formfield player.bid_asset3 label="How much will you bid for Seller 3's Asset?" %}
-				{% endif %}
+			{% if seller.id == 1 %}
+				{% formfield player.bid_asset1 label="How much will you bid for Seller 1's Asset?" %}
+			{% elif seller.id == 2 %}
+				{% formfield player.bid_asset2 label="How much will you bid for Seller 2's Asset?" %}
+			{% else %}
+				{% formfield player.bid_asset3 label="How much will you bid for Seller 3's Asset?" %}
+			{% endif %}
 
-				{% if seller.history %}
-				<h4>Seller {{ seller.id }} History</h4>
-				<table class="table">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Round</th>
-							<th scope="col">Reported Range</th>
-							<th scope="col">Precision</th>
-							<th scope="col">Seller Grade</th>
-							<th scope="col">True Value</th>
-						</tr>
-					</thead>
-			
-						<tbody>
-							{% for round_history in seller.history %}
-								<tr>
-									<th scope="row">
-										{{ round_history.round_number }}
-									</th>
-									<td>
-										{{ round_history.reported_range }}
-									</td>
-									<td>
-										{{ round_history.precision }}
-									</td>
-									<td>
-										{{ round_history.seller_grade }}
-									</td>
-									<td>
-										{{ round_history.asset_true_value }}
-									</td>
-								</tr>
-							{% endfor %}
+			{% if seller.history %}
+			<h4>Seller {{ seller.id }} History</h4>
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">Round</th>
+						<th scope="col">Reported Range</th>
+						<th scope="col">Precision</th>
+						<th scope="col">Seller Grade</th>
+						<th scope="col">True Value</th>
+					</tr>
+				</thead>
+		
+					<tbody>
+						{% for round_history in seller.history %}
+							<tr>
+								<th scope="row">
+									{{ round_history.round_number }}
+								</th>
+								<td>
+									{{ round_history.reported_range }}
+								</td>
+								<td>
+									{{ round_history.precision }}
+								</td>
+								<td>
+									{{ round_history.seller_grade }}
+								</td>
+								<td>
+									{{ round_history.asset_true_value }}
+								</td>
+							</tr>
+						{% endfor %}
 
-					</tbody>
-				</table>
-				{% endif %}
-			</div>
-		{% endfor %}
-	</div>
-	<table class="table">
-		<tbody>
-			<tr>
-				<th scope="col">
-					Your budget
-				</th>
-				<td>{{ player.budget }}</td>
-			</tr>
-		</tbody>
-	</table>
+				</tbody>
+			</table>
+			{% endif %}
+		</div>
+	{% endfor %}
+</div>
 
-	{% next_button %}
+<table class="table">
+	<tbody>
+		<tr>
+			<th scope="col">
+				Your budget
+			</th>
+			<td>{{ player.budget }}</td>
+		</tr>
+	</tbody>
+</table>
+
+{% next_button %}
 
 {% endblock %}

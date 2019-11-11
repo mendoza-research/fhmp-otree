@@ -1,5 +1,11 @@
-{% extends "global/Page.html" %} {% load otree static %} {% block title %} Your
-Role {% endblock %} {% block content %}
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Your Role
+{% endblock %}
+
+{% block content %}
 <p style="font-size: 24px; line-height: 1.6; ">
   Your role is a <strong style="color: blue; ">{{ role }}</strong
   >. You will have this role in every round. Every participant has an assigned
@@ -10,5 +16,6 @@ Role {% endblock %} {% block content %}
   You will now practice for a few rounds (no points are earned or lost for the
   practice) and then you will start the real study.
 </p>
+{% next_button %}
 
-{% next_button %} {% endblock %}
+{% endblock %}

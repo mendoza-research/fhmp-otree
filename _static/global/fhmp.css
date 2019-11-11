@@ -1,50 +1,57 @@
 /* Custom CSS for FHMP */
 body {
-	font-family: 'Roboto', sans-serif;
-	line-height: 1.7;
+    font-family: "Roboto", sans-serif;
+    line-height: 1.7;
+}
+
+.role-box {
+    color: #2e86c1;
+    background-color: #ebf5fb;
+    border: 1px solid #d6eaf8;
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
 }
 
 .formula-box {
-	color: #28B463;
-	background: #EAFAF1;
-	border: 1px solid #D5F5E3;
-	padding: 15px 20px;
-	text-align: center;
-	border-radius: 6px;
-	margin-bottom: 20px;
+    color: #28b463;
+    background-color: #eafaf1;
+    border: 1px solid #d5f5e3;
+    padding: 15px 20px;
+    text-align: center;
+    border-radius: 6px;
+    margin-bottom: 20px;
 }
 
 .comprehension-check-questions label {
-	display: block;
-	margin-bottom: 20px;
+    display: block;
+    margin-bottom: 20px;
 }
 
 .line-through {
-	text-decoration: line-through;
+    text-decoration: line-through;
 }
 
 .comprehension-check-questions .question {
-	margin-top: 10px;
-	border-top: 3px solid #ddd;
-	padding-top: 20px;
-	padding-bottom: 10px;
+    margin-top: 10px;
+    border-top: 3px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 10px;
 }
 
-
-
 .comprehension-check-questions .question li label {
-	display: inline-block;
-	padding-left: 30px;
+    display: inline-block;
+    padding-left: 30px;
 }
 
 .comprehension-check-questions .correct {
-	color: #28B463;
+    color: #28b463;
 }
 
 .comprehension-check-questions .incorrect {
-	color: #E74C3C;
+    color: #e74c3c;
 }
 
 .red {
-	color: #E74C3C;
+    color: #e74c3c;
 }
