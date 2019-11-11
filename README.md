@@ -22,8 +22,9 @@ In `treatments.py`, uncomment the lines below, and set the values to either `'Tr
 
 ```python
 # For local testing
-os.environ['CAN_CHOOSE_PRECISION'] = 'False'
-os.environ['IS_GRADE_PASS_FAIL'] = 'True'
+# Uncomment the lines below to manually set treatment environment variables
+os.environ['CAN_CHOOSE_PRECISION'] = 'True'
+os.environ['IS_GRADE_PASS_FAIL'] = 'False'
 ```
 
 
