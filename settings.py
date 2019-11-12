@@ -15,7 +15,7 @@ SESSION_CONFIGS = [
     {
         'name': 'fhmp',
         'display_name': 'FHMP',
-                        'num_demo_participants': 7,
+                        'num_demo_participants': 3,
                         'app_sequence': [
                             'fhmp_setup',
                             'fhmp_auction_rounds',

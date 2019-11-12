@@ -199,18 +199,24 @@ class RoundResult(Page):
 
         num_won_assets = sum(did_win_assets)
 
-        if num_won_assets == 0:
-            buyer_won_assets_message = 'You did not win any asset this round. Your payoff is 0.'
-        elif num_won_assets == 1:
-            won_asset_id = did_win_assets.index(True) + 1
-            buyer_won_assets_message = 'You won asset {}. Your payoff is {}.'.format(
-                won_asset_id, self.player.payoff)
+        if self.player.role() == 'seller':
+            buyer_won_assets_message = 'You sold asset {}. Your payoff is {}.'.format(
+                self.player.id_in_group, self.player.payoff)
+
         else:
-            won_asset_ids = [i + 1 for i, x in enumerate(did_win_assets) if x]
-            won_asset_ids_str = ', '.join(
-                map(str, won_asset_ids[:-1])) + ' and ' + str(won_asset_ids[-1])
-            buyer_won_assets_message = 'You won assets {}. Your payoff is {}.'.format(
-                won_asset_ids_str, self.player.payoff)
+            if num_won_assets == 0:
+                buyer_won_assets_message = 'You did not win any asset this round. Your payoff is 0.'
+            elif num_won_assets == 1:
+                won_asset_id = did_win_assets.index(True) + 1
+                buyer_won_assets_message = 'You won asset {}. Your payoff is {}.'.format(
+                    won_asset_id, self.player.payoff)
+            else:
+                won_asset_ids = [i + 1 for i,
+                                 x in enumerate(did_win_assets) if x]
+                won_asset_ids_str = ', '.join(
+                    map(str, won_asset_ids[:-1])) + ' and ' + str(won_asset_ids[-1])
+                buyer_won_assets_message = 'You won assets {}. Your payoff is {}.'.format(
+                    won_asset_ids_str, self.player.payoff)
 
         return {
             # This array of objects is used in the Results page

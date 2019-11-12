@@ -3,6 +3,11 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
+class SonaID(Page):
+    form_model = 'player'
+    form_fields = ['Sona_ID']
+
+
 # Instruction: Ground rules
 class GroundRules(Page):
     pass
@@ -299,6 +304,7 @@ class ResultsWaitPage(WaitPage):
 
 
 page_sequence = [
+    SonaID,
     # GroundRules,
     # HowWillIGetPaid,
     # Introduction,

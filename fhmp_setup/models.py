@@ -17,7 +17,7 @@ class Constants(BaseConstants):
 
     # Set the number of sellers
     # Any participants after the number of sellers will be assigned as buyers
-    num_sellers = 3
+    num_sellers = 2
 
     CC_tf_choices = [
         [True, 'True'],
@@ -251,6 +251,10 @@ t = Constants.CC_QuestionsAnswers
 
 
 class Player(BasePlayer):
+    Sona_ID = models.StringField(
+        label='Please enter your Sona ID'
+    )
+
     CC_Intro0 = create_cc_boolean_field(t['Introduction'][0])
     CC_Intro1 = create_cc_boolean_field(t['Introduction'][1])
     CC_Intro2 = create_cc_boolean_field(t['Introduction'][2])
