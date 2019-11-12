@@ -92,13 +92,22 @@ class Constants(BaseConstants):
                 'label': 'Sellers can choose any range they want, as long as it is either 3 or 5 numbers wide, and sellers\' Reported Range does not have to contain any number from the Private Range they were given.',
                 'choices': cc_tf_choices,
                 'correct_answer': True,
-                'answer_label': 'True! The seller can report either a range that is 3 or 5 numbers wide. The seller can also report any range. That is, the seller\'s Reported Range does not have to contain any number from the Private Range they were given.'
+                'answer_label': 'True! The seller can report either a range that is 3 or 5 numbers wide. The seller can also report any range. That is, the seller\'s Reported Range does not have to contain any number from the Private Range they were given.',
+                'treatment': 'choice'
+            },
+            {
+                'label': 'Sellers can choose any range they want, as long as it is 3 numbers wide, and sellers\' Reported Range does not have to contain any number from the Private Range they were given.',
+                'choices': cc_tf_choices,
+                'correct_answer': True,
+                'answer_label': 'True! The seller reports a range that is 3 numbers wide. The seller can also report any range. That is, the seller\'s Reported Range does not have to contain any number from the Private Range they were given.',
+                'treatment': 'no_choice'
             },
             {
                 'label': 'To report a more precise range, sellers must pay 2 points.',
                 'choices': cc_tf_choices,
                 'correct_answer': True,
-                'answer_label': 'True! The seller must pay 2 points if they choose to report the more precise (3-number) range.'
+                'answer_label': 'True! The seller must pay 2 points if they choose to report the more precise (3-number) range.',
+                'treatment': 'choice'
             },
             {
                 'label': 'Sellers report ',
@@ -124,7 +133,8 @@ class Constants(BaseConstants):
                     ]
                 ],
                 'correct_answer': 'B or C',
-                'answer_label': 'B or C! The seller can report either 3 or 5 numbers range. To report a 3 number range, the seller must pay 2 points.'
+                'answer_label': 'B or C! The seller can report either 3 or 5 numbers range. To report a 3 number range, the seller must pay 2 points.',
+                'treatment': 'choice'
             }
         ],
         'FactChecker': [
@@ -265,9 +275,10 @@ class Player(BasePlayer):
     cc_asset_2 = create_cc_boolean_field(t['AssetDistribution'][2])
 
     cc_seller_0 = create_cc_boolean_field(t['SellerReporting'][0])
-    cc_seller_1 = create_cc_boolean_field(t['SellerReporting'][1])
-    cc_seller_2 = create_cc_boolean_field(t['SellerReporting'][2])
-    cc_seller_3 = create_cc_string_field(t['SellerReporting'][3])
+    cc_seller_1_choice = create_cc_boolean_field(t['SellerReporting'][1])
+    cc_seller_2_no_choice = create_cc_boolean_field(t['SellerReporting'][2])
+    cc_seller_3_choice = create_cc_boolean_field(t['SellerReporting'][3])
+    cc_seller_4_choice = create_cc_string_field(t['SellerReporting'][4])
 
     cc_fact_checker_0 = create_cc_boolean_field(t['FactChecker'][0])
     cc_fact_checker_1 = create_cc_boolean_field(t['FactChecker'][1])
