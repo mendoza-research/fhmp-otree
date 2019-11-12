@@ -35,4 +35,4 @@ class Player(BasePlayer):
         label='How many years have you been in college?')
     age = models.IntegerField(label='What is your age?')
     comments = models.StringField(
-        label='Do you have any questions or comments about the study? If so, please specify below', initial="")
+        label='Do you have any questions or comments about the study? If so, please specify below', blank=True)
