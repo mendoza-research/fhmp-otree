@@ -1,6 +1,5 @@
 from ._builtin import Page, WaitPage
 from .models import Constants
-from .treatments import Treatments
 
 # Each page that a player sees is defined in this file
 # Each class in this file represents a page

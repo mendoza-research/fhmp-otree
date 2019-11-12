@@ -1,7 +1,6 @@
 import random
 import numpy as np
 from numpy.random import choice
-from .treatments import Treatments
 
 from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
