@@ -17,7 +17,7 @@ SESSION_CONFIG_DEFAULTS = {
     'participation_fee': 0.00,
     'doc': "",
     'can_choose_precision': True,
-    'is_grade_pass_fail': True
+    'is_grade_pass_fail': False
 }
 
 SESSION_CONFIGS = [
@@ -52,7 +52,7 @@ SESSION_CONFIGS = [
         'app_sequence': app_sequence,
         'can_choose_precision': False,
         'is_grade_pass_fail': True
-    },
+    }
 ]
 
 # ISO-639 code

@@ -29,10 +29,10 @@ class CC_Introduction(Page):
 
     def get_form_fields(self):
         form_fields = [
-            'CC_Intro0',
-            'CC_Intro1',
-            'CC_Intro2',
-            'CC_Intro3'
+            'cc_intro_0',
+            'cc_intro_1',
+            'cc_intro_2',
+            'cc_intro_3'
         ]
         return form_fields
 
@@ -43,15 +43,15 @@ class CC_Introduction_Answers(Page):
 
     def vars_for_template(self):
         player_choices = [
-            self.player.CC_Intro0,
-            self.player.CC_Intro1,
-            self.player.CC_Intro2,
-            self.player.CC_Intro3
+            self.player.cc_intro_0,
+            self.player.cc_intro_1,
+            self.player.cc_intro_2,
+            self.player.cc_intro_3
         ]
 
         questions_answers = []
 
-        for idx, qa in enumerate(Constants.CC_QuestionsAnswers['Introduction']):
+        for idx, qa in enumerate(Constants.cc_questions_answers['Introduction']):
             qa_copy = qa.copy()
             qa_copy['player_choice'] = player_choices[idx]
             qa_copy['is_correct'] = player_choices[idx] == qa['correct_answer']
@@ -82,9 +82,9 @@ class CC_AssetDistribution(Page):
 
     def get_form_fields(self):
         form_fields = [
-            'CC_Asset0',
-            'CC_Asset1',
-            'CC_Asset2'
+            'cc_asset_0',
+            'cc_asset_1',
+            'cc_asset_2'
         ]
         return form_fields
 
@@ -95,14 +95,14 @@ class CC_AssetDistribution_Answers(Page):
 
     def vars_for_template(self):
         player_choices = [
-            self.player.CC_Asset0,
-            self.player.CC_Asset1,
-            self.player.CC_Asset2
+            self.player.cc_asset_0,
+            self.player.cc_asset_1,
+            self.player.cc_asset_2
         ]
 
         questions_answers = []
 
-        for idx, qa in enumerate(Constants.CC_QuestionsAnswers['AssetDistribution']):
+        for idx, qa in enumerate(Constants.cc_questions_answers['AssetDistribution']):
             qa_copy = qa.copy()
             qa_copy['player_choice'] = player_choices[idx]
             qa_copy['is_correct'] = player_choices[idx] == qa['correct_answer']
@@ -128,10 +128,10 @@ class CC_SellerReporting(Page):
 
     def get_form_fields(self):
         form_fields = [
-            'CC_Seller0',
-            'CC_Seller1',
-            'CC_Seller2',
-            'CC_Seller3'
+            'cc_seller_0',
+            'cc_seller_1',
+            'cc_seller_2',
+            'cc_seller_3'
         ]
         return form_fields
 
@@ -142,15 +142,15 @@ class CC_SellerReporting_Answers(Page):
 
     def vars_for_template(self):
         player_choices = [
-            self.player.CC_Seller0,
-            self.player.CC_Seller1,
-            self.player.CC_Seller2,
-            self.player.CC_Seller3
+            self.player.cc_seller_0,
+            self.player.cc_seller_1,
+            self.player.cc_seller_2,
+            self.player.cc_seller_3
         ]
 
         questions_answers = []
 
-        for idx, qa in enumerate(Constants.CC_QuestionsAnswers['SellerReporting']):
+        for idx, qa in enumerate(Constants.cc_questions_answers['SellerReporting']):
             qa_copy = qa.copy()
             qa_copy['player_choice'] = player_choices[idx]
             qa_copy['is_correct'] = player_choices[idx] == qa['correct_answer']
@@ -175,9 +175,9 @@ class CC_FactChecker(Page):
 
     def get_form_fields(self):
         form_fields = [
-            'CC_FactChecker0',
-            'CC_FactChecker1',
-            'CC_FactChecker2'
+            'cc_fact_checker_0',
+            'cc_fact_checker_1',
+            'cc_fact_checker_2'
         ]
         return form_fields
 
@@ -187,14 +187,14 @@ class CC_FactChecker_Answers(Page):
 
     def vars_for_template(self):
         player_choices = [
-            self.player.CC_FactChecker0,
-            self.player.CC_FactChecker1,
-            self.player.CC_FactChecker2
+            self.player.cc_fact_checker_0,
+            self.player.cc_fact_checker_1,
+            self.player.cc_fact_checker_2
         ]
 
         questions_answers = []
 
-        for idx, qa in enumerate(Constants.CC_QuestionsAnswers['FactChecker']):
+        for idx, qa in enumerate(Constants.cc_questions_answers['FactChecker']):
             qa_copy = qa.copy()
             qa_copy['player_choice'] = player_choices[idx]
             qa_copy['is_correct'] = player_choices[idx] == qa['correct_answer']
@@ -215,10 +215,10 @@ class CC_BuyerBid(Page):
 
     def get_form_fields(self):
         form_fields = [
-            'CC_BuyerBid0',
-            'CC_BuyerBid1',
-            'CC_BuyerBid2',
-            'CC_BuyerBid3'
+            'cc_buyer_bid_0',
+            'cc_buyer_bid_1',
+            'cc_buyer_bid_2',
+            'cc_buyer_bid_3'
         ]
         return form_fields
 
@@ -228,15 +228,15 @@ class CC_BuyerBid_Answers(Page):
 
     def vars_for_template(self):
         player_choices = [
-            self.player.CC_BuyerBid0,
-            self.player.CC_BuyerBid1,
-            self.player.CC_BuyerBid2,
-            self.player.CC_BuyerBid3
+            self.player.cc_buyer_bid_0,
+            self.player.cc_buyer_bid_1,
+            self.player.cc_buyer_bid_2,
+            self.player.cc_buyer_bid_3
         ]
 
         questions_answers = []
 
-        for idx, qa in enumerate(Constants.CC_QuestionsAnswers['BuyerBid']):
+        for idx, qa in enumerate(Constants.cc_questions_answers['BuyerBid']):
             qa_copy = qa.copy()
             qa_copy['player_choice'] = player_choices[idx]
             qa_copy['is_correct'] = player_choices[idx] == qa['correct_answer']
@@ -261,8 +261,8 @@ class CC_EarnPoints(Page):
 
     def get_form_fields(self):
         form_fields = [
-            'CC_EarnPoints0',
-            'CC_EarnPoints1',
+            'cc_earn_points_0',
+            'cc_earn_points_1',
         ]
         return form_fields
 
@@ -272,13 +272,13 @@ class CC_EarnPoints_Answers(Page):
 
     def vars_for_template(self):
         player_choices = [
-            self.player.CC_EarnPoints0,
-            self.player.CC_EarnPoints1,
+            self.player.cc_earn_points_0,
+            self.player.cc_earn_points_1,
         ]
 
         questions_answers = []
 
-        for idx, qa in enumerate(Constants.CC_QuestionsAnswers['EarnPoints']):
+        for idx, qa in enumerate(Constants.cc_questions_answers['EarnPoints']):
             qa_copy = qa.copy()
             qa_copy['player_choice'] = player_choices[idx]
             qa_copy['is_correct'] = player_choices[idx] == qa['correct_answer']
@@ -305,31 +305,31 @@ class ResultsWaitPage(WaitPage):
 
 page_sequence = [
     SonaID,
-    # GroundRules,
-    # HowWillIGetPaid,
-    # Introduction,
-    # CC_Introduction,
-    # CC_Introduction_Answers,
-    # HowMuchIsAssetWorth,
-    # AssetDistribution,
-    # AssetDistributionExample,
-    # CC_AssetDistribution,
-    # CC_AssetDistribution_Answers,
-    # InstructionsSellerReceivesNumber,
-    # InstructionsSellerChooseReportedRange,
-    # CC_SellerReporting,
-    # CC_SellerReporting_Answers,
-    # InstructionsFactChecker,
-    # InstructionsFactCheckerExamples,
-    # CC_FactChecker,
-    # CC_FactChecker_Answers,
-    # InstructionsBuyersBidOnAssets,
-    # CC_BuyerBid,
-    # CC_BuyerBid_Answers,
-    # InstructionsEndOfTheRound,
-    # HowWillIEarnPoints,
-    # CC_EarnPoints,
-    # CC_EarnPoints_Answers,
+    GroundRules,
+    HowWillIGetPaid,
+    Introduction,
+    CC_Introduction,
+    CC_Introduction_Answers,
+    HowMuchIsAssetWorth,
+    AssetDistribution,
+    AssetDistributionExample,
+    CC_AssetDistribution,
+    CC_AssetDistribution_Answers,
+    InstructionsSellerReceivesNumber,
+    InstructionsSellerChooseReportedRange,
+    CC_SellerReporting,
+    CC_SellerReporting_Answers,
+    InstructionsFactChecker,
+    InstructionsFactCheckerExamples,
+    CC_FactChecker,
+    CC_FactChecker_Answers,
+    InstructionsBuyersBidOnAssets,
+    CC_BuyerBid,
+    CC_BuyerBid_Answers,
+    InstructionsEndOfTheRound,
+    HowWillIEarnPoints,
+    CC_EarnPoints,
+    CC_EarnPoints_Answers,
     PlayerRole,
     ResultsWaitPage
 ]

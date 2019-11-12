@@ -19,34 +19,34 @@ class Constants(BaseConstants):
     # Any participants after the number of sellers will be assigned as buyers
     num_sellers = 2
 
-    CC_tf_choices = [
+    cc_tf_choices = [
         [True, 'True'],
         [False, 'False'],
     ]
 
-    CC_QuestionsAnswers = {
+    cc_questions_answers = {
         'Introduction': [
             {
                 'label': 'Each round, buyers can bid on up to 3 assets because there are 3 sellers.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! Each round, buyers can bid on up to 3 assets because there are 3 sellers.'
             },
             {
                 'label': 'Buyers will earn more points by winning assets at lower prices.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! Buyers will earn more points by winning assets at lower prices.'
             },
             {
                 'label': 'Sellers will earn more points by selling assets at higher prices.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! Sellers will earn more points by selling assets at higher prices.'
             },
             {
                 'label': 'The more points you earn, the more money you will be paid.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! The more points you earn, the more money you will be paid.'
             }
@@ -76,7 +76,7 @@ class Constants(BaseConstants):
             },
             {
                 'label': 'If a seller receives the Private Range 13-15, then 14 is the most likely value to be drawn for the asset.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! The midpoint of the Private Range the seller receives has the highest chance (43%) of being the value drawn for the asset.'
             }
@@ -84,19 +84,19 @@ class Constants(BaseConstants):
         'SellerReporting': [
             {
                 'label': 'Only the seller knows the Private Range they are given.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! Only the seller knows the Private Range; no other person in the study knows the Private Range the seller was given.'
             },
             {
                 'label': 'Sellers can choose any range they want, as long as it is either 3 or 5 numbers wide, and sellers\' Reported Range does not have to contain any number from the Private Range they were given.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! The seller can report either a range that is 3 or 5 numbers wide. The seller can also report any range. That is, the seller\'s Reported Range does not have to contain any number from the Private Range they were given.'
             },
             {
                 'label': 'To report a more precise range, sellers must pay 2 points.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! The seller must pay 2 points if they choose to report the more precise (3-number) range.'
             },
@@ -130,13 +130,13 @@ class Constants(BaseConstants):
         'FactChecker': [
             {
                 'label': 'The fact checker is automated.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! The fact checker is automated.'
             },
             {
                 'label': 'The fact checker\'s grade (A, B, C, or F) designating how close the seller\'s Reported Range is to the midpoint of the Fact Checker Range always perfectly corresponds to the true value of the asset.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': False,
                 'answer_label': 'False. The Fact Checker\'s 5 number range is drawn from a distribution of ranges surrounding the midpoint of the seller\'s Private Range, and it does not perfectly correspond to the true value of the asset.'
             },
@@ -163,19 +163,19 @@ class Constants(BaseConstants):
         'BuyerBid': [
             {
                 'label': 'Buyers can bid on assets.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! The buyer can bid on as many assets as they want.'
             },
             {
                 'label': 'The buyer who bids the most for an asset wins that asset.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! Highest bidder for each asset will win that asset.'
             },
             {
                 'label': 'Sellers earn the winning bid for their asset.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! Sellers earn whatever the highest bid was for their asset.'
             },
@@ -195,13 +195,13 @@ class Constants(BaseConstants):
         'EarnPoints': [
             {
                 'label': 'Buyers earn 0 points if they are not the highest bid, but if a buyer has the winning bid the buyer earns the true value of the asset less the amount paid for the asset.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! Losing buyers and buyers that did not bid earn 0 points. Winning buyer earns the true value of the asset less the bid amount.'
             },
             {
                 'label': 'Sellers earn the top bid for their asset.',
-                'choices': CC_tf_choices,
+                'choices': cc_tf_choices,
                 'correct_answer': True,
                 'answer_label': 'True! Sellers earn whatever the highest bid was for their asset.'
             }
@@ -247,7 +247,7 @@ def create_cc_string_field(question_info):
 # role for future rounds
 
 
-t = Constants.CC_QuestionsAnswers
+t = Constants.cc_questions_answers
 
 
 class Player(BasePlayer):
@@ -255,31 +255,31 @@ class Player(BasePlayer):
         label='Please enter your Sona ID'
     )
 
-    CC_Intro0 = create_cc_boolean_field(t['Introduction'][0])
-    CC_Intro1 = create_cc_boolean_field(t['Introduction'][1])
-    CC_Intro2 = create_cc_boolean_field(t['Introduction'][2])
-    CC_Intro3 = create_cc_boolean_field(t['Introduction'][3])
+    cc_intro_0 = create_cc_boolean_field(t['Introduction'][0])
+    cc_intro_1 = create_cc_boolean_field(t['Introduction'][1])
+    cc_intro_2 = create_cc_boolean_field(t['Introduction'][2])
+    cc_intro_3 = create_cc_boolean_field(t['Introduction'][3])
 
-    CC_Asset0 = create_cc_string_field(t['AssetDistribution'][0])
-    CC_Asset1 = create_cc_string_field(t['AssetDistribution'][1])
-    CC_Asset2 = create_cc_boolean_field(t['AssetDistribution'][2])
+    cc_asset_0 = create_cc_string_field(t['AssetDistribution'][0])
+    cc_asset_1 = create_cc_string_field(t['AssetDistribution'][1])
+    cc_asset_2 = create_cc_boolean_field(t['AssetDistribution'][2])
 
-    CC_Seller0 = create_cc_boolean_field(t['SellerReporting'][0])
-    CC_Seller1 = create_cc_boolean_field(t['SellerReporting'][1])
-    CC_Seller2 = create_cc_boolean_field(t['SellerReporting'][2])
-    CC_Seller3 = create_cc_string_field(t['SellerReporting'][3])
+    cc_seller_0 = create_cc_boolean_field(t['SellerReporting'][0])
+    cc_seller_1 = create_cc_boolean_field(t['SellerReporting'][1])
+    cc_seller_2 = create_cc_boolean_field(t['SellerReporting'][2])
+    cc_seller_3 = create_cc_string_field(t['SellerReporting'][3])
 
-    CC_FactChecker0 = create_cc_boolean_field(t['FactChecker'][0])
-    CC_FactChecker1 = create_cc_boolean_field(t['FactChecker'][1])
-    CC_FactChecker2 = create_cc_string_field(t['FactChecker'][2])
+    cc_fact_checker_0 = create_cc_boolean_field(t['FactChecker'][0])
+    cc_fact_checker_1 = create_cc_boolean_field(t['FactChecker'][1])
+    cc_fact_checker_2 = create_cc_string_field(t['FactChecker'][2])
 
-    CC_BuyerBid0 = create_cc_boolean_field(t['BuyerBid'][0])
-    CC_BuyerBid1 = create_cc_boolean_field(t['BuyerBid'][1])
-    CC_BuyerBid2 = create_cc_boolean_field(t['BuyerBid'][2])
-    CC_BuyerBid3 = create_cc_string_field(t['BuyerBid'][3])
+    cc_buyer_bid_0 = create_cc_boolean_field(t['BuyerBid'][0])
+    cc_buyer_bid_1 = create_cc_boolean_field(t['BuyerBid'][1])
+    cc_buyer_bid_2 = create_cc_boolean_field(t['BuyerBid'][2])
+    cc_buyer_bid_3 = create_cc_string_field(t['BuyerBid'][3])
 
-    CC_EarnPoints0 = create_cc_boolean_field(t['EarnPoints'][0])
-    CC_EarnPoints1 = create_cc_boolean_field(t['EarnPoints'][1])
+    cc_earn_points_0 = create_cc_boolean_field(t['EarnPoints'][0])
+    cc_earn_points_1 = create_cc_boolean_field(t['EarnPoints'][1])
 
     def role(self):
         if self.id_in_group <= Constants.num_sellers:
