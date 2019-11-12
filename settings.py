@@ -5,22 +5,53 @@ from os import environ
 # the session config can be accessed from methods in your apps as self.session.config,
 # e.g. self.session.config['participation_fee']
 
+app_sequence = [
+    'fhmp_setup',
+    'fhmp_auction_rounds',
+    'fhmp_exit_survey',
+]
+num_demo_participants = 3
+
 SESSION_CONFIG_DEFAULTS = {
     'real_world_currency_per_point': 1.00,
     'participation_fee': 0.00,
     'doc': "",
+    'can_choose_precision': True,
+    'is_grade_pass_fail': True
 }
 
 SESSION_CONFIGS = [
     {
-        'name': 'fhmp',
-        'display_name': 'FHMP',
-                        'num_demo_participants': 3,
-                        'app_sequence': [
-                            'fhmp_setup',
-                            'fhmp_auction_rounds',
-                            'fhmp_exit_survey',
-                        ]
+        'name': 'fhmp_choice_grades',
+        'display_name': 'Choice-Grades',
+        'num_demo_participants': num_demo_participants,
+        'app_sequence': app_sequence,
+        'can_choose_precision': True,
+        'is_grade_pass_fail': False
+    },
+    {
+        'name': 'fhmp_choice_pass_fail',
+        'display_name': 'Choice-Pass-Fail',
+        'num_demo_participants': num_demo_participants,
+        'app_sequence': app_sequence,
+        'can_choose_precision': True,
+        'is_grade_pass_fail': True
+    },
+    {
+        'name': 'fhmp_no_choice_grades',
+        'display_name': 'No-Choice-Grades',
+        'num_demo_participants': num_demo_participants,
+        'app_sequence': app_sequence,
+        'can_choose_precision': False,
+        'is_grade_pass_fail': False
+    },
+    {
+        'name': 'fhmp_no_choice_pass_fail',
+        'display_name': 'No-Choice-Pass-Fail',
+        'num_demo_participants': num_demo_participants,
+        'app_sequence': app_sequence,
+        'can_choose_precision': False,
+        'is_grade_pass_fail': True
     },
 ]
 

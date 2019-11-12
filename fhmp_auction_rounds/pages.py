@@ -30,7 +30,7 @@ class BeginWaitPage(WaitPage):
 
 class SellerChoiceNotEnoughBudget(Page):
     def is_displayed(self):
-        return self.player.role() == 'seller' and self.player.budget < Constants.more_precise_reporting_cost
+        return self.session.config['can_choose_precision'] and self.player.role() == 'seller' and self.player.budget < Constants.more_precise_reporting_cost
 
     def vars_for_template(self):
         seller_private_range_midpoints_by_player_id = {
@@ -52,7 +52,7 @@ class SellerChoiceLowHigh(Page):
     form_model = 'group'
 
     def is_displayed(self):
-        return Treatments.can_choose_precision and self.player.role() == 'seller' and self.player.budget >= Constants.more_precise_reporting_cost
+        return self.session.config['can_choose_precision'] and self.player.role() == 'seller' and self.player.budget >= Constants.more_precise_reporting_cost
 
     # Return reporting precision level form field based on player id
     def get_form_fields(self):
@@ -200,8 +200,21 @@ class RoundResult(Page):
         num_won_assets = sum(did_win_assets)
 
         if self.player.role() == 'seller':
+
+            did_report_more_precise_by_id = {
+                1: self.group.seller1_did_report_more_precise,
+                2: self.group.seller2_did_report_more_precise,
+                3: self.group.seller3_did_report_more_precise,
+            }
+
+            if self.session.config['can_choose_precision'] and did_report_more_precise_by_id[self.player.id_in_group]:
+                reporting_cost = Constants.more_precise_reporting_cost
+            else:
+                reporting_cost = 0
+
+            payoff_with_reporting_cost = self.player.payoff - reporting_cost
             buyer_won_assets_message = 'You sold asset {}. Your payoff is {}.'.format(
-                self.player.id_in_group, self.player.payoff)
+                self.player.id_in_group, payoff_with_reporting_cost)
 
         else:
             if num_won_assets == 0:

@@ -16,6 +16,7 @@ Models for auction rounds
 # Set the number of practice/main rounds here
 num_practice_rounds = 2
 num_main_rounds = 2
+more_precise_reporting_cost_without_currency = 2
 
 
 class Constants(BaseConstants):
@@ -38,7 +39,7 @@ class Constants(BaseConstants):
 
     # If the sellers are forced to select the more precise reporting option, the cost should be 0
     more_precise_reporting_cost = c(
-        2) if Treatments.can_choose_precision else c(0)
+        more_precise_reporting_cost_without_currency)
 
     # Generate reporting ranges dict
     reporting_ranges = {}
@@ -75,7 +76,8 @@ class Constants(BaseConstants):
     # Choices for reporting precision
     reporting_precision_choices = [
         [False, 'Less Precise (5 numbers wide) (No cost)'],
-        [True, 'More Precise (3 numbers wide) (Cost: 2 points)'],
+        [True, 'More Precise (3 numbers wide) (Cost: {} points)'.format(
+            more_precise_reporting_cost_without_currency)],
     ]
 
 
@@ -90,19 +92,19 @@ class Group(BaseGroup):
     seller1_did_report_more_precise = models.BooleanField(
         choices=Constants.reporting_precision_choices,
         widget=widgets.RadioSelect,
-        initial=False if Treatments.can_choose_precision else True
+        initial=False
     )
 
     seller2_did_report_more_precise = models.BooleanField(
         choices=Constants.reporting_precision_choices,
         widget=widgets.RadioSelect,
-        initial=False if Treatments.can_choose_precision else True
+        initial=False
     )
 
     seller3_did_report_more_precise = models.BooleanField(
         choices=Constants.reporting_precision_choices,
         widget=widgets.RadioSelect,
-        initial=False if Treatments.can_choose_precision else True
+        initial=False
     )
 
     # Reported ranges
@@ -160,6 +162,12 @@ class Group(BaseGroup):
             self.seller2_private_range_midpoint)
         self.asset3_true_value = self.draw_asset_true_value(
             self.seller3_private_range_midpoint)
+
+        # Set default reporting precision to high if No-Choice condition
+        if not self.session.config['can_choose_precision']:
+            self.group.seller1_did_report_more_precise = True
+            self.group.seller2_did_report_more_precise = True
+            self.group.seller3_did_report_more_precise = True
 
         is_start_of_practice_rounds = self.round_number == 1
         is_start_of_main_rounds = self.round_number == Constants.num_practice_rounds + 1
@@ -284,12 +292,11 @@ class Group(BaseGroup):
     # B: if the midpoint of the reported range is + or - 2 or 3 from the midpoint of the fact checker’s range
     # C: if the midpoint of the reported range is + or – 4 from the midpoint of the fact checker’s range
     # F: everything else
-    @staticmethod
-    def calculate_seller_grade(reported_range_midpoint, fact_checker_range_midpoint):
+    def calculate_seller_grade(self, reported_range_midpoint, fact_checker_range_midpoint):
         midpoint_diff = abs(reported_range_midpoint -
                             fact_checker_range_midpoint)
 
-        if Treatments.is_grade_pass_fail:
+        if self.session.config['is_grade_pass_fail']:
             return 'Pass' if midpoint_diff <= 4 else 'Fail'
 
         else:
@@ -394,7 +401,7 @@ class Group(BaseGroup):
             3: self.seller3_did_report_more_precise
         }
 
-        return Constants.more_precise_reporting_cost if did_seller_report_more_precise[seller_id] else 0
+        return Constants.more_precise_reporting_cost if (did_seller_report_more_precise[seller_id] and self.session.config['can_choose_precision']) else 0
 
     def get_seller_history(self, player_id):
         previous_rounds = range(1, self.round_number) if self.round_number <= Constants.num_practice_rounds else range(
