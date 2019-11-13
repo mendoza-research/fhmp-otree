@@ -148,7 +148,15 @@ class Constants(BaseConstants):
                 'label': 'The fact checker\'s grade (A, B, C, or F) designating how close the seller\'s Reported Range is to the midpoint of the Fact Checker Range always perfectly corresponds to the true value of the asset.',
                 'choices': cc_tf_choices,
                 'correct_answer': False,
-                'answer_label': 'False. The Fact Checker\'s 5 number range is drawn from a distribution of ranges surrounding the midpoint of the seller\'s Private Range, and it does not perfectly correspond to the true value of the asset.'
+                'answer_label': 'False. The Fact Checker\'s 5 number range is drawn from a distribution of ranges surrounding the midpoint of the seller\'s Private Range, and it does not perfectly correspond to the true value of the asset.',
+                'treatment': 'grade'
+            },
+            {
+                'label': 'The fact checker\'s grade (Pass or Fail) designating how close the seller\'s Reported Range is to the midpoint of the Fact Checker Range always perfectly corresponds to the true value of the asset.',
+                'choices': cc_tf_choices,
+                'correct_answer': False,
+                'answer_label': 'False. The Fact Checker\'s 5 number range is drawn from a distribution of ranges surrounding the midpoint of the seller\'s Private Range, and it does not perfectly correspond to the true value of the asset.',
+                'treatment': 'pass_fail'
             },
             {
                 'label': 'The fact checker knows',
@@ -281,8 +289,9 @@ class Player(BasePlayer):
     cc_seller_4_choice = create_cc_string_field(t['SellerReporting'][4])
 
     cc_fact_checker_0 = create_cc_boolean_field(t['FactChecker'][0])
-    cc_fact_checker_1 = create_cc_boolean_field(t['FactChecker'][1])
-    cc_fact_checker_2 = create_cc_string_field(t['FactChecker'][2])
+    cc_fact_checker_1_grade = create_cc_boolean_field(t['FactChecker'][1])
+    cc_fact_checker_2_pass_fail = create_cc_boolean_field(t['FactChecker'][2])
+    cc_fact_checker_3 = create_cc_string_field(t['FactChecker'][3])
 
     cc_buyer_bid_0 = create_cc_boolean_field(t['BuyerBid'][0])
     cc_buyer_bid_1 = create_cc_boolean_field(t['BuyerBid'][1])

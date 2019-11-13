@@ -194,10 +194,18 @@ class CC_FactChecker(Page):
     def get_form_fields(self):
         form_fields = [
             'cc_fact_checker_0',
-            'cc_fact_checker_1',
-            'cc_fact_checker_2'
+            'cc_fact_checker_1_grade',
+            'cc_fact_checker_2_pass_fail',
+            'cc_fact_checker_3',
         ]
-        return form_fields
+
+        qa = Constants.cc_questions_answers['FactChecker']
+        grade_indices = [i for i in range(
+            len(qa)) if 'treatment' not in qa[i] or qa[i]['treatment'] == 'grade']
+        pass_fail_indices = [i for i in range(
+            len(qa)) if 'treatment' not in qa[i] or qa[i]['treatment'] == 'pass_fail']
+
+        return [form_fields[i] for i in pass_fail_indices] if self.session.config['is_grade_pass_fail'] else [form_fields[i] for i in grade_indices]
 
 
 class CC_FactChecker_Answers(Page):
@@ -206,16 +214,28 @@ class CC_FactChecker_Answers(Page):
     def vars_for_template(self):
         player_answers = [
             self.player.cc_fact_checker_0,
-            self.player.cc_fact_checker_1,
-            self.player.cc_fact_checker_2
+            self.player.cc_fact_checker_1_grade,
+            self.player.cc_fact_checker_2_pass_fail,
+            self.player.cc_fact_checker_3
         ]
+
+        qa = Constants.cc_questions_answers['FactChecker']
+        grade_indices = [i for i in range(
+            len(qa)) if 'treatment' not in qa[i] or qa[i]['treatment'] == 'grade']
+        pass_fail_indices = [i for i in range(
+            len(qa)) if 'treatment' not in qa[i] or qa[i]['treatment'] == 'pass_fail']
+
+        player_answers_filtered = [player_answers[i] for i in pass_fail_indices] if self.session.config['is_grade_pass_fail'] else [
+            player_answers[i] for i in grade_indices]
+        qa_filtered = [qa[i] for i in pass_fail_indices] if self.session.config['is_grade_pass_fail'] else [
+            qa[i] for i in grade_indices]
 
         questions_answers = []
 
-        for idx, qa in enumerate(Constants.cc_questions_answers['FactChecker']):
+        for idx, qa in enumerate(qa_filtered):
             qa_copy = qa.copy()
-            qa_copy['player_choice'] = player_answers[idx]
-            qa_copy['is_correct'] = player_answers[idx] == qa['correct_answer']
+            qa_copy['player_choice'] = player_answers_filtered[idx]
+            qa_copy['is_correct'] = player_answers_filtered[idx] == qa['correct_answer']
             qa_copy['choices'] = list(map(lambda x: x[0], qa['choices']))
             questions_answers.append(qa_copy)
 
@@ -335,12 +355,12 @@ page_sequence = [
     # CC_AssetDistribution_Answers,
     # InstructionsSellerReceivesNumber,
     # InstructionsSellerChooseReportedRange,
-    CC_SellerReporting,
-    CC_SellerReporting_Answers,
+    # CC_SellerReporting,
+    # CC_SellerReporting_Answers,
     # InstructionsFactChecker,
     # InstructionsFactCheckerExamples,
-    # CC_FactChecker,
-    # CC_FactChecker_Answers,
+    CC_FactChecker,
+    CC_FactChecker_Answers,
     # InstructionsBuyersBidOnAssets,
     # CC_BuyerBid,
     # CC_BuyerBid_Answers,
