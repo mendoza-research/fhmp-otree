@@ -119,7 +119,10 @@ class InstructionsSellerReceivesNumber(Page):
 
 
 class InstructionsSellerChooseReportedRange(Page):
-    pass
+    def vars_for_template(self):
+        return {
+            'can_choose_precision': self.session.config['can_choose_precision']
+        }
 
 
 class CC_SellerReporting(Page):
@@ -351,32 +354,32 @@ class ResultsWaitPage(WaitPage):
 
 
 page_sequence = [
-    SonaID,
-    GroundRules,
-    HowWillIGetPaid,
-    Introduction,
-    CC_Introduction,
-    CC_Introduction_Answers,
-    HowMuchIsAssetWorth,
-    AssetDistribution,
-    AssetDistributionExample,
-    CC_AssetDistribution,
-    CC_AssetDistribution_Answers,
-    InstructionsSellerReceivesNumber,
+    # SonaID,
+    # GroundRules,
+    # HowWillIGetPaid,
+    # Introduction,
+    # CC_Introduction,
+    # CC_Introduction_Answers,
+    # HowMuchIsAssetWorth,
+    # AssetDistribution,
+    # AssetDistributionExample,
+    # CC_AssetDistribution,
+    # CC_AssetDistribution_Answers,
+    # InstructionsSellerReceivesNumber,
     InstructionsSellerChooseReportedRange,
-    CC_SellerReporting,
-    CC_SellerReporting_Answers,
-    InstructionsFactChecker,
-    InstructionsFactCheckerExamples,
-    CC_FactChecker,
-    CC_FactChecker_Answers,
-    InstructionsBuyersBidOnAssets,
-    CC_BuyerBid,
-    CC_BuyerBid_Answers,
-    InstructionsEndOfTheRound,
-    HowWillIEarnPoints,
-    CC_EarnPoints,
-    CC_EarnPoints_Answers,
+    # CC_SellerReporting,
+    # CC_SellerReporting_Answers,
+    # InstructionsFactChecker,
+    # InstructionsFactCheckerExamples,
+    # CC_FactChecker,
+    # CC_FactChecker_Answers,
+    # InstructionsBuyersBidOnAssets,
+    # CC_BuyerBid,
+    # CC_BuyerBid_Answers,
+    # InstructionsEndOfTheRound,
+    # HowWillIEarnPoints,
+    # CC_EarnPoints,
+    # CC_EarnPoints_Answers,
     PlayerRole,
     ResultsWaitPage
 ]

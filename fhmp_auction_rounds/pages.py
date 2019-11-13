@@ -118,6 +118,7 @@ class SellerChoiceReportingRange(Page):
             self.player.id_in_group]
 
         return {
+            'can_choose_precision': self.session.config['can_choose_precision'],
             'role_and_number': self.player.get_role_and_number(),
             'seller_private_range': seller_private_range,
             'did_seller_report_more_precise': did_seller_report_more_precise
