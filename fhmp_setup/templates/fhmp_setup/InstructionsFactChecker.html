@@ -7,22 +7,23 @@ Instructions: The Fact Checker
 
 {% block content %}
 <p>
-    The fact checker is automated. It is not biased but it does not have perfect knowledge. That is, it does not know
-    the true value and it does not know the seller's Private Range. Instead the fact checker knows a 5-number range
-    that overlaps with the seller's Private Range. The 5 number range is drawn from a distribution of ranges 
-    surrounding the seller's Private Range.
+    The fact checker is automated. It is not biased but it does not have perfect knowledge. That is, it does not know the true value and it does not know the seller's Private Range. Instead the fact checker knows a 5-number range that overlaps with the seller's Private Range. The 5 number range is drawn from a distribution of ranges surrounding the seller's Private Range.
 </p>
 
 <p>
-    The fact checker compares the Reported Range the seller discloses to the Fact Checker Range, and then provides a
-    grade (A, B, C, or F) about how accurate the fact checker believes the Reported Range that the seller gave is.
+    {% if is_grade_pass_fail %}
+        The fact checker compares the Reported Range the seller discloses to the Fact Checker Range, and then provides a grade (Pass or Fail) about how accurate the fact checker believes the Reported Range that the seller gave is.
+    {% else %}
+        The fact checker compares the Reported Range the seller discloses to the Fact Checker Range, and then provides a grade (A, B, C, or F) about how accurate the fact checker believes the Reported Range that the seller gave is.
+    {% endif %}
 </p>
 
 <p>
-    An "A" grade is the best grade since it signals the Seller's Reported Range provides information to buyers that is
-    more likely to be accurate, while a grade of “F” is the worst grade since it signals the Seller's Reported Range
-    provides information to buyers that is not likely to be accurate. Because the fact checker only knows the Fact
-    Checker Range, the grade is based on how much the Reported Range overlaps with the Fact Checker Range.
+    {% if is_grade_pass_fail %}
+        A "Pass" grade is the best grade since it signals the Seller's Reported Range provides information to buyers that is more likely to be accurate, while a grade of "Fail" is the worst grade since it signals the Seller's Reported Range provides information to buyers that is not likely to be accurate. Because the fact checker only knows the Fact Checker Range, the grade is based on how much the Reported Range overlaps with the Fact Checker Range.
+    {% else %}
+        An "A" grade is the best grade since it signals the Seller's Reported Range provides information to buyers that is more likely to be accurate, while a grade of "F" is the worst grade since it signals the Seller's Reported Range provides information to buyers that is not likely to be accurate. Because the fact checker only knows the Fact Checker Range, the grade is based on how much the Reported Range overlaps with the Fact Checker Range.
+    {% endif %}
 </p>
 
 {% next_button %}

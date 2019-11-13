@@ -181,11 +181,17 @@ class CC_SellerReporting_Answers(Page):
 
 
 class InstructionsFactChecker(Page):
-    pass
+    def vars_for_template(self):
+        return {
+            'is_grade_pass_fail': self.session.config['is_grade_pass_fail']
+        }
 
 
 class InstructionsFactCheckerExamples(Page):
-    pass
+    def vars_for_template(self):
+        return {
+            'is_grade_pass_fail': self.session.config['is_grade_pass_fail']
+        }
 
 
 class CC_FactChecker(Page):
@@ -291,7 +297,10 @@ class InstructionsEndOfTheRound(Page):
 
 
 class HowWillIEarnPoints(Page):
-    pass
+    def vars_for_template(self):
+        return {
+            'can_choose_precision': self.session.config['can_choose_precision']
+        }
 
 
 class CC_EarnPoints(Page):
@@ -342,32 +351,32 @@ class ResultsWaitPage(WaitPage):
 
 
 page_sequence = [
-    # SonaID,
-    # GroundRules,
-    # HowWillIGetPaid,
-    # Introduction,
-    # CC_Introduction,
-    # CC_Introduction_Answers,
-    # HowMuchIsAssetWorth,
-    # AssetDistribution,
-    # AssetDistributionExample,
-    # CC_AssetDistribution,
-    # CC_AssetDistribution_Answers,
-    # InstructionsSellerReceivesNumber,
-    # InstructionsSellerChooseReportedRange,
-    # CC_SellerReporting,
-    # CC_SellerReporting_Answers,
-    # InstructionsFactChecker,
-    # InstructionsFactCheckerExamples,
+    SonaID,
+    GroundRules,
+    HowWillIGetPaid,
+    Introduction,
+    CC_Introduction,
+    CC_Introduction_Answers,
+    HowMuchIsAssetWorth,
+    AssetDistribution,
+    AssetDistributionExample,
+    CC_AssetDistribution,
+    CC_AssetDistribution_Answers,
+    InstructionsSellerReceivesNumber,
+    InstructionsSellerChooseReportedRange,
+    CC_SellerReporting,
+    CC_SellerReporting_Answers,
+    InstructionsFactChecker,
+    InstructionsFactCheckerExamples,
     CC_FactChecker,
     CC_FactChecker_Answers,
-    # InstructionsBuyersBidOnAssets,
-    # CC_BuyerBid,
-    # CC_BuyerBid_Answers,
-    # InstructionsEndOfTheRound,
-    # HowWillIEarnPoints,
-    # CC_EarnPoints,
-    # CC_EarnPoints_Answers,
+    InstructionsBuyersBidOnAssets,
+    CC_BuyerBid,
+    CC_BuyerBid_Answers,
+    InstructionsEndOfTheRound,
+    HowWillIEarnPoints,
+    CC_EarnPoints,
+    CC_EarnPoints_Answers,
     PlayerRole,
     ResultsWaitPage
 ]

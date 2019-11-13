@@ -19,7 +19,7 @@ more_precise_reporting_cost_without_currency = 2
 
 
 class Constants(BaseConstants):
-    name_in_url = 'fhmp_practice_rounds'
+    name_in_url = 'fhmp_auction_rounds'
     players_per_group = None
 
     # Define the number of rounds class variables
@@ -87,6 +87,9 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
+    # Store treatment conditions
+    treatment = models.StringField()
+
     # These boolean fields indicate whether the user has selected more precise reporting option
     seller1_did_report_more_precise = models.BooleanField(
         choices=Constants.reporting_precision_choices,
@@ -149,6 +152,11 @@ class Group(BaseGroup):
 
     # Generate estimated/true values
     def init_round(self):
+        treatment_choice = 'Choice' if self.session.config['can_choose_precision'] else 'No-Choice'
+        treatment_grade = 'Pass-Fail' if self.session.config['is_grade_pass_fail'] else 'Grades'
+
+        self.treatment = treatment_choice + '-' + treatment_grade
+
         # High asset probabilities
         self.seller1_private_range_midpoint = c(random.randint(2, 19))
         self.seller2_private_range_midpoint = c(random.randint(2, 19))
@@ -164,9 +172,9 @@ class Group(BaseGroup):
 
         # Set default reporting precision to high if No-Choice condition
         if not self.session.config['can_choose_precision']:
-            self.group.seller1_did_report_more_precise = True
-            self.group.seller2_did_report_more_precise = True
-            self.group.seller3_did_report_more_precise = True
+            self.seller1_did_report_more_precise = True
+            self.seller2_did_report_more_precise = True
+            self.seller3_did_report_more_precise = True
 
         is_start_of_practice_rounds = self.round_number == 1
         is_start_of_main_rounds = self.round_number == Constants.num_practice_rounds + 1

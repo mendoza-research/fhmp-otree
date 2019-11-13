@@ -13,10 +13,9 @@ Instructions: The Fact Checker - Examples
     <br />
     (2) the Private Range (given to the seller only) is 12-14
     <br />
-    (3) the Fact Checker’s range is 11-15
+    (3) the Fact Checker's range is 11-15
     <br />
-    Please note that these are just examples, and the numbers we picked are not more or less likely than any other
-    numbers we could have picked.
+    Please note that these are just examples, and the numbers we picked are not more or less likely than any other numbers we could have picked.
 </p>
 
 <p>
@@ -24,8 +23,12 @@ Instructions: The Fact Checker - Examples
 
     <ul>
         <li>The seller gives a Reported Range of 7-11</li>
-        <li>The Fact Checker’s grade is C, because the Fact Checker’s Range and the Reported Range over overlap a
-            little.</li>
+
+        {% if is_grade_pass_fail %}
+            <li>The Fact Checker's grade is Pass, because the Fact Checker's Range and the Reported Range over overlap a little.</li>
+        {% else %}
+            <li>The Fact Checker's grade is C, because the Fact Checker's Range and the Reported Range over overlap a little.</li>
+        {% endif %}
     </ul>
 </p>
 
@@ -34,8 +37,12 @@ Instructions: The Fact Checker - Examples
 
     <ul>
         <li>The seller gives a Reported Range of 11-15</li>
-        <li>The Fact Checker’s grade is A, because the Fact Checker’s Range and the Reported Range over overlap a lot.</li>
 
+        {% if is_grade_pass_fail %}
+            <li>The Fact Checker's grade is Pass, because the Fact Checker's Range and the Reported Range over overlap a lot.</li>
+        {% else %}
+            <li>The Fact Checker's grade is A, because the Fact Checker's Range and the Reported Range over overlap a lot.</li>
+        {% endif %}
     </ul>
 </p>
 
@@ -44,9 +51,12 @@ Instructions: The Fact Checker - Examples
 
     <ul>
         <li>The seller gives a Reported Range of 16-20</li>
-        <li>The Fact Checker’s grade is F, because the Fact Checker’s Range and the Reported Range do not overlap at
-            all.</li>
 
+        {% if is_grade_pass_fail %}
+            <li>The Fact Checker's grade is Fail, because the Fact Checker's Range and the Reported Range do not overlap at all.</li>
+        {% else %}
+            <li>The Fact Checker's grade is F, because the Fact Checker's Range and the Reported Range do not overlap at all.</li>
+        {% endif %}
     </ul>
 </p>
 
