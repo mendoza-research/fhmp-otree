@@ -17,7 +17,7 @@ class Constants(BaseConstants):
 
     # Set the number of sellers
     # Any participants after the number of sellers will be assigned as buyers
-    num_sellers = 2
+    num_sellers = 3
 
     cc_tf_choices = [
         [True, 'True'],
