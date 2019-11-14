@@ -18,7 +18,7 @@
 	{% for seller in sellers %}
 		<div class="col-md-12">
 			<h3><u>Seller {{ seller.id }}</u></h3>
-			<p>Seller {{ seller.id }} has chosen to disclose a range of <strong>{{ seller.reported_range }}</strong> points. </p>
+			<p>Seller {{ seller.id }} has chosen to disclose a range of <strong>{{ seller.reported_range }} points</strong>. </p>
 			<p>Based on this range, the fact checker has given the Seller a <strong>grade of {{ seller.grade }}</strong>.</p>
 
 			{% if seller.id == 1 %}
