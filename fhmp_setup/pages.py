@@ -193,6 +193,7 @@ class InstructionsFactChecker(Page):
 class InstructionsFactCheckerExamples(Page):
     def vars_for_template(self):
         return {
+            'can_choose_precision': self.session.config['can_choose_precision'],
             'is_grade_pass_fail': self.session.config['is_grade_pass_fail']
         }
 
@@ -354,21 +355,21 @@ class ResultsWaitPage(WaitPage):
 
 
 page_sequence = [
-    SonaID,
-    GroundRules,
-    HowWillIGetPaid,
-    Introduction,
-    CC_Introduction,
-    CC_Introduction_Answers,
-    HowMuchIsAssetWorth,
-    AssetDistribution,
-    AssetDistributionExample,
-    CC_AssetDistribution,
-    CC_AssetDistribution_Answers,
-    InstructionsSellerReceivesNumber,
-    InstructionsSellerChooseReportedRange,
-    CC_SellerReporting,
-    CC_SellerReporting_Answers,
+    # SonaID,
+    # GroundRules,
+    # HowWillIGetPaid,
+    # Introduction,
+    # CC_Introduction,
+    # CC_Introduction_Answers,
+    # HowMuchIsAssetWorth,
+    # AssetDistribution,
+    # AssetDistributionExample,
+    # CC_AssetDistribution,
+    # CC_AssetDistribution_Answers,
+    # InstructionsSellerReceivesNumber,
+    # InstructionsSellerChooseReportedRange,
+    # CC_SellerReporting,
+    # CC_SellerReporting_Answers,
     InstructionsFactChecker,
     InstructionsFactCheckerExamples,
     CC_FactChecker,
