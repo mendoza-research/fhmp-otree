@@ -13,8 +13,8 @@ doc = """
 Models for auction rounds
 """
 # Set the number of practice/main rounds here
-num_practice_rounds = 2
-num_main_rounds = 2
+num_practice_rounds = 4
+num_main_rounds = 20
 more_precise_reporting_cost_without_currency = 2
 
 
